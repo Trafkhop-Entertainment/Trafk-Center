@@ -1,7 +1,8 @@
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: white;
+  border: 5px solid black;
   display: none;
   z-index: 1000;
 }
@@ -11,19 +12,19 @@
 }
 
 .modal-content {
-  background: #111;
-  color: white;
+  background: white;
+  color: black;
   width: 60%;
   max-width: 600px;
   margin: 10% auto;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .close {
   float: right;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 28px;
   color: white;
 }
 
