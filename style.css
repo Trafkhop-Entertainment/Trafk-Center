@@ -2,7 +2,6 @@
   position: fixed;
   inset: 0;
   background: white;
-  border: 5px solid black;
   display: none;
   z-index: 1000;
 }
@@ -18,7 +17,7 @@
   max-width: 600px;
   margin: 10% auto;
   padding: 20px;
-  border-radius: 5px;
+  border: 5px solid black;
 }
 
 .close {
