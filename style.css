@@ -1,1 +1,29 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  z-index: 1000;
+}
+
+.modal:target {
+  display: block;
+}
+
+.modal-content {
+  background: #111;
+  color: white;
+  width: 60%;
+  max-width: 600px;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.close {
+  float: right;
+  text-decoration: none;
+  font-size: 24px;
+  color: white;
+}
 
