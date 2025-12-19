@@ -1,29 +1,30 @@
-.nav {
+body {
   background: white;
   color: black;
+}
+
+.nav {
   margin: 5px;;
   padding-bottom: 10px;
   border: 5px solid black;
 }
-.nav a {
-  background: white;
-  color: black;
+.nav a, a {
   margin: 5px;;
   padding-bottom: 10px;
   border: 5px solid black;
 }
 
 .section {
-  background: white;
-  color: black;
   margin: 10% auto;
   padding: 20px;
 }
-.p, h1, a {
-  background: white;
-  color: black;
-  margin: 10px;;
-  padding: 20px;
+
+h1 {
+  padding-top: 10px;
+}
+
+p {
+  padding: 5px;
 }
 
 .modal {
