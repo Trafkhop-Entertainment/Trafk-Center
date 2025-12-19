@@ -1,3 +1,16 @@
+.nav {
+  background: white;
+  color: black;
+  margin: 10px;;
+  padding: 20px;
+}
+.nav a {
+  background: white;
+  color: black;
+  margin: 10px;;
+  padding: 20px;
+}
+
 .section {
   background: white;
   color: black;
