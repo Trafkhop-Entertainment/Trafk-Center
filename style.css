@@ -93,6 +93,31 @@ a.box{
   box-sizing: border-box;
 }
 
+.container.oldnews {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0% 0;
+}
+
+.box.oldnews{
+  text-align: center;
+  border: 3px solid black;
+  margin: 1%;
+  padding: 0.5%;
+  text-decoration: none;
+  color: black;
+  aspect-ratio: auto;
+  width: 7%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+
 
 
 /*Für die Box in Website*/
@@ -123,4 +148,3 @@ a.box{
   font-size: 28px;
   color: black;
 }
-
