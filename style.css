@@ -59,12 +59,34 @@ p {
 }
 footer {
   border-top: 5px solid black;
-  padding: 0.5%;
+  padding: 20px 0; /* Oben und unten etwas Platz */
   text-align: center;
   margin-top: auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column; /* Stapelt Text und Links übereinander */
+  gap: 10px; /* Abstand zwischen Text und Link-Zeile */
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Abstand zwischen den einzelnen Links */
+}
+
+.footer-links a {
+  color: black;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Wir entfernen das Padding vom p-Tag im Footer, falls es noch stört */
+footer span {
+  display: inline-block;
 }
 
 
