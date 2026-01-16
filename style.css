@@ -7,11 +7,16 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  margin: 0;
+  margin: 0px;
+  padding: 0px;
 }
 main {
   flex: 1;
   text-align: center;
+}
+.logo {
+  max-width: 360px;
+  padding: 1%;
 }
 nav {
   padding: 0.5%;
