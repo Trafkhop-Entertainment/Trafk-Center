@@ -164,6 +164,16 @@ footer a:hover {
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
 }
 
+#license {
+    color: #fff8bd;
+    padding: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 25px;
+    font-size: 20px;
+    text-align: center;
+}
+
 
 
 /* Alles in diesem Block gilt NUR für Bildschirme, die schmaler als 800px sind */
