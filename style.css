@@ -41,7 +41,7 @@ nav {
     justify-content: center;
     width: fit-content;
     margin: 0% auto;
-    padding: 10px;
+    padding: 15px;
     gap: 56.25px;
 }
 nav a {
@@ -65,6 +65,10 @@ nav a span {
 nav a:hover span {
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
 }
+
+
+
+
 #news {
     margin-top: 50px;
     margin-bottom: 10px;
@@ -80,7 +84,7 @@ newsarea {
 }
 .news {
     background: #5a3998;
-    padding: 20px;
+    padding: 30px;
     width: 550px;
     height: 275px;
     margin-bottom: 25px;
@@ -107,7 +111,7 @@ newsarea {
     text-decoration: underline;
 }
 .news .oldnewsp {
-    padding: 10px;
+    padding: 15px;
 }
 .newsh2 {
     background: #9069da;
@@ -115,7 +119,7 @@ newsarea {
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 20px;
     font-size: 21px;
     box-shadow: 0px 0px 10px #2e1757;
@@ -139,6 +143,55 @@ newsarea {
     font-size: 15px;
     text-decoration: underline;
 }
+
+
+
+
+
+#wiki {
+
+}
+.wiki-content {
+    margin: 40px;
+    padding-bottom: 30px;
+    background: #5a3998;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 25px;
+    border: 5px solid #371c67;
+    box-shadow: 0px 0px 10px #160930;
+    border-radius: 20px;
+    scrollbar-width: thin;
+}
+.wiki-content-header {
+    margin: 30px;
+    padding: 15px;
+    text-align: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    background: #9069da;
+    box-shadow: 0px 0px 10px #2e1757;
+    border: 5px solid #603ea3;
+    border-radius: 20px;
+}
+.wiki-content-header a {
+    font-size: 21px;
+    color: #fff37d;
+    text-decoration: underline;
+}
+
+.wiki-content p {
+    margin-left: 60px;
+    margin-right: 60px;
+    line-height: 25px;
+    font-size: 20px;
+    color: #fff8bd;
+}
+
+
+
+
+
 
 footer {
     display: flex;
@@ -166,7 +219,7 @@ footer a:hover {
 
 #license {
     color: #fff8bd;
-    padding: 20px;
+    padding: 30px;
     margin-left: 20px;
     margin-right: 20px;
     line-height: 25px;
@@ -176,11 +229,13 @@ footer a:hover {
 
 
 
+
+
 /* Alles in diesem Block gilt NUR für Bildschirme, die schmaler als 800px sind */
 @media screen and (max-width: 1100px) {
     #logoundnav {
     flex-direction: column;
-    padding: 10px;
+    padding: 15px;
     }
     .navlinks, .navrechts {
         gap: 42px;
@@ -188,7 +243,7 @@ footer a:hover {
     footer {
         flex-direction: column;
         height: auto;
-        padding: 10px;
+        padding: 15px;
         gap: 0px;
     }
 }
