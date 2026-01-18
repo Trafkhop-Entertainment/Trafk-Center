@@ -1,179 +1,174 @@
-html {
-  height: 100%;
-  background: white;
-  color: black;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    font-family: 'Noto Sans', sans-serif;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-weight: bold;
 }
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  margin: 0px;
-  padding: 0px;
+    background: #61498a;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 main {
-  flex: 1;
-  text-align: center;
+    flex: 1;
 }
-.logo {
-  max-width: 360px;
-  padding: 1%;
+
+
+
+
+
+#logoundnav {
+    background: #815fb4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.borderbottom {
+    border-bottom: 5px solid #35284b;
+    filter: drop-shadow(0px 0px 0px #513c71)    drop-shadow(0px 3px 5px #251c34);
+}
+#logoundnav img {
+    height: 150px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0px 0px 0px #f3e976)    drop-shadow(0px 0px 25px #fff67c);
 }
 nav {
-  padding: 0.5%;
-  border: 5px solid black;
-  margin-left: 35%;
-  margin-right: 35%;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin: 0% auto;
+    padding: 10px;
+    gap: 56.25px;
 }
 nav a {
-  margin: 2.1%;
-  padding: 1%;
-  color: black;
+    transition: transform 0.1s ease, filter 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 112.5px;
+    height: 112.5px;
+    color: #fff67c;
+    font-size: 25px;
+    text-decoration: none;
+    border: 5px solid #513c71;
+    border-radius: 50%;
+    filter: drop-shadow(0px 0px 0px #35284b)    drop-shadow(0px 3px 5px #251c34);
+    background:#9b72d8;
 }
-section {
-  margin: 10% auto;
-  padding: 20px;
+nav a:hover span {
+    filter: drop-shadow(0px 0px 8px #f3e976)    drop-shadow(0px 0px 10px #fff67c);
 }
-header {
-  text-align: center;
+#news {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+    margin-right: 25px;
+    color: #fff67c;
 }
-header h1{
-  padding-top: 0%;
-  text-decoration-line: none;
-  text-decoration-thickness: 0px;
+newsarea {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
 }
-h1 {
-  text-align: center;
-  padding-top: 2.5%;
-  padding-left: 1%;
-  padding-right:1%;
-  padding-bottom: 0%;
-  text-decoration-line: underline;
-  text-decoration-thickness: 5px;
+.news {
+    background: #815fb4;
+    padding: 20px;
+    width: 550px;
+    height: 275px;
+    margin-bottom: 25px;
+    border: 5px solid #35284b;
+    filter: drop-shadow(0px 0px 0px #35284b)    drop-shadow(0px 3px 5px #251c34);
+    overflow: scroll auto;
+    border-radius: 20px;
+    overflow-x: hidden;
+    scrollbar-width: thin;
 }
-h2 {
-  text-align: center;
-  padding-top: 1.25%;
-  padding-left: 0.5%;
-  padding-right:0.5%;
-  padding-bottom: 0%;
-  text-decoration-line: underline;
-  text-decoration-thickness: 2px;
+.news p {
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 25px;
+    font-size: 20px;
 }
-p {
-  text-align: center;
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-bottom: 0%;
+.news .oldnewsh2 {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 25px;
+    font-size: 21px;
+    text-decoration: underline;
 }
+.news .oldnewsp {
+    padding: 10px;
+}
+.newsh2 {
+    background:#9b72d8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 21px;
+    filter: drop-shadow(0px 0px 0px #513c71)    drop-shadow(0px 3px 5px #251c34);
+    border: 5px solid #513c71;
+    border-radius: 20px;
+    position: relative;
+}
+.newsh2 .newsdate {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+}
+.newsdate p {
+    margin: 0px;
+    padding: 0px;
+    font-size: 15px;
+    text-decoration: underline;
+}
+
 footer {
-  border-top: 5px solid black;
-  padding: 20px 0; /* Oben und unten etwas Platz */
-  text-align: center;
-  margin-top: auto;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-top: 5px solid #35284b;
+    height: 50px;
+    box-shadow: 0px 0px 10px #32127a;
+    gap: 350px;
+    background: #815fb4;
 }
-
-.footer-content {
-  display: flex;
-  flex-direction: column; /* Stapelt Text und Links übereinander */
-  gap: 10px; /* Abstand zwischen Text und Link-Zeile */
-  align-items: center;
+footer a, footer span {
+    color: #fff67c;
+    text-decoration: none;
 }
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Abstand zwischen den einzelnen Links */
+footer:border {
+    filter: drop-shadow(0px 0px 0px #35284b)    drop-shadow(0px 3px 5px #251c34);
 }
-
-.footer-links a {
-  color: black;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-/* Wir entfernen das Padding vom p-Tag im Footer, falls es noch stört */
-footer span {
-  display: inline-block;
+footer a:hover {
+    filter: drop-shadow(0px 0px 8px #f3e976)    drop-shadow(0px 0px 10px #fff67c);
 }
 
 
 
-/*Für die Boxen*/
-.container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 10% 0;
-}
-a.box{
-  text-align: center;
-  border: 5px solid black;
-  margin: 2%;
-  padding: 1.5%;
-  text-decoration: none;
-  color: black;
-  aspect-ratio: 4/3;
-  width: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.container.oldnews {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 0% 0;
-}
-
-.box.oldnews{
-  text-align: center;
-  border: 3px solid black;
-  margin: 1%;
-  padding: 0.5%;
-  text-decoration: none;
-  color: black;
-  aspect-ratio: auto;
-  width: 7%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-
-
-
-/*Für die Box in Website*/
-.modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal:target {
-  display: block;
-}
-.modal-content {
-  background: white;
-  color: black;
-  max-width: 80%;
-  margin: 15% auto;
-  padding: 1.5%;
-  border: 5px solid black;
-  position: relative;
-  z-index: 1001;
-}
-.close {
-  float: right;
-  text-decoration: none;
-  font-size: 28px;
-  color: black;
+/* Alles in diesem Block gilt NUR für Bildschirme, die schmaler als 800px sind */
+@media screen and (max-width: 1100px) {
+    #logoundnav {
+    flex-direction: column;
+    padding: 10px;
+    }
+    .navlinks, .navrechts {
+        gap: 42px;
+    }
+    footer {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 0px;
+    }
 }
