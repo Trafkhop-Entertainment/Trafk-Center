@@ -192,9 +192,8 @@ newsarea {
 
 
 
-
 footer {
-    font-size: 20px;
+    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,8 +201,10 @@ footer {
     border-top: 5px solid #371c67;
     height: 50px;
     box-shadow: 0px -2px 5px #160930;
-    gap: 350px;
+    gap: 12%;
     background: #5a3998;
+    color: #fff287;
+    font-size: 25px;
 }
 footer a {
     color: #fff287;
@@ -211,7 +212,6 @@ footer a {
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
 }
 footer span {
-    color: #fff287;
     text-decoration: none;
 }
 footer a:hover {
@@ -219,12 +219,10 @@ footer a:hover {
 }
 
 #license {
-    color: #fff8bd;
     padding: 30px;
     margin-left: 20px;
     margin-right: 20px;
     line-height: 25px;
-    font-size: 20px;
     text-align: center;
 }
 
