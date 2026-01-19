@@ -53,7 +53,6 @@ nav a {
     height: 112.5px;
     color: #fff287;
     font-size: 25px;
-    text-decoration: none;
     border: 5px solid #603ea3;
     border-radius: 50%;
     box-shadow: 0 0 25px #2e1757;
@@ -233,11 +232,9 @@ footer {
 }
 footer a {
     color: #fff287;
-    text-decoration: none;
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
 }
 footer span {
-    text-decoration: none;
 }
 footer a:hover {
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
