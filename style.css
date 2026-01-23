@@ -44,31 +44,32 @@ nav {
     padding: 15px;
     gap: 56.25px;
 }
-nav a {
-    transition: transform 0.1s ease, filter 0.1s ease;
+nav .header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 112.5px;
     height: 112.5px;
-    color: #fff287;
-    font-size: 25px;
     border: 5px solid #603ea3;
     border-radius: 50%;
-    box-shadow: 0 0 25px #2e1757;
     background: #9069da;
 }
-nav a span {
+nav .header a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff287;
+    font-size: 30px;
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
 }
-nav a:hover span {
+nav .header a:hover{
     filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
 }
 
 
 
 
-#news {
+#news, #wiki {
     margin-top: 50px;
     margin-bottom: 10px;
     margin-left: 25px;
@@ -81,11 +82,33 @@ newsarea {
     justify-content: center;
     align-items: center;
 }
-.news {
+#wiki {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+}
+#wiki .content {
     background: #5a3998;
     padding: 30px;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 25px;
+    max-width: 35%;
+    max-height: 600px;
+    border: 5px solid #371c67;
+    box-shadow: 0px 0px 10px #160930;
+    overflow: scroll auto;
+    border-radius: 20px;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    color: #fff8bd;
+}
+#news .content {
     width: 550px;
     height: 275px;
+    background: #5a3998;
+    padding: 30px;
     margin-bottom: 25px;
     border: 5px solid #371c67;
     box-shadow: 0px 0px 10px #160930;
@@ -95,117 +118,83 @@ newsarea {
     scrollbar-width: thin;
     color: #fff8bd;
 }
-.news p {
-    margin-left: 20px;
-    margin-right: 20px;
-    line-height: 25px;
-    font-size: 20px;
+
+.header-old{
+    font-size: 28px;
 }
-.news .oldnewsh2 {
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    line-height: 25px;
-    font-size: 21px;
-    text-decoration: underline;
+.content-old {
+    font-size: 18px;
 }
-.news .oldnewsp {
-    padding: 15px;
+#news-old {
+    width: 550px;
+    height: 275px;
 }
-.newsh2 {
+
+.header {
     background: #9069da;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    font-size: 21px;
     box-shadow: 0px 0px 10px #2e1757;
     border: 5px solid #603ea3;
     border-radius: 20px;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    z-index: 1;
+}
+.header h2 {
+    font-size: 30px;
     color: #fff37d;
 }
-.newsh2 .newsdate {
+.header .date {
     position: absolute;
     top: 0px;
     right: 5px;
     color: #ffeb3c;
+        z-index: 2;
 }
-.newsdate p {
+.header .date p {
     margin: 0px;
     padding: 0px;
-    font-size: 15px;
-    text-decoration: underline;
-}
-
-
-
-
-
-#wiki {
-
-}
-.wiki-content {
-    margin: 40px;
-    padding-bottom: 30px;
-    background: #5a3998;
-    width: fit-content;
-    height: fit-content;
-    margin-bottom: 25px;
-    border: 5px solid #371c67;
-    box-shadow: 0px 0px 10px #160930;
-    border-radius: 20px;
-    scrollbar-width: thin;
-}
-.wiki-content-header {
-    margin: 30px;
-    padding: 15px;
-    text-align: center;
-    display: inline-flex;
-    flex-wrap: wrap;
-    background: #9069da;
-    box-shadow: 0px 0px 10px #2e1757;
-    border: 5px solid #603ea3;
-    border-radius: 20px;
-}
-.wiki-content-header a {
-    font-size: 21px;
-    color: #fff37d;
-    text-decoration: underline;
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
-
-}
-.wiki-content a p {
-    color: #fff37d;
-    text-decoration: underline;
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
-    padding-bottom:25px;
-}
-.wiki-content-header a:hover, .wiki-content a p:hover {
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
-
-}
-
-.wiki-content h2 {
-    color: #fff37d;
-    font-size: 21px;
-}
-
-.wiki-content p {
-    margin-left: 60px;
-    margin-right: 60px;
-    line-height: 25px;
     font-size: 20px;
-    color: #fff8bd;
+    text-decoration: dotted;
 }
-.wiki-content img {
+
+
+p, footer span {
+    margin-left: 20px; /* News-Standard */
+    margin-right: 20px;
+    line-height: 25px;
+    font-size: 20px; /* Gleiche Größe wie News */
+    color: #fff8bd;
+    text-decoration: none;
+}
+
+
+
+h2 {
+    color: #fff37d;
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+
+a p{
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+
+
+
+
+#wiki img {
 display: flex;
-margin-left: 60px;
-margin-right: 60px;
-height: 150px;
-/*ab hier alt*/
+margin-left: 20px;
+margin-right: 20px;
+max-width: 500px;
 line-height: 25px;
 font-size: 20px;
 color: #fff8bd;
@@ -213,11 +202,19 @@ color: #fff8bd;
 
 
 
+a {
+    color: #fff49e;
+    text-decoration: underline #fff49e;
+    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
+}
+a:hover {
+    color: #fff49e;
+    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
+}
 
 
 
 footer {
-    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,18 +224,9 @@ footer {
     box-shadow: 0px -2px 5px #160930;
     gap: 12%;
     background: #5a3998;
-    color: #fff287;
-    font-size: 25px;
 }
-footer a {
-    color: #fff287;
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
-}
-footer span {
-}
-footer a:hover {
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
-}
+
+
 
 #license {
     padding: 30px;
@@ -246,25 +234,4 @@ footer a:hover {
     margin-right: 20px;
     line-height: 25px;
     text-align: center;
-}
-
-
-
-
-
-/* Alles in diesem Block gilt NUR für Bildschirme, die schmaler als 800px sind */
-@media screen and (max-width: 1100px) {
-    #logoundnav {
-    flex-direction: column;
-    padding: 15px;
-    }
-    .navlinks, .navrechts {
-        gap: 42px;
-    }
-    footer {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
-        gap: 0px;
-    }
 }
