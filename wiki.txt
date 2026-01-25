@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="style.css">
 <meta name="description" content="The Home/Newspage of Trafkhop Entertainment">
 <title>Trafkhop Entertainment™</title>
 </head>
@@ -18,46 +18,44 @@
 <a href="javascript:history.back()" class="back-button">Back</a>
 </div>
 </nav>
-<img src="../../wiki/wiki-logo.png">
+<img src="wiki/wiki-logo.png">
 <nav>
 <div class="header">
-<a href="../../index.html">Home</a>
+<a href="index.html">Home</a>
 </div>
 </nav>
 </section>
 <div class="borderbottom"></div>
 </header>
 
-<main>
 
+
+<main>
 <section id="wiki">
 
 <div class="content">
 <div class="header">
-<h2>Raufbold3b's Scratch Archive</h2>
+<a href="wiki/studio.html"><h2>Trafkhop Entertainment</h2></a>
 </div>
-<p>Raufbold3b's Scratch Archive is a Collection of 15 very old and bad games released by HoppiTex(back then Raufbold3b/Ullidani) on Scratch/Unreleased.</p>
+<p>Everything about the studio can be found here!</p>
 </div>
 <div class="content">
 <div class="header">
-<h2>History</h2>
+    <a href="games.html"><h2>Games</h2></a>
 </div>
-<p>At the time(~2018 - 2024) he did not know how to code and he was also a bit too joung to really learn it properly. So he made the best out of Scratch and other modifications like Turbowarp, Penguinmod und Dinosourmod. Most games were really bad, a few are decent but are really unfinished and bugged. In the glorious year 2025, HoppiTex made the decision to make a Collection of his "best" works(that even he disliked by now) and released that shortly after in Itch.io on 19.12.2025!</p>
+<p>List of all released an announced games!</p>
 </div>
-
 <div class="content">
 <div class="header">
-<h2>Games Included</h2>
+    <a href="wiki/gameideas.html"><h2>Game Ideas</h2></a>
 </div>
-<div class="wiki-content-header">
-    <a href="raufbold3bsscratcharchive/pyleyjump.html"><h2>Pyley Jump</h2></a>
+<p>List of all gameideas that our studio has right now. You can also vote on them to let us know how much you like them!</p>
 </div>
-<img>
-<p></p>
-<img>
+<div class="content">
+<div class="header">
+    <a href="wiki/trafkverse.html"><h2>Trafkverse (Our Fictional Universe)</h2></a>
 </div>
-
-
+</div>
 </section>
 </main>
 
@@ -66,7 +64,6 @@
 <span>© 2026 Trafkhop Entertainment™. All rights reserved.</span>
 <a href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
 </footer>
-
 <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2026/01/17/17/20260117172727-QP6CGKSK.js" defer></script>
 </body>
