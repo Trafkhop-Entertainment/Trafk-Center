@@ -64,7 +64,7 @@
 <div class="wiki-content-header">
 <h2>Gameplayloop</h2>
 </div>
-<iframe src="https://www.youtube.com/embed/LoixJFtuJQ4" title="RSArchive | Pyley Jump" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe id="player" width="100%" height="315" src="https://www.youtube.com/embed/LoixJFtuJQ4?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
 <p>You play as Pyley. You have to jump on the trampoline to avoid falling onto the ground and dying from impact. After a few score point, Pyley will slowly begin to move in the air, because nobody can jump in one spot for a long period of time. Also in this state, bombs will fall from the sky that you have to avoid by moving the trampolin. The more Points you get, the faster the bombs will fall. THe longer you play, the more Pyley will move around.</p>
 <div class="wiki-content-header">
 <h2>Controls</h2>
@@ -93,6 +93,36 @@
 <span>© 2026 Trafkhop Entertainment™. All rights reserved.</span>
 <a href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
 </footer>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerStateChange(event) {
+    // YT.PlayerState.PLAYING (Wert 1) bedeutet das Video läuft
+    if (event.data == YT.PlayerState.PLAYING) {
+      // HIER DEINE SOUNDS STOPPEN
+      console.log("Video spielt - Stoppe Website Sounds");
+      stopAllSiteSounds();
+    }
+  }
+
+  function stopAllSiteSounds() {
+    // Beispiel: Falls du ein <audio> Element hast
+    var allAudios = document.querySelectorAll('audio');
+    allAudios.forEach(function(audio) {
+        audio.pause();
+    });
+    // Falls du eine Library wie Howler.js nutzt: Howler.stop();
+  }
+</script>
 
 <audio id="hintergrundmusik"></audio>
 <audio id="fallsound" src="pyleyjump/fall.wav"></audio>
