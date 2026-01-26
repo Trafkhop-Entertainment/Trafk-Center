@@ -29,7 +29,15 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/trafkhopwebsite.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleyjump.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -49,7 +57,7 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio/Members/hoppitex.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio/members/hoppitex.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
