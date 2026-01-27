@@ -1,47 +1,45 @@
 (function() {
-    // 1. Wert laden (Zentral)
     const getStoredVol = () => localStorage.getItem('site-volume') || "0.5";
 
-    // 2. Audio-Abfangen (Funktioniert immer)
+    // 1. Funktion zum Erzwingen der Lautstärke auf ALLE vorhandenen Audios
+    const applyStorageVolume = () => {
+        const currentVol = parseFloat(getStoredVol());
+        document.querySelectorAll('audio').forEach(audio => {
+            audio.volume = currentVol;
+        });
+
+        // Auch den Slider-Knopf optisch anpassen, falls er schon da ist
+        const slider = document.getElementById('lautstärke');
+        if (slider) {
+            slider.value = getStoredVol();
+        }
+    };
+
+    // 2. GLOBALER INTERCEPTOR: Für Sounds, die erst später erstellt werden
     const originalPlay = Audio.prototype.play;
     Audio.prototype.play = function() {
         this.volume = parseFloat(getStoredVol());
         return originalPlay.apply(this, arguments);
     };
 
-    // 3. Den Slider "jagen"
-    const setupSlider = (slider) => {
-        if (!slider || slider.dataset.initialized) return;
+    // 3. MEHRFACH-CHECK (Sorgt dafür, dass es beim Laden direkt passt)
+    // Sofort ausführen
+    applyStorageVolume();
 
-        // Wert sofort erzwingen
-        slider.value = getStoredVol();
-        slider.dataset.initialized = "true";
+    // Wenn das HTML fertig geladen ist
+    document.addEventListener('DOMContentLoaded', () => {
+        applyStorageVolume();
 
-        // Bei Änderung speichern
-        slider.oninput = (e) => {
-            const val = e.target.value;
-            localStorage.setItem('site-volume', val);
-            // Alle aktiven Sounds auf der aktuellen Seite updaten
-            document.querySelectorAll('audio').forEach(a => a.volume = parseFloat(val));
-        };
-    };
-
-    // 4. MutationObserver: Beobachtet, ob der Slider zum DOM hinzugefügt wird
-    const observer = new MutationObserver((mutations) => {
         const slider = document.getElementById('lautstärke');
         if (slider) {
-            setupSlider(slider);
+            slider.addEventListener('input', (e) => {
+                localStorage.setItem('site-volume', e.target.value);
+                applyStorageVolume(); // Direkt alles updaten
+            });
         }
     });
 
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
+    // Sicherheit für langsame Browser: Nach 500ms nochmal drüberbügeln
+    window.addEventListener('load', applyStorageVolume);
 
-    // 5. Fallback für den Fall, dass er schon da ist
-    window.addEventListener('load', () => {
-        const slider = document.getElementById('lautstärke');
-        if (slider) setupSlider(slider);
-    });
 })();
