@@ -163,7 +163,7 @@ newsarea {
 }
 
 
-p, footer span, pre {
+p, footer span, pre, footer label {
     margin-left: 20px; /* News-Standard */
     margin-right: 20px;
     line-height: 25px;
