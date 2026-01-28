@@ -21,14 +21,6 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/announced.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/trafkhopwebsite.html</loc>
     <priority>0.80</priority>
   </url>
@@ -50,10 +42,6 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio/trafkjabyte-squad.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
