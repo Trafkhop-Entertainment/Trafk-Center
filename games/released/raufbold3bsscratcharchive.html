@@ -7,10 +7,26 @@
 <link rel="stylesheet" href="../../style.css">
 <meta name="description" content="The Home/Newspage of Trafkhop Entertainment">
 <title>Trafkhop Entertainment™</title>
-<audio src="raufbold3bsscratcharchive/RSA%20Intro.mp3" autoplay></audio>
+<audio id="rsalogosound" src="raufbold3bsscratcharchive/RSA%20Intro.mp3"></audio>
 <script src="../../volume.js"></script>
 <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2026/01/17/17/20260117172727-QP6CGKSK.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('#logoundnav img');
+    const introSound = document.getElementById('rsalogosound');
+
+    if (logo && introSound) {
+
+        logo.addEventListener('click', () => {
+            introSound.currentTime = 0;
+            introSound.play().catch(error => {
+                console.log("Wurde vom Browser blockiert. Klicke erst irgendwo auf die Seite.");
+            });
+        });
+    }
+});
+</script>
 </head>
 
 <body>
@@ -19,13 +35,13 @@
 <section id="logoundnav">
 <nav>
 <div class="header">
-<a href="javascript:history.back()" class="back-button">Back</a>
+<a href="javascript:history.back()" class="back-button do">Back</a>
 </div>
 </nav>
-<img src="raufbold3bsscratcharchive/RSA%20Logo.png" alt="Raufbold3b's Scratch Archive">
+<img src="raufbold3bsscratcharchive/RSA%20Logo.png" alt="Raufbold3b's Scratch Archive" class="do">
 <nav>
 <div class="header">
-<a href="../../index.html">Home</a>
+<a href="../../index.html" class="do">Home</a>
 </div>
 </nav>
 </section>
@@ -38,7 +54,7 @@
 
 <div class="content">
 <div class="header">
-    <a href="https://itch.io/c/6715296/raufbold3bs-scratch-archive"><h2>Raufbold3b's Scratch Archive</h2></a>
+    <a class="do" href="https://itch.io/c/6715296/raufbold3bs-scratch-archive"><h2>Raufbold3b's Scratch Archive</h2></a>
 </div>
 <p>Raufbold3b's Scratch Archive is a Collection of 15 very old and bad games released by HoppiTex(back then Raufbold3b/Ullidani) on Scratch/Unreleased.</p>
 </div>
@@ -54,7 +70,7 @@
 <h2>Games Included</h2>
 </div>
 <div class="wiki-content-header">
-    <a href="raufbold3bsscratcharchive/pyleyjump.html"><h2>Pyley Jump</h2></a>
+    <a class="do" href="raufbold3bsscratcharchive/pyleyjump.html"><h2>Pyley Jump</h2></a>
 </div>
 <img>
 <p></p>
@@ -65,9 +81,9 @@
     <div class="header">
         <h2>Collection Links</h2>
     </div>
-    <a href="https://itch.io/c/6715296/raufbold3bs-scratch-archive"><p>Itch.io Collection</p></a>
-    <a href="https://github.com/Trafkhop-Entertainment/RSA"><p>Github Repo</p></a>
-    <a href="https://scratch.mit.edu/users/Raufbold3b/"><p>Original Scratch Account</p></a>
+    <a class="do" href="https://itch.io/c/6715296/raufbold3bs-scratch-archive"><p>Itch.io Collection</p></a>
+    <a class="do" href="https://github.com/Trafkhop-Entertainment/RSA"><p>Github Repo</p></a>
+    <a class="do" href="https://scratch.mit.edu/users/Raufbold3b/"><p>Original Scratch Account</p></a>
 </div>
 
 
@@ -75,12 +91,12 @@
 </main>
 
 <footer>
-<a href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
-<a href="../../LICENSE.html">License</a>
+<a class="do" href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
+<a class="do" href="../../LICENSE.html">License</a>
 <span>© 2026 Trafkhop Entertainment™. All rights reserved.</span>
 <div class="lautstärke">
     <label for="lautstärke">Volume:</label>
-    <input type="range" id="lautstärke" min="0" max="1" step="0.01" value="0.5">
+    <input class="do" type="range" id="lautstärke" min="0" max="1" step="0.01" value="0.5">
 </div>
 </footer>
 

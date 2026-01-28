@@ -1,17 +1,13 @@
-# JetBrains IDEs (WebStorm, PyCharm)
 .idea/
 *.iws
 *.iml
 *.ipr
 
-# Betriebssystem-Müll
 .DS_Store
 thumbs.db
 
-# Node/Build-Müll (falls du später mal Tools nutzt)
 node_modules/
 dist/
 .cache/
 
-# Deine lokale Test-Konfiguration
 .env

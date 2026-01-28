@@ -59,7 +59,6 @@ main {
     position: absolute;
     width: 80px;
     left: 2.5%;
-    /* Sprung-Animation: 1.5 Sekunden pro Sprung */
     animation: jump 1.5s infinite ease-in-out;
 }
 
@@ -72,29 +71,22 @@ main {
 
 @keyframes jump {
     0%, 100% {
-        bottom: 10%;
+        bottom: 75px;
     }
     50% {
-        /* Die Variable erlaubt uns, die Höhe dynamisch zu ändern */
         bottom: var(--jump-height, 300px);
     }
 }
 
-/* Der Salto während des Sprungs */
-/* Nur die Rotation, keine Bewegung */
 @keyframes pyleyFlip {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Diese Klasse wird jetzt nur noch als Marker benutzt,
-   das JS übernimmt das Kombinieren der Animationen */
-.flipping {}
-
-/* Vorbereitung für das Wegschießen */
 #pyleyalive {
     transition: transform 0.8s ease-in, opacity 0.8s ease-in;
 }
+
 
 
 #hintergrundmusik, #jumpsound {
@@ -109,7 +101,6 @@ display: none;
     width: 50px;
     z-index: 1000;
     top: -100px;
-    /* Macht das Wachstum der Explosion flüssig */
     transition: width 0.5s ease-out, top 0.1s linear;
 }
 
@@ -126,8 +117,10 @@ display: none;
     z-index: 9999;
 }
 
-#gameover-overlay img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+#gameover-img {
+    width: 100vw;
+    height: auto;
+    max-width: none !important;
+    object-fit: cover;
+    display: block;
 }

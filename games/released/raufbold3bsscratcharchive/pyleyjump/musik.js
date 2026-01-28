@@ -1,4 +1,3 @@
-// musik.js
 const bgMusic = document.getElementById('hintergrundmusik');
 
 const playlist = [
@@ -21,25 +20,37 @@ function playTrack(index) {
     currentTrack = index;
     bgMusic.src = playlist[currentTrack];
     bgMusic.play().catch(error => {
-        console.log("Warte auf Nutzerinteraktion für Musik...");
+        console.log("Browser blockiert Autoplay. Klicke auf das Logo!");
     });
 }
 
-// Nächster Track wenn einer endet
 bgMusic.addEventListener('ended', () => {
     currentTrack++;
     playTrack(currentTrack);
 });
 
-// Start-Trigger: Musik startet beim ersten Klick auf die Seite
-document.addEventListener('click', () => {
-    if (bgMusic.paused && !bgMusic.src.includes(playlist[currentTrack])) {
-        playTrack(currentTrack);
-    }
-}, { once: true }); // Führt das nur einmal aus
+document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('#logoundnav img');
 
-// Funktion zum Stoppen/Starten (kannst du von anderen Skripten aufrufen)
+    if (logo) {
+        logo.style.cursor = 'pointer';
+
+        logo.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                playTrack(currentTrack);
+                console.log("Musik über Logo gestartet!");
+            } else {
+                bgMusic.pause();
+                console.log("Musik gestoppt.");
+            }
+        });
+    }
+});
+
 function toggleMusic() {
-    if (bgMusic.paused) bgMusic.play();
-    else bgMusic.pause();
+    if (bgMusic.paused) {
+        bgMusic.play();
+    } else {
+        bgMusic.pause();
+    }
 }
