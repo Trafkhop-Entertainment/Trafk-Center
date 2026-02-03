@@ -9,7 +9,7 @@ background: #22215f;
 main {
     background: transparent;
 }
-#wiki {
+.content {
 opacity: 90%;
 }
 #spawn-fenster {

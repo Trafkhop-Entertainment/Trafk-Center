@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const bounds = getMainBounds();
 
         const fenster = document.createElement('img');
-        fenster.src = 'pyleyjump/fenster.png';
+        fenster.src = 'fenster.png';
         fenster.className = 'fenster';
         fenster.alt = 'Fenster';
 

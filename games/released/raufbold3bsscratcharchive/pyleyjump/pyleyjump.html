@@ -4,42 +4,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../../../style.css">
-<link rel="stylesheet" href="pyleyjump/pyleyjump.css">
+<link rel="stylesheet" href="../../../../style.css">
+<link rel="stylesheet" href="pyleyjump.css">
 <meta name="description" content="The Home/Newspage of Trafkhop Entertainment">
 <title>Trafkhop Entertainment™</title>
-<audio id="hintergrundmusik"></audio>
-<audio id="fallsound" src="pyleyjump/fall.wav"></audio>
-<audio id="boomsound" src="pyleyjump/boom.wav"></audio>
-<audio id="gameoversound" src="pyleyjump/gameover.mp3"></audio>
-<script src="pyleyjump/bombe.js"></script>
-<audio id="jumpsound" src="pyleyjump/jump.wav"></audio>
-<script src="pyleyjump/musik.js"></script>
-<script src="pyleyjump/jump.js"></script>
-<script src="pyleyjump/fenster.js"></script>
-<script src="../../../volume.js"></script>
 <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2026/01/17/17/20260117172727-QP6CGKSK.js" defer></script>
+<script src="../../../../volume.js"></script>
+
+<audio id="hintergrundmusik"></audio>
+<audio id="fallsound" src="fall.wav"></audio>
+<audio id="boomsound" src="boom.wav"></audio>
+<audio id="gameoversound" src="gameover.mp3"></audio>
+<audio id="jumpsound" src="jump.wav"></audio>
+<script src="bomb.js"></script>
+<script src="music.js"></script>
+<script src=jump.js></script>
+<script src="fenster.js"></script>
 </head>
 
 <body>
 
 <div id="gameover-overlay">
-        <img src="pyleyjump/gameover.svg" alt="GAME OVER" id="gameover-img">
+        <img src="gameover.svg" alt="GAME OVER" id="gameover-img">
 </div>
 
 <header>
 <section id="logoundnav">
 <nav>
-<div class="header">
-<a class="do" href="javascript:history.back()" class="back-button">Back</a>
-</div>
+<a class="header back-button do" href="javascript:history.back()">
+<span>Back</span>
+</a>
 </nav>
-<img class="do" src="pyleyjump/logo.png" alt="logo">
+<img class="do" src="logo.png" alt="logo">
 <nav>
-<div class="header">
-<a class="do" href="../../../index.html">Home</a>
-</div>
+<a class="header do" href="../../../../index.html">
+<span>Home</span>
+</a>
 </nav>
 </section>
 
@@ -47,14 +48,12 @@
 </header>
 
 <div id="spawn-fenster">
-<img src="pyleyjump/fenster.png" id="erstesfenster" class="fenster" alt="Fenster">
+<img src="fenster.png" id="erstesfenster" class="fenster" alt="Fenster">
 </div>
 
 <main>
 
-<img src="pyleyjump/bomb.svg" id="bombe" style="display:none;" alt="BOMBE!">
-
-<section id="wiki">
+<img src="bomb.svg" id="bombe" style="display:none;" alt="BOMBE!">
 
 <div class="content">
 <div class="header">
@@ -77,7 +76,7 @@
 <div class="wiki-content-header">
 <h2>Gameplayloop</h2>
 </div>
-<iframe src="https://www.youtube.com/embed/LoixJFtuJQ4" title="RSArchive | Pyley Jump" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/Dckxtkc_CJ8" title="RSArchive | Pyley Jump" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <p>You play as Pyley. You have to jump on the trampoline to avoid falling onto the ground and dying from impact. After a few score point, Pyley will slowly begin to move in the air, because nobody can jump in one spot for a long period of time. Also in this state, bombs will fall from the sky that you have to avoid by moving the trampolin. The more Points you get, the faster the bombs will fall. THe longer you play, the more Pyley will move around.</p>
 <div class="wiki-content-header">
 <h2>Controls</h2>
@@ -90,20 +89,18 @@
 </div>
 
 
-</section>
-
 <div id="tramppyley">
-      <img src="pyleyjump/pyleyalive.svg" id="pyleyalive" alt="Pyley">
+      <img src="pyleyalive.svg" id="pyleyalive" alt="Pyley">
 
       <div id="tramp">
-          <img class="do" src="pyleyjump/tramp1.png" id="tramp1" alt="Trampolin">
+          <img class="do" src="tramp1.png" id="tramp1" alt="Trampolin">
       </div>
   </div>
 </main>
 
 <footer>
 <a class="do" href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
-<a class="do" href="../../../LICENSE.html">License</a>
+<a class="do" href="../../../../LICENSE.html">License</a>
 <span>© 2026 Trafkhop Entertainment™. All rights reserved.</span>
 <div class="lautstärke">
     <label for="lautstärke">Volume:</label>

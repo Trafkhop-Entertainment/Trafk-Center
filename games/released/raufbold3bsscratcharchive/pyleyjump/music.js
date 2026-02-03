@@ -1,16 +1,16 @@
 const bgMusic = document.getElementById('hintergrundmusik');
 
 const playlist = [
-    'pyleyjump/menu.mp3',
-    'pyleyjump/menu.mp3',
-    'pyleyjump/menu.mp3',
-    'pyleyjump/menu.mp3',
-    'pyleyjump/1-1.mp3',
-    'pyleyjump/1-2.mp3',
-    'pyleyjump/1-3.mp3',
-    'pyleyjump/2.mp3',
-    'pyleyjump/3.mp3',
-    'pyleyjump/4.mp3'
+    'menu.mp3',
+    'menu.mp3',
+    'menu.mp3',
+    'menu.mp3',
+    '1-1.mp3',
+    '1-2.mp3',
+    '1-3.mp3',
+    '2.mp3',
+    '3.mp3',
+    '4.mp3'
 ];
 
 let currentTrack = 0;

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     const pyley = document.getElementById('pyleyalive');
     const trampImg = document.getElementById('tramp1');
     const jumpSound = document.getElementById('jumpsound');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (pyley) {
         pyley.addEventListener('animationiteration', () => {
-            if (trampImg) trampImg.src = 'pyleyjump/tramp2.png';
+            if (trampImg) trampImg.src = 'tramp2.png';
 
             if (jumpSound && jumpSoundEnabled) {
                 jumpSound.currentTime = 0;
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             setTimeout(() => {
-                if (trampImg) trampImg.src = 'pyleyjump/tramp1.png';
+                if (trampImg) trampImg.src = 'tramp1.png';
             }, 200);
         });
     }

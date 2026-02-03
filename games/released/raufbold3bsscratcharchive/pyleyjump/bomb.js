@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     const bombe = document.getElementById('bombe');
     const fallSound = document.getElementById('fallsound');
     const boomSound = document.getElementById('boomsound');
@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
         bombe.style.height = 'auto';
 
         const boomImages = [
-            'pyleyjump/boom0.svg',
-            'pyleyjump/boom1.svg',
-            'pyleyjump/boom2.svg',
-            'pyleyjump/boom3.svg'
+            'boom0.svg',
+            'boom1.svg',
+            'boom2.svg',
+            'boom3.svg'
         ];
 
         let stage = 0;
