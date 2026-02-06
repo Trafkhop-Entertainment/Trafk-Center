@@ -21,13 +21,13 @@ main {
 
 
 #logoundnav {
-    background: #5a3998; /*standard trafk color if not transparent*/
+    background: #9069da;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .borderbottom {
-    border-bottom: 5px solid #371c67;
+    border-bottom: 5px solid #603ea3;
     box-shadow: 0 2px 5px #160930;
 }
 #logoundnav img.do {
@@ -57,9 +57,9 @@ nav .header {
     justify-content: center;
     width: 112.5px;
     height: 112.5px;
-    border: 5px solid #603ea3;
+    border: 5px solid #371c67;
     border-radius: 50%;
-    background: #9069da;
+    background: #5a3998;
 }
 nav .header.do {
     display: inline-flex;
@@ -93,7 +93,7 @@ main {
     margin-right: 25px;
 }
 .content{
-    background: #5a3998;
+    background: #5a3998; /*standard trafk color if not transparent*/
     padding: 30px;
     width: fit-content;
     height: fit-content;
@@ -262,11 +262,11 @@ footer {
     align-items: center;
     justify-content: center;
     width: 100%;
-    border-top: 5px solid #371c67;
+    border-top: 5px solid #603ea3;
     height: 50px;
     box-shadow: 0px -2px 5px #160930;
     gap: 12%;
-    background: #5a3998;
+    background: #9069da;
 }
 
 
