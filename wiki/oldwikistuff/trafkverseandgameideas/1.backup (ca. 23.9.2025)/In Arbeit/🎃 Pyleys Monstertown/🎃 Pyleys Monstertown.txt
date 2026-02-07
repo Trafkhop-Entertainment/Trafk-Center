@@ -1,0 +1,166 @@
+Neue Idee fürs Spiel: Das ist die Backstory wie aus Gruhor Musihor wurde. Man muss die ganzen Wesen verbannen, Weggsperren.
+
+Alles Nach dieser Nachricht, bitte neumachen!
+
+
+
+
+Main Character:
+Ee ist natürlich nicht Pyley, es ist ein unbedeutender Nebencharacter, der in Gruhor wohnt und Pyley und Filan haben dievMonster mit ihrer Präsens verärgert und nin wüten sie in der Nacht im Dorf...
+
+
+
+
+📖 Story
+
+Pyley kehrt spät abends von einer Halloween-Party zurück – doch in seinem Heimatdorf wartet das Grauen: Monster greifen die Stadt an! Sie haben ein Loch in den nahegelegenen Berg gesprengt und strömen nun in die Welt hinaus. Die Dorfbewohner sind in Gefahr.
+
+Entschlossen, seine Heimat zu retten, beginnt Pyley damit, Materialien zu sammeln, Waffen zu bauen und die Einwohner zu beschützen. Nach drei Tagen entdeckt er ein altes Geheimnis: eine heilige Atombombe – die einzige Chance, die Monster endgültig zu vernichten.
+
+
+
+
+🔚 Ziel
+
+Hauptziel: Baue innerhalb von 30 Nächten eine heilige Atombombe und wirf sie in das Loch der Monsterhöhle.
+
+Erfolg: Das Dorf wird gerettet. Der Berg ist zerstört, zurück bleibt ein tiefer Krater.
+
+Scheitern: Die Monster übernehmen die Welt. Die Menschheit wird ausgelöscht. Satelliten stürzen ab – die Erde wird zur postapokalyptischen Ruine.
+
+
+
+
+🎮 Spielprinzip
+
+🌒 Nacht für Nacht
+Jede Nacht beginnt mit dem Sonnenuntergang und endet bei Sonnenaufgang.
+Monster erscheinen in Wellen. Die Anzahl und Stärke nimmt mit jeder Nacht zu.
+Bei Tagesanbruch ziehen sich die Monster in ihre Höhle zurück.
+
+🔁 Loop-Struktur
+Ressourcen sammeln
+Bewohner beschützen
+Crafting neuer Waffen und Geräte
+Vorbereitung auf stärkere Monsterwellen
+
+💣 Finale
+Sobald alle nötigen Materialien gesammelt wurden, kann die heilige Atombombe gebaut und eingesetzt werden.
+
+
+
+
+🌍 Spielwelt
+
+Die Welt ist in vier Hauptsektoren unterteilt:
+
+Dorf	8–11 Häuser, Eisentor, Felder, Blumen, Getreide, Gras.
+
+Wald	5 große Bäume, 11 gestapelte Baumstämme, Axt in Holzscheibe, Wildblumen.
+
+Höhle	¼ im Berg, schräg ansteigend, oben ein kleines Sonnenloch, unten großer Eingang.
+
+Labor	Verlassen, mit Theken, Braustand, Crafting-Platz, Mikrowelle und Lagerflächen.
+
+🗺️ Umgebungslage
+
+Wald: links
+Dorf: vorne
+Höhle: rechts
+Labor: hinten
+
+
+
+
+🎨 Look & Stil
+
+Stil: Cartoon-inspirierter 3D-Look
+Ästhetik: Knet-/Tonoptik (Clay-Stil)
+Atmosphäre: Humorvoller Grusel trifft auf düstere Endzeit-Stimmung
+
+
+
+
+🧪 Crafting & Waffen
+
+Alle Waffen und Ausrüstung werden am Crafting-Tisch im Labor aus gesammelten Materialien hergestellt.
+
+🧷 Startwaffen
+
+Jagdgewehr
+Messer
+Streichholzverpackung
+
+🛠️ Craftbare Waffen
+
+Waffe&Effekt:
+
+Holzpflöcke	Wirksam gegen Vampire & Werwölfe
+Knoblauch	Vertreibt Vampire
+Kruzifix	Exorziert Geister (mächtige Spezialwaffe)
+Axt	Effektiv gegen Zombies
+Anti-Werwolf-Spray	Verwandelt Werwölfe in harmlose Hunde
+Flammenwerfer	Verbrennt Mumien & deren Papierhüllen
+Heilige Atombombe	Endgame-Item zum Besiegen aller Monster
+
+
+🧟 Mumien-Mutation-Mechanik
+
+Mumie → Zombie-Mumie
+Erste Verbrennung (Papier): Mumie wird zur Zombie-Mumie
+Zweite Verbrennung: endgültige Vernichtung
+Geht zur Toilette → „reset“ → neue Mumie erscheint
+
+
+📦 Materialien
+
+Material	Verwendung
+
+Holz	Basis-Baustoff
+Stein	Struktur, Waffen
+Eisen	Werkzeuge, Waffen
+Schießpulver	Munition
+Atomkern	Für heilige Atombombe
+Flint	Feuerquellen
+Kohle	Energiequelle
+Wasser	Brauvorgänge, Kühlung
+Glas	Geräte, Laborutensilien
+Sand	Herstellung von Glas
+Heiliges Wasser	Waffe gegen Geister/Vampire
+
+
+
+
+🧾 HUD & Anzeigen
+
+Element	Position	Beschreibung
+
+❤️ Leben	Oben links	10/10 Herzen
+⏱️ Tageszeit	Oben Mitte	Uhrzeit & aktueller Tag
+🧍‍♂️ Bewohner	Oben rechts	Anzahl lebender NPCs
+📦 Materialien	Unten rechts	Leiste mit gesammelten Ressourcen
+🧰 Gegenstände	Unten links	Aktive Items und Waffen
+
+
+
+
+🎮 Steuerung
+
+🖱️ Maus
+Bewegung: Mauszeiger → je weiter weg, desto schneller
+Interaktion: Rechte Maustaste
+Angriff: Linke Maustaste
+Pause: Mittlere Maustaste
+
+⌨️ Tastatur
+Pfeiltasten: Bewegung
+C: Waffe benutzen
+X: Interaktion
+Enter: Pause
+
+🕹️ Gamepad
+Linker Stick: Bewegung
+A/B/X/Y: Interagieren
+Start/Select: Pause
+L/R: Waffe wechseln
+ZR/ZL: Waffe benutzen

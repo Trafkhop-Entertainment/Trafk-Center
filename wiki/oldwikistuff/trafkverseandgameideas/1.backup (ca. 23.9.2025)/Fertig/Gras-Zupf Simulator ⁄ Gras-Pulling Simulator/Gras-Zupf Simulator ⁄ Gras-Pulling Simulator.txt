@@ -1,0 +1,391 @@
+Gras-Zupf Simulator / Grass-Pulling Simulator
+
+
+
+
+Grafik: 3d, cartoony, bunt, Outlines(oder nur die Level selber sind 3D, der rest sind sprites[für testen mal])
+
+
+
+
+Sounddesign:
+Eher Frühlich. Jahreszeiten:
+Frühling: Glockenspiel/Blockflöte Sommer: Kalimba/Maraccas/Ukulele Herbst: Cello/ Oboe/Harfenzupfer Winter: Klavier/Cello/Chor/Schellen
+Immer mit dazugehörigem Jahreszeiten Hintergrundgeräuschen.
+Bossfights: mit etwas extra Pepp: 1.:Claves 2.:Bongos/Kazoo 3.:Tuba 4.:E-Guitar
+
+
+
+
+Movement:
+WASD/mauszeiger gehen
+alt/rechte maustaste gras zupfen
+leertaste/linke maustaste tool benutzen
+tab/mittelclick und mausrad tool wechseln(in so nem auswahlsrad)
+R ist Rutschen, er sitzt sich auf den Boden/luft und beginnt von z.B. Bergen, boden herunterzurutschen!
+Man kann gehen, gras zupfen.
+
+
+
+
+
+Content:
+
+Es gibt Upgrades: (6 Upgrades pro Upgrade) (Stufen = +25-300%) {1000 $+1000*(0.35*Upgrade-Stufe)}
+Speed
+Zupf reichweite
+Tool Speed
+
+Es gibt Tools:
+Sense  1500 $  0.5 nutz 0.25 cooldown
+Staubsauger (alt halten:zum Wolken einsaugen, alt drücken: man kann mit einem Luftstoß sich in eine Richtung schießen)  600$ max 2.5s nutz 5s cooldown
+Schleuder (um Feinde zu eliminieren)  900$ min 0.05s aim 0.05s cooldown
+Schaufel (für Knochen und Sandburgen)  1900$ 0.2s grab 0.25s cooldown
+Kescher (Schmetterlinge und Heuschrecken)  2100$ 0.25 nutz 0.1 cooldown
+Feder (Springen, gibt einen kleinen Boost in der Luft)  300$  jump height=x*speed/5  0.05s cooldown
+Rechen (blatt)  600$ 0.15 use 0.1 cooldown
+Marmeladen Glas (Schmetterling und Heuschrecken  aufbewahrung)(Krabben und Vögel gehen auch, aber die sind viel schwerer zu kriegen. man muss sie bewusstlos machen)  3000$ 0.1 use 0.5 cooldown
+Maulwurf (grabt gras aus)  15800$  passic-aktiv
+zupf-reichweite=playerzupfreichweite(standart)/1*zupfreichweite
+Angel  1800$ 0.2 use, wait, catch, 0.1 cooldown
+catch: Balken unten mitte. roter bereich der sich bewegt. man muss mit a d den großen Balken neigen, sodass das rote in der Mitte bleibt.
+
+Collectables:
+Knochen
+Blatt
+Osterei
+Stein (Schleuder munni)
+Muschel
+Fisch
+Schmetterling
+Grille/Heuschrecke
+Krabbe
+Vogel
+Stinkwanzen
+Alien-Käfer
+
+Skins: (300$ pro Skin)
+Skins sind kombinierbar um viel variation zu erzeugen!
+z.B.
+Error Eyes
+Tie
+
+Backgrounds: (600$ pro Skin)
+Die sieht man im Menü und man kann sie downloaden:
+z.B.
+Error
+Himmel
+Herbst
+
+Wenn man alle Collectables von einer art bekommen hat bekommt man:
+Skin und background
+Wenn man ALLE Collectables gesamment hat bekommt man:
+100% skin & background
+
+Im shop kann man mit Schilling $ Kaufen:
+Skins
+Backgrounds
+Tools
+Upgrades
+
+
+
+
+Story:
+Alienkäfer kommen mit Asteroid auf die Erde und infeszieren viel gras, dass mutiert.
+Grasi muss alles mutierte Gras zupfen, denn sonst wird das normale Gras austerben.
+Das ist ein Problem, da man das mutierte Gras nicht essen kann
+und zusätzlich tötet es in der nähe stehendes Gras ab!
+Wenn er nicht schnell die Gefahr beseitigt, dann könnte die gesamte Welt untergehen!
+
+
+
+
+Gameplayloop:
+Man erkundet "große Level mit nicer Umgebung mit manchmal vielen Bergen oder Meeren in der Suche nach dem alien Gras. Man kann auch sammelbare gegenstände finden.
+Es gibt Leitern Brücken und sonstiges um an manche Stellen zu kommen.
+Natürlich gibt es auch ein bisschen parkour, aber dass geht nur mit der Feder, da der kleine Grasi nicht von selber springen kann.
+Wenn das ganze Infeszierte Gras entfernt wurde, erscheint ein Großes, Farbenwächselndes Gras, dass man zupfen muss, um das Level zu beenden.
+Wenn man recht lange braucht, bemerken die Alien-Käfer, dass Grasi das Mutierte Gras entfernt und sie werden versuchen, ihn aufzuhalten indem sie das andere, normale Gras, auch mutieren lassen.
+Wenn das ganze normale Gras mutiert ist, verliert man und muss das Level neu starten.
+Da muss man aber wirklich lange brauchen, auch wenn man das Level ausführlich erkundet sollte noch ein wenig normales Gras übrig bleiben.
+Nachdem man ein Level beendet hat, bekommt man, je nach dem wie viel man in dem Level gesammelt hat,
+unterschiedlich viele Schillinge.
+z.B. Alles Gras allein bringt 300. Wenn man alles im Level hat(Gegner, Sammelobjekte) bekommt man 600!
+
+
+
+
+Welten und deren Features:
+
+Overworld: Pyleys Vorgarten vorm Haus(checken alle ned aber egal wird eh ned erklährt #hiddenlore)
+Alle 4 Jahreszeiten in nem rechteck(oben links 1. unten link 2. unten recht 3. oben links 4.)
+So ähnlich wie in nsmbds.
+
+Bevor man ein Level betritt, warnt es einen, wenn man ein Tool nicht besitzt, dass man braucht oder man es haben sollte.
+Wenn man das nächste Level auf der Karte auswählt, warnt es einen und gibt die Möglichkeit direkt zum Shop zu gehen.
+
+Es gibt viele Level die in je einer der 4 Jahreszeiten Spielt.
+Das generelle Gameplay sieht so aus:
+
+Wass es immer in Levels gibt:
+Fische
+Knochen
+Gras
+Großes gras (braucht 10 hits oder 1 mit Frucht im Bauch)
+steine (munition)
+Alien-Käfer(kommen, wenn man recht lange braucht[Länge hängt davon ab, wie weit man im Spiel schjon ist] und infeszieren normales Gras, sodass mehr nachwächst! Sie attakieren auch manchmal.)
+
+Frühling: (24 Level)
+Ostereier (im Oster Level)
+Regen (kommt von den Wolken. Regen lässt gras wachsen. wenn regen 5mal auf ein gras fällt wird es zum großen gras.)
+Hecken mit Stinkwanzen (stinkwanzen kacken und dadurch entsteht gras. Sie greifen auch einen an)
+Bäume mit Blüten (keine Frucht!!!)
+Schmetterlinge
+
+Sommer: (19 Level)
+Heuschrecken
+Sandburgen
+Mit Boot fahren (man kann da angeln und schnell ans andere Ufer)
+tauchen (mit taucherkostüm kann man dass)
+muscheln( sind unterwasser)
+Bäume mit Früchten!!!
+Krabben(die zwicken dich ganz doll)
+
+Herbst: (29 Level)
+Löcher (mit Feder drüberspringen, sonst bist du weg)
+Blätterhaufen (Blätter zusammenrächen. man kann reinspringen und die kattapultieren einen dann in die Luft)
+Wind (schiebt einen in ne Richtung zum Beispiel Löcher)
+Vögel (gegner)(visieren einen an und pecken dich an wenn du zu langsam bist)
+kleine Hütten, wo man sich vom Wind und von den Vögeln schützen kann.
+
+Winter: (24 Level)
+Eisfischen (mit schaufel Loch in zugefrorenen Teich graben)
+Schneewände die man mit der Schaufel abbauen muss
+Schwarze Version vom Spieler der einen sucht und ihn tötet(man muss sich verstecken)
+man kann sich in Igluus und hinter Schnee/Wänden verstecken
+Schneewolken mit Eiszapfen (Die Tun Weh)(Staubseuger!!!)
+Bäume ohne Blätter (nach längerer Zeit formen sich Eiszapfen)
+Schneemann bauen (is witzig und man kanns als versteck benutzen)
+Laboratoren: Weiße Untergrundanlagen, die im Schnee versteckt sind und der einzige Weg zum Hauptquatier sind. Sie sind so eine Art Tunnel mit Labor.
+Laser Turrets: Sie sind in den Laboratoren und die schießen dich ab.
+Glas-Laborgläser mit schwarzer halb-Flüssigkeit: Die ist tötlich und rinnt langsam(sehr langsam, langsamer als Lava)
+Alien-Käger Brutkasten: In diesen Laboratoren werden die Alien Käfer erschaffen, man muss alle töten und die Brutkasten zerstören.
+Hauptquatier: Wo die letzten 3 Level stattfinden.
+
+
+
+
+Bossfights: (1 Boss Level pro Jahreszeit)
+
+Frühling:
+Riesen Mistkäfer der groß scheißt und großes Gras Spawnt.
+Es geht langsam herum, und macht manchmal eine Stampfattacke aus.
+Dabei lehnt er sich in eine Richtung, hebt die andere Seite in die Luft und lasst sie auf den Boden krachen.
+Man muss ihn von unten Abschießen, wenn er die Stampfattacke macht.
+In der ersten Fase macht er nichts besonderes
+In der 2. Phase(nach 2 Treffern) dreht er sich für kurze Zeit herum und ist dabei recht schnell.
+In der 3. Phase(nach 5 Treffern) Rennt er einem direkt nach für 3 Sekunden wie ein Bulle)
+In der 4. Phase(nach 8 Treffern) Fliegt er Kopfüber in der Luft und kracht auf einen Hinab.
+Nach 10 Treffern ist er tot.
+
+Sommer:
+Große Krabbe.
+Geht mittel schnell herum, bleibt stehen und schnippelt mit seinen Klauen nach dir.
+1.Phase: nix
+2.Phase: Zickzack gehen (nach 2 treffern)
+3.phase: Mit Klauen auf den Boden hauen und erzeugt schockwellen.(nach 5 treffern)
+4.phase: Beugt sich nach vorne auf seine Klauen und schiebt sich mit denen mit einem Salto nach vorne und klatscht auf den Boden.(nach 8 treffern)
+Wieder nach 10 Treffern Tod.
+
+Herbst:
+Vogel.
+Mit seinen großen Flügeln erzeugt er starke Winde mit denen er dich in Löcher Jagen will.
+1.Phase: nix
+2.Phase: Versucht dich mit seinen Füßen zu ergreifen und dich in Löcher zu werfen.
+3.Phase: Rammt mit seinem Schnabel un den Boden und versucht dich aufzuspießen.
+4.Phase: Fliegt nach unten fliegt bissl über den Boden und versucht dich aufzuessen.
+Nach 10 Treffern Tod.
+
+Winter:
+Schlauerer schwarze Version von Spieler.(3. Sarglos Kommandant)
+Er versucht dich abzuschießen und du musst dich verstecken.
+Das Schlachtfeld schaut so aus:
+Nachdem man durch das Hauptquatier gegangen ist und die Alien Käfer und das Gras ausgelöscht hat, ist ein Ausgang, der nach draußen in einen langen und nicht sehr hohen Garten führt, der von großen Bergen umgeben ist.
+Es geht von oben nach unten so: Boden Wand Boden Wand Boden. Es ist nicht sehr hoch.
+Es ist sehr breit. Es gibt manchmal längere Unterbrechungen bei den Wänden.
+Man kann ihn nur treffen, wenn du es schaffst auf seine Seite zu kommen(die obere Seite, der Spiele ist auf der unteren Seite)
+1.Phase: nix
+2.Phase: Schießt Eiszapfen von Bäumen auf dich herab.
+3.Phase: Schmeißt eine schwarze, halbflüssige Substanz nach dir(ist tötlich)
+4.Phase: Stellt Turrets auf, die Laser nach dir schießen. Man kann sie ausschalten, indem man in das Laserloch mit der Steinschleuder schießt.
+5. Phase: Sendet UFOs nach dir die manchmal über dir fliegen und einen großen Ball der mysteriösen, schwarzen Materie auf dich hinabschießen. Man kann sie besiegen, indem man erst mit dem Staubsauger das Ufo anzieht und dann mit der Sense das Glas des UFOs einschlägt. Sie fliegen dann weg.
+6.  Alles außer der schwarze Typ zieht sich zurück. Der Typ panikt und zündet eine Bombe die in 10 Sekunden in die Luft geht. Man muss sie, wenn er sie nach dir schmeißt, zurückwerfen. Das macht man indem Man die Bombe mit der Schaufel zurückschlägt.
+Der Typ explodiert und das Spiel ist aus.
+
+
+
+
+Schwierigkeitsgrad:
+Es wird von Levl zu Level und Jahreszeit pro Jahreszeit schwerer:
+Frühling: Anfang ist nicht viel los, nur chilliges Erkunden. Am Ende kommen viele Wolken, Stinkwanzen und die Aline-Käfer kommen ein bisschen Früher.
+Sommer: Anfang recht chillig, ein paar Krabben hier, ein bisschen Bootln da. Ende: Viele Krabben, viel Gras Unterwasser, Käfer kommen schon ein wenig Früher.
+Herbst: Anfang halbwegs chillig, ein bisschen Wind hier, ein Loch da. Ende: Starker Wind, Parkour auf Berge mit vielen Löchern, Vögel verfolgen dich, Käfer kommen schon Früher.
+Winter: Anfang geht, Ein Soldat hier, Ein Eiszapfen da. Ende: Ne halbe Armee, viele Eiszapfen. Käfer kommen recht Früh.
+
+
+
+
+Cutscenes:
+
+Intro:
+Man sieht Weltraum mit Erde und Asteroid.
+Zoom auf Asteroid und man sieht die Alien-Käfer.
+Rauszoomen und Asteroid kracht auf Erde.
+Transition zum Krater.
+Die Aliens krabbeln aus dem Asteroidenkrümeln heraus.
+Sie hegen auf das Gras zu und knabbern es an.
+Sie gehen und suchen nach mehr Gras.
+Das angeknabberte Gras Mutiert zu Größerem Gras mit komischen Grasartigen Tentakeln die nichts machen am Fuße des Grases.
+Das normale Gras in kleinem Umkreis wird Weis und stirbt ab.
+Timeskip..
+Grasi grast durch das Gras und entdeckt das mutierte Gras.
+Voller entsetzen reißt er es aus und das abgestorbene Gras erholt sich langsam wieder.
+Damit ist es ihm klat, er wird das ganze komische Gras ausreißen.
+Schwarzblende.
+Transition zur Worldmap
+
+Ende:
+Nachdem die Bombe in der nähe des schwarzem Spieler explodiert ist, sagt er ein paar letzte Worte:
+Boss, ich habe sie entteuscht... Diese Kreatur ist zu gefährlich, bricht die Mission ab..
+Sarglos Kommandant Nummer 3: Ende...
+Grasi hat es geschafft, das Mutierte Gras ist weg.
+Fröhlich geht Grasi zurück zu seinem Blumentopf, das sein zuhause ist, und beginnt fernzusehen.
+
+Credits: kommt dann hald...
+
+
+
+
+Credits Gameplay:
+
+Man ist auf einer viereckigen Fläche und der Text erscheint als Gras auf dem Boden.
+Dieser verschwindet nach ein paar Sekunden und ein neuer Erschient.
+Man muss so viel Gras wegzupfen wie möglich.
+Es gibt 4 Flächen in den Weltenfarben.
+Frühling: Chillig
+Sommer: Krabben halten einen auf.
+Herbst: Vögel halten einen auf und es geht Wind mit Löchern.
+Winter: Rutschig, Eiszapfen fallen von den Wolken.
+Fade to Black
+Danke fürs Spielen! :)
+
+
+
+
+Level Editor.
+Das Spiel wird hoffentlich einen Leveleditor haben.
+Das heißt man wird eigene Level erstellen können.
+Es wird im Spiel die möglichkeit geboten, Level herunterladen zu können.
+(keine Ahnung ob ich das hinbekomme...)
+
+
+
+
+Multiplayer:
+Das Spiel könnte einen Koop Modus haben, wo bis zu 6 Spieler gleichzeitig entweder den Story Modus, oder Level(normale/custom) spielen können.
+Das wird Lokel und Online mit Freunden oder mit Randoms gehen.
+Wenn ein custom Level ausgewählt wird, wird es sofort heruntergeladen.(Funktioniert hoffentlich besser als in Stick Fight The Game...)
+Multiplayer Battle Modes:
+Wer an schnellsten Level cleared
+Free for all
+Wellenüberleben
+Parkour Rennen
+Wettschießen
+In Löcher saugen
+(keine Ahnung ob ich das hinbekomme...)
+
+
+
+
+Speichersystem:
+Speichert immer alles.
+Sobald man was hat ist es gespeichert!
+
+
+
+
+Tutorial:
+Gibts ned.
+
+
+
+
+User Interface:
+Look: Cartoony mit schwarzem Rand(so wie alles andere hald auch...)
+
+Im Spiel:
+Oben Links: Gras gezupft im Level und verbleibendes Gras z.B.  15/300     Gras
+Oben Rechts erscheint wenn man zu lange braucht ja die Käfer, dann erscheint auch noch ein länglicher Balken der anzeigt, wie viel vom Level schon infesziert ist.
+
+Menu:
+Mitte mitte Oben : Logo
+MItte Mitte: Weiterspielen Knapf
+MItte unten: Darunter ein Custom Level auswahlknopf
+Mitte unten unten?: Level Editor(falls eingebaut)
+Mitte unten links: Einstellungen
+Mitte unten unten links: Spiel Beenden
+MItten unten rechts: Shop
+mitte unten unten rechts: Statistiken(Spielzeit, Level, Collectables, Beste Level Zeit,...)
+
+Shop:
+mitte links links: Upgrades
+mitte links: tools
+mitte: Custom Maps
+mitte rechts: skins
+mitte rechts rechts: backgrounds
+
+Options:
+mitte links: Grafik
+mitte: Audio
+mitte rechts: Tastenbelegung
+
+Custom Levels :
+Zeigt alle custom Levels an.
+Man muss nur draufdrücken.
+
+Level Editor:
+mitte links: create Level
+mitte: Edit Level
+mitte rechts: delete Level
+unten mitte links: Upload custom Level
+unten mitte Rechts: Erase uploaded Level
+
+
+
+
+Update Ideen:
+
+2. Spiel als Update/DLC wo Grasi die restliche Organisation Ausschaltet und die anderen Planeten rettet.
+Intro:
+Nach einer viertel Stunde, wechselt der Fehrnseher plötzlich zu einem Programm.
+Der Fernseher muss außversehen eine Frequenz eingefangen haben und zwar die von der Raumschiff Überwachungskamera wo er alles mitkriegt.
+Der Sarglos Anführer spricht mit den 2 Kommandanten über die Niederlage.
+Der Anführer beschwer sich über die Niederlage des 3. Kommandanten.
+Nicht einmal seine Soldaten haben es geschafft, diese Weise, Bohnenartige Kreatur zu töten.
+Der Anführer sagt wiederwillig, dass sie die Mission Erde abbrechen und sie andere Planeten zur Eroberung suchen sollen.
+Er schickt sie weg und der Anführen setzt sich auf seinen Thron.
+Entsetzt schaut er sich alles an.
+Schwarzblende.
+Nachdem er sich alles angeschaut hat, beginnt er einen Weg zu suchen, um diese Bösewichte aufzuhalten.
+Er findet in der nähe seines Hauses ein Ufo und repariert es.
+Dann begibt er sich in den Weltraum auf der Suche nach den Missetätern.
+In dem "gebortem" UFO erscheinen auf einem Display, Planeten, die zur Eroberung ausgewählt wurden.
+Mit diesen Informationen begiebt sich Grasi erneut auf Welt(en) Rettung.
+
+
+
+
+
+
+Grafisches: sehe im Ordner!
