@@ -20,11 +20,20 @@
 const params = new URLSearchParams(window.location.search);
 const file = params.get("file");
 
-fetch(file)
-  .then(res => res.text())
-  .then(md => {
-      document.getElementById("mdcontent").innerHTML = marked.parse(md);
-  });
+if (file) {
+    // encodeURI sorgt dafür, dass Leerzeichen zu %20 werden
+    fetch(encodeURI(file))
+      .then(res => {
+          if (!res.ok) throw new Error("Datei nicht gefunden");
+          return res.text();
+      })
+      .then(md => {
+          document.getElementById("mdcontent").innerHTML = marked.parse(md);
+      })
+      .catch(err => {
+          document.getElementById("mdcontent").innerHTML = "Fehler: " + err.message;
+      });
+}
 </script>
 </body>
 </html>
