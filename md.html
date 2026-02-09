@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Markdown View</title>
-
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-
 <body>
 <main>
     <div class="content">
@@ -17,23 +14,23 @@
 </main>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const file = params.get("file");
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
 
-if (file) {
-    // encodeURI sorgt dafür, dass Leerzeichen zu %20 werden
-    fetch(encodeURI(file))
-      .then(res => {
-          if (!res.ok) throw new Error("Datei nicht gefunden");
-          return res.text();
-      })
-      .then(md => {
-          document.getElementById("mdcontent").innerHTML = marked.parse(md);
-      })
-      .catch(err => {
-          document.getElementById("mdcontent").innerHTML = "Fehler: " + err.message;
-      });
-}
+    if (file) {
+        // encodeURI fix für Leerzeichen in "newest notes" und "RTS Game.md"
+        fetch(encodeURI(file))
+            .then(res => {
+                if (!res.ok) throw new Error("Datei nicht gefunden");
+                return res.text();
+            })
+            .then(md => {
+                document.getElementById("mdcontent").innerHTML = marked.parse(md);
+            })
+            .catch(err => {
+                document.getElementById("mdcontent").innerHTML = "Fehler beim Laden der Notiz: " + err.message;
+            });
+    }
 </script>
 </body>
 </html>
