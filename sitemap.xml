@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/index.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -9,15 +9,271 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/LICENSE.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/index.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/links.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/news.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/LICENSE.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/md.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/oldwikistuff.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio/members/Tetrabox.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio/members/hoppitex.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Musihor_ The new Era oder so (schnappsidee).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Pyley and Filan 2_ Fragments of the Past.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Pyley and Filan_ Legend of the 12 Realms (nichts Ü.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Pyley and Filan 3_ Fragments of Creation.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Hinterblasen Erforscher.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Pyley_s Robo-Rescue.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Gras-Zupf Simulator(Fertig).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Pyley Sports (schnappsidee) (nichts übersetzt).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/🏁🏎️🚤🛩️Pyley Racing (schnappsidee) (nichts über.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Pyley_s Blocky Quest (schnappsidee).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Pyley_s Collection (ALTE IDEE, DAS IST NIX MEHR).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Pyley Railshooter Game (schnappsidee).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Pyley_s Marbleblast (schnappsidee) (In Gamenight i.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Animal Crossing x Sims Game (schnappsidee).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Pyley_s Gamenight (schnappsidee) (nichts übersetzt.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Spieleideen/Schnappsideen/Tracor_s Ranch_Bauernhof & co. (schnappsidee).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Checkliste.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Welten Lore/Beziehungs- und (Ver)Handelsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Welten Lore/Gesetzbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Welten Lore/Personenbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Welten Lore/Religionsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Welten Lore/Geschichtsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Welten Lore/Kartenbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Kochbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Spielbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Freizeitbeschäftigungsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Berufsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Musikbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Kulturbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Malereibuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Bauwerksbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Handwerksbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Kultur Lore/Sportbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Kampfbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Zauberbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Scheibbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Naturgesetzbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Anbaubuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Sinnesbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Alfönisßes Wörterbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Stein- und Naturverhaltungsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Rechnungsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Naturkraftgesetzbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Zauberspruchbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Gesundheitsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Alfönisßes Sßbroßbuaß.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Naturreaktionsbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Lebensbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Bücherbuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Brauereibuch.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/2.backup (ca. 6.2.2026)/2.backup/Lore/Informations Lore/Zusammenfassung der 14 Unwichtigen Bücher_.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/1.backup (ca. 23.9.2025)/1.backup.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/backups/asset backup (ca. evrything not in RSA until 6.2.2026)/asset backup.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/newest notes/checkliste.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/newest notes/newest notes.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/newest notes/gameideas/good/RTS Game.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -29,211 +285,63 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleyjump.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleyhunt/pyleyhunt.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/die2cops/die2cops.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/autov2/autov2.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/sonnenpflicht/sonnenpflicht.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/studio/members/hoppitex.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleyfang/pyleyfang.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/musihor-thenewera.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/flappypyley/flappypyley.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/grasspullingsimulator.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/retroklavier/retroklavier.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/hinterblasenerforscher.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/derapfelundderkuerbis/derapfelundderkuerbis.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/pyleyandfilan1-legendofthe13realms.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/grasiv064/grasiv064.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/pyleyandfilan2-fragmentofthepast.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleyrun/pyleyrun.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/pyleyandfilan3-fragmentofcreation.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/mayrorpg/mayrorpg.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/good/pyleyandfilan0-roborescue.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleyjump/pyleyjump.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/pyleysgamenight.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/grasiv143/grasiv143.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/pyleysports.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/pyleysadventure/pyleysadventure.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/pyleysblockyqust.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/pyleyracing.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/pyleyrailshootergame.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/tracorsranchbauernhufundco.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/gameideas/questionable/animalcrsossingxsimsgame.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/checkliste.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/weltenlore/beziehungsund(ver)handlungsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/weltenlore/personenbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/weltenlore/geschichtsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/weltenlore/religionsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/weltenlore/kartenbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/weltenlore/gesetzbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/zauberbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/naturgesetzbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/zauberspruchbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/steinundnaturverhaltungsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/brauereibuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/kampfbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/anbaubuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/naturkraftgesetzbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/schreibbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/rechnungsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/alfönisßessßbroßbuaß.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/lebensbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/alfönisßeswöaddabuaß.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/naturreaktionsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/sinnesbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/Informationslore/gesundheitsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/freizeitbeschäftigungsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/spielbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/musikbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/bauwerksbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/malereibuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/kochbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/handwerksbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/berufsbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/kulturbuch.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/wiki/trafkverse/kulturlore/sportbuch.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafkhop-Entertainment-Website/games/released/raufbold3bsscratcharchive/goffy/goffy.html</loc>
     <priority>0.80</priority>
   </url>
 </urlset>
