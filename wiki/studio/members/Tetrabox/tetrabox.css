@@ -1,0 +1,57 @@
+#logoundnav {
+    background-image: url("banner.png");
+    background-repeat: repeat;
+    background-position: center;
+    background-size: contain;
+}
+body {
+    background-image: url("bg.png");
+    background-repeat: repeat;
+    background-position: center;
+    background-size: contain;
+    color: #ffc000;
+}
+
+.borderbottom {
+    border-bottom: 5px solid #ffc000;
+    box-shadow: 0 2px 5px #ffc000;
+}
+
+.content {
+background-color: #7030a0;
+}
+nav .header {
+background-color: #7030a0;
+}
+
+.header {
+background-color: #4472c4;
+}
+
+footer {
+    background-image: url("bg.png");
+    background-repeat: repeat;
+    background-position: center;
+    background-size: contain;
+    border-top: 5px solid #ffc000;
+    box-shadow: 0 2px 10px #ffc000;
+}
+
+.do {
+    text-decoration: underline #8fff1c;
+}
+.do:hover {
+    text-decoration: underline #8fff1c;
+}
+nav .header.do span {
+    text-decoration: underline #8fff1c;
+}
+nav .header.do:hover span {
+    text-decoration: underline #8fff1c;
+}
+footer a.do {
+    text-decoration: underline #8fff1c;
+}
+
+.header h2, .header h1, .header .date, .header .date p, p, footer span, pre, footer label, h2, h1 {
+}
