@@ -8,3 +8,5 @@ so expect many "groundbreaking" updates.
 On this Website, you can find every Info
 about Trafkhop Entertainment.
 We even have our own wiki!
+
+//For Trafkhop Members: git clone --recursive https://github.com/Trafkhop-Entertainment/Trafk-Center.git
