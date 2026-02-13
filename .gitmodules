@@ -19,3 +19,6 @@
 [submodule "games/released/Raufbold3bsScratchArchive/Repo"]
 	path = games/released/Raufbold3bsScratchArchive/Repo
 	url = git@github.com:Trafkhop-Entertainment/Raufbold3bsScratchArchive
+[submodule "wiki/Assets/Sourcehop-Documents"]
+	path = wiki/Assets/Sourcehop-Documents
+	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Documents.git
