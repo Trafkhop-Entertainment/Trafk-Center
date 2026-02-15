@@ -1,24 +1,24 @@
 [submodule "wiki/trafkverse/Sourcehop-Notes"]
 	path = wiki/trafkverse/Sourcehop-Notes
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Notes
-[submodule "wiki/Assets/Sourcehop-GodotScenes"]
-	path = wiki/Assets/Sourcehop-GodotScenes
+[submodule "wiki/assets/Sourcehop-GodotScenes"]
+	path = wiki/assets/Sourcehop-GodotScenes
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-GodotScenes
-[submodule "wiki/Assets/Sourcehop-Shaders"]
-	path = wiki/Assets/Sourcehop-Shaders
+[submodule "wiki/assets/Sourcehop-Shaders"]
+	path = wiki/assets/Sourcehop-Shaders
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Shaders
-[submodule "wiki/Assets/Sourcehop-Images"]
-	path = wiki/Assets/Sourcehop-Images
+[submodule "wiki/assets/Sourcehop-Images"]
+	path = wiki/assets/Sourcehop-Images
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Images
-[submodule "wiki/Assets/Sourcehop-Audios"]
-	path = wiki/Assets/Sourcehop-Audios
+[submodule "wiki/assets/Sourcehop-Audios"]
+	path = wiki/assets/Sourcehop-Audios
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Audios
-[submodule "wiki/Assets/Sourcehop-Models"]
-	path = wiki/Assets/Sourcehop-Models
+[submodule "wiki/assets/Sourcehop-Models"]
+	path = wiki/assets/Sourcehop-Models
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Models
 [submodule "games/released/Raufbold3bsScratchArchive/Repo"]
 	path = games/released/Raufbold3bsScratchArchive/Repo
 	url = git@github.com:Trafkhop-Entertainment/Raufbold3bsScratchArchive
-[submodule "wiki/Assets/Sourcehop-Documents"]
-	path = wiki/Assets/Sourcehop-Documents
+[submodule "wiki/assets/Sourcehop-Documents"]
+	path = wiki/assets/Sourcehop-Documents
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Documents.git
