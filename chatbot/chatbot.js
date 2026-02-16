@@ -1,8 +1,8 @@
 // ================================
 // KONFIGURATION
 // ================================
-const OPENROUTER_KEY = "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"; // Dein Key
-const MODEL = "mistralai/mixtral-8x7b-instruct"; // oder "meta-llama/llama-3-70b-instruct"
+const HF_TOKEN = "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";
+const currentModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
 
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 
@@ -168,31 +168,38 @@ function addMessage(sender, text) {
 // ================================
 // OPENROUTER API
 // ================================
-async function queryOpenRouter(prompt) {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${OPENROUTER_KEY}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            model: MODEL,
-            messages: [
-                { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: prompt }
-            ],
-            max_tokens: 400,
+// ================================
+// HUGGING FACE API AUFRUF (mit CORS-Proxy)
+// ================================
+async function queryHuggingFace(prompt) {
+    const body = {
+        inputs: prompt,
+        parameters: {
+            max_new_tokens: 400,
             temperature: 0.6
-        })
+        }
+    };
+
+    // Öffentlicher CORS-Proxy (nur für Tests!)
+    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+    const HF_API_URL = `https://api-inference.huggingface.co/models/${currentModel}`;
+
+    const response = await fetch(CORS_PROXY + HF_API_URL, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${HF_TOKEN}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
     });
 
     if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "OpenRouter Fehler");
+        const error = await response.text();
+        throw new Error(`Hugging Face Fehler: ${error}`);
     }
 
-    const data = await response.json();
-    return data.choices[0].message.content;
+    const result = await response.json();
+    return result[0]?.generated_text || '';
 }
 
 // ================================
@@ -218,7 +225,7 @@ async function sendMessage() {
         ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nAntworte basierend darauf auf die Frage: ${text}`
         : text;
 
-        const reply = await queryOpenRouter(finalPrompt);
+        const reply = await queryHuggingFace(finalPrompt);
 
         document.getElementById(loadingId)?.remove();
 
