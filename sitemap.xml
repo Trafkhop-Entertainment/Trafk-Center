@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/RTSGame.md</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/robots.txt</loc>
     <priority>0.80</priority>
   </url>
@@ -29,6 +25,10 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/Delete any accociation with botpress and fix website and add new wikibot.txt</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/links.html</loc>
     <priority>0.80</priority>
   </url>
@@ -37,11 +37,19 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/AiAflonzInstructions.txt</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/md.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -61,11 +69,11 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/newestNotes.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backup2.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/RTSGame.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backup1.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -78,10 +86,6 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/gameideas/good/RTSGame.md</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/backups/2.backup(ca.6.2.2026)/backup2.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -293,10 +297,6 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/backups/1.backup(ca.23.9.2025)/backup1.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/backups/1.backup(ca.23.9.2025)/Fertig/Gras-ZupfSimulator/Gras-ZupfSimulator.txt</loc>
     <priority>0.80</priority>
   </url>
@@ -346,6 +346,30 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/backups/1.backup(ca.23.9.2025)/AlteGameideen/PyleysCollection.txt</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-Images.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-Audios.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-GodotScenes.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-Models.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-Shaders.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-Documents.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
