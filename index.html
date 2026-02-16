@@ -111,6 +111,7 @@
 
 </main>
 
+
 <footer>
 <a class="do" href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
 <a class="do" href="LICENSE.html">License</a>
@@ -120,6 +121,19 @@
     <input class="do" type="range" id="lautstärke" min="0" max="1" step="0.01" value="0.5">
 </div>
 </footer>
+
+
+<div id="chatbot">
+<div class="content hidden">
+<div class="header">
+<h1>Frag Alfonz</h1>
+</div>
+<h3 class="do" id="startChatbot">Einschalten</h3><br><br>
+<input type="text" id="chatbotEingabe" placeholder="Frag was..." disabled style="line-height: 3.5; width:100%;">
+</div>
+<button id="chatbotUmschalten"><p class="do">Alfonz fragen</p></button>
+</div>
+<script type="module" src="chatbot/chatbot.js"></script>
 
 
 </body>
