@@ -1,8 +1,8 @@
 // ================================
 // KONFIGURATION
 // ================================
-const OPENROUTER_KEY = "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";
-const MODEL = "meta-llama/llama-3-70b-instruct"; // Du kannst auch "mistralai/mixtral-8x7b-instruct" nehmen
+const OPENROUTER_KEY = "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"; // Dein Key
+const MODEL = "mistralai/mixtral-8x7b-instruct"; // oder "meta-llama/llama-3-70b-instruct"
 
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 
@@ -33,7 +33,7 @@ let sitemapUrls = [];
 let chatWindow, inputField, sendBtn, quickActions;
 
 // ================================
-// SITEMAP LADEN (per Regex, tolerant)
+// SITEMAP LADEN
 // ================================
 async function loadSitemap() {
     const pathsToTest = [
@@ -46,15 +46,12 @@ async function loadSitemap() {
         try {
             console.log(`Versuche Sitemap unter: ${path}`);
             const response = await fetch(path);
-            if (!response.ok) {
-                console.warn(`-> Status ${response.status}`);
-                continue;
-            }
-            const xmlText = await response.text();
-            console.log('Sitemap geladen (Auszug):', xmlText.substring(0, 200));
+            if (!response.ok) continue;
 
+            const xmlText = await response.text();
             const locMatches = xmlText.matchAll(/<loc>(.*?)<\/loc>/gi);
             const urls = [];
+
             for (const match of locMatches) {
                 let url = match[1].trim();
                 if (!url.includes('/games/released/Raufbold3bsScratchArchive/Repo/')) {
@@ -64,25 +61,20 @@ async function loadSitemap() {
 
             if (urls.length > 0) {
                 sitemapUrls = urls;
-                console.log(`✅ Sitemap erfolgreich geladen: ${sitemapUrls.length} URLs (via ${path})`);
+                console.log(`✅ Sitemap geladen: ${sitemapUrls.length} URLs`);
                 return;
-            } else {
-                console.warn('Keine <loc>-Tags in der Sitemap gefunden.');
             }
         } catch (e) {
-            console.warn(`Fehler beim Laden von ${path}:`, e.message);
+            console.warn(`Fehler: ${e.message}`);
         }
     }
-    console.error('❌ Sitemap konnte mit keinem Pfad geladen werden.');
 }
 
 // ================================
-// HILFSFUNKTION: Relativen Pfad extrahieren
+// DATEIEN LADEN
 // ================================
 function getRelativePath(url) {
-    if (url.startsWith(BASE_URL)) {
-        return url.substring(BASE_URL.length);
-    }
+    if (url.startsWith(BASE_URL)) return url.substring(BASE_URL.length);
     try {
         const urlObj = new URL(url);
         return urlObj.pathname.replace('/Trafk-Center/', '');
@@ -91,9 +83,6 @@ function getRelativePath(url) {
     }
 }
 
-// ================================
-// DATEI INHALT HOLEN
-// ================================
 async function fetchFileContent(url) {
     const relativePath = getRelativePath(url);
     const fetchUrl = `/Trafk-Center/${relativePath}`;
@@ -113,13 +102,12 @@ async function fetchFileContent(url) {
             return text.replace(/\s+/g, ' ').trim();
         }
     } catch (e) {
-        console.warn(`Fehler beim Abrufen von ${fetchUrl}:`, e);
         return '';
     }
 }
 
 // ================================
-// RELEVANTE DOKUMENTE FINDEN
+// KONTEXT FINDEN
 // ================================
 async function fetchContext(userMessage) {
     const keywords = userMessage.toLowerCase()
@@ -157,7 +145,7 @@ async function fetchContext(userMessage) {
 }
 
 // ================================
-// UI: NACHRICHT HINZUFÜGEN
+// UI
 // ================================
 function addMessage(sender, text) {
     const msgDiv = document.createElement('div');
@@ -178,7 +166,7 @@ function addMessage(sender, text) {
 }
 
 // ================================
-// OPENROUTER API AUFRUF
+// OPENROUTER API
 // ================================
 async function queryOpenRouter(prompt) {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -208,7 +196,7 @@ async function queryOpenRouter(prompt) {
 }
 
 // ================================
-// HAUPTFUNKTION: NACHRICHT SENDEN
+// HAUPTFUNKTION
 // ================================
 async function sendMessage() {
     const text = inputField.value.trim();
@@ -231,17 +219,23 @@ async function sendMessage() {
         : text;
 
         const reply = await queryOpenRouter(finalPrompt);
+
         document.getElementById(loadingId)?.remove();
-        addMessage('Alfonz', reply);
+
+        if (!reply) {
+            addMessage('Alfonz', '*räuspert sich* ... Die Erinnerungen sind heute wirr.');
+        } else {
+            addMessage('Alfonz', reply);
+        }
     } catch (e) {
         document.getElementById(loadingId)?.remove();
-        addMessage('Alfonz', `*zittert leicht* ... Die Verbindung zu den Archiven ist abgerissen. (Fehler: ${e.message})`);
+        addMessage('Alfonz', `*zittert leicht* ... Die Verbindung ist abgerissen. (Fehler: ${e.message})`);
         console.error(e);
     }
 }
 
 // ================================
-// INIT: WARTEN BIS DOM BEREIT IST
+// INIT
 // ================================
 document.addEventListener('DOMContentLoaded', function() {
     chatWindow = document.getElementById('chat-window');
@@ -250,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     quickActions = document.getElementById('quick-actions');
 
     if (!chatWindow || !inputField || !sendBtn) {
-        console.error('❌ Chat-Elemente nicht gefunden! Prüfe die IDs im HTML.');
+        console.error('❌ Chat-Elemente nicht gefunden!');
         return;
     }
 
