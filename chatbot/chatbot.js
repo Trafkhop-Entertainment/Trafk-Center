@@ -166,10 +166,7 @@ function addMessage(sender, text) {
 }
 
 // ================================
-// OPENROUTER API
-// ================================
-// ================================
-// HUGGING FACE API AUFRUF (mit CORS-Proxy)
+// HUGGING FACE API AUFRUF (Direkt, ohne Proxy)
 // ================================
 async function queryHuggingFace(prompt) {
     const body = {
@@ -180,11 +177,9 @@ async function queryHuggingFace(prompt) {
         }
     };
 
-    // Öffentlicher CORS-Proxy (nur für Tests!)
-    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
     const HF_API_URL = `https://api-inference.huggingface.co/models/${currentModel}`;
 
-    const response = await fetch(CORS_PROXY + HF_API_URL, {
+    const response = await fetch(HF_API_URL, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${HF_TOKEN}`,
@@ -194,12 +189,20 @@ async function queryHuggingFace(prompt) {
     });
 
     if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Hugging Face Fehler: ${error}`);
+        const errorText = await response.text();
+        throw new Error(`API Fehler (${response.status}): ${errorText}`);
     }
 
     const result = await response.json();
-    return result[0]?.generated_text || '';
+
+    // HuggingFace gibt oft den Prompt mit im Ergebnis zurück.
+    // Falls das passiert, extrahieren wir nur den generierten Text.
+    let generatedText = result[0]?.generated_text || '';
+    if (generatedText.startsWith(prompt)) {
+        generatedText = generatedText.substring(prompt.length).trim();
+    }
+
+    return generatedText;
 }
 
 // ================================
