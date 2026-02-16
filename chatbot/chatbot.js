@@ -26,56 +26,47 @@ function appendMessage(sender, text, color) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-// Stoppwörter (kannst du erweitern)
 const STOPWORDS = new Set(["der", "die", "das", "und", "ist", "wie", "was", "wann", "wer", "wo", "warum", "dann", "dort", "hier", "ein", "eine", "einer", "eines", "dem", "den", "des", "mit", "von", "für", "auf", "bei", "nach", "aus", "durch", "über", "unter", "zwischen"]);
 
-// Absolute URL zu deiner Sitemap (GitHub Pages)
 const SITEMAP_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/sitemap.xml";
 
 async function loadFullWiki() {
     startBtn.innerText = "📡 Lade Sitemap...";
     try {
-        // 1. Sitemap abrufen
         const response = await fetch(SITEMAP_URL);
         if (!response.ok) {
             throw new Error(`HTTP-Fehler ${response.status}: ${response.statusText}`);
         }
         const xmlText = await response.text();
 
-        // 2. XML parsen
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-
-        // Prüfen auf Parse-Fehler
-        const parseError = xmlDoc.querySelector("parsererror");
-        if (parseError) {
-            throw new Error("XML-Parsing-Fehler: " + parseError.textContent);
+        // URLs mit Regex extrahieren – umgeht XML-Parsing-Fehler
+        const locRegex = /<loc>([^<]+)<\/loc>/g;
+        const urls = [];
+        let match;
+        while ((match = locRegex.exec(xmlText)) !== null) {
+            urls.push(match[1]);
         }
 
-        // 3. Alle <loc>-Elemente extrahieren
-        const locs = xmlDoc.getElementsByTagName("loc");
-        if (locs.length === 0) {
+        if (urls.length === 0) {
             throw new Error("Keine <loc>-Elemente in der Sitemap gefunden.");
         }
 
-        const urls = Array.from(locs)
-            .map(n => n.textContent)
-            .filter(u => u.match(/\.(md|txt|html)$/i));
-
-        if (urls.length === 0) {
+        // Nur .md, .txt, .html behalten
+        const filteredUrls = urls.filter(u => u.match(/\.(md|txt|html)$/i));
+        if (filteredUrls.length === 0) {
             throw new Error("Keine URLs mit .md/.txt/.html-Endung gefunden.");
         }
 
-        // 4. Alle Dateien laden (mit Fortschritt)
+        // Alle Dateien laden
         let loaded = 0;
-        const results = await Promise.all(urls.map(async (url) => {
+        const results = await Promise.all(filteredUrls.map(async (url) => {
             try {
                 const r = await fetch(url);
                 if (!r.ok) return null;
                 const raw = await r.text();
                 const clean = raw.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
                 loaded++;
-                startBtn.innerText = `📥 Lade Wiki ... ${loaded}/${urls.length}`;
+                startBtn.innerText = `📥 Lade Wiki ... ${loaded}/${filteredUrls.length}`;
                 return { url, content: clean };
             } catch (e) {
                 console.warn(`Fehler beim Laden von ${url}:`, e);
@@ -92,20 +83,20 @@ async function loadFullWiki() {
     } catch (error) {
         console.error("Sitemap-Fehler:", error);
         appendMessage("Alfonz", `❌ Fehler beim Laden des Wikis: ${error.message}`, "red");
-        throw error; // Damit der Startvorgang abgebrochen wird
+        throw error;
     }
 }
 
 function extractKeywords(query) {
     return query.toLowerCase()
-        .split(/\s+/)
-        .filter(word => word.length > 2 && !STOPWORDS.has(word));
+    .split(/\s+/)
+    .filter(word => word.length > 2 && !STOPWORDS.has(word));
 }
 
 function getRelevantFiles(query) {
     const keywords = extractKeywords(query);
     if (keywords.length === 0) {
-        // Fallback: erste 10 Dateien (alphabetisch)
+        // Fallback: erste 10 Dateien alphabetisch
         return [...wikiData].sort((a, b) => a.url.localeCompare(b.url)).slice(0, 10);
     }
 
@@ -126,21 +117,20 @@ function getRelevantFiles(query) {
 startBtn.onclick = async () => {
     startBtn.style.pointerEvents = "none";
     try {
-        await loadFullWiki(); // Falls Fehler, wird Exception geworfen
+        await loadFullWiki();
     } catch (e) {
         startBtn.style.pointerEvents = "auto";
         startBtn.innerText = "❌ Wiki-Fehler";
         return;
     }
 
-    // WebLLM-Engine starten
     engine = new webllm.MLCEngine();
     engine.setInitProgressCallback((report) => {
         startBtn.innerText = `🧠 Lade Hirn: ${Math.round(report.progress * 100)}%`;
     });
 
     try {
-        // 7B Modell (ca. 4-5 GB VRAM) – falls zu groß, nimm 3B: "Qwen2.5-3B-Instruct-q4f16_1-MLC"
+        // 7B Modell (ca. 4-5 GB VRAM) – bei Bedarf auf 3B ändern
         await engine.reload("Qwen2.5-7B-Instruct-q4f16_1-MLC");
         startBtn.innerText = "🤖 Alfonz ist bereit!";
         userInput.disabled = false;
@@ -173,13 +163,13 @@ async function handleChat() {
     const messages = [
         {
             role: "system",
-            content: `Du bist Alfonz, der Guide für Trafkhop Entertainment. 
-Beantworte die Frage des Users ausschließlich anhand der folgenden Auszüge aus dem Wiki. 
-Wenn die Antwort nicht in den Auszügen enthalten ist, sage, dass du dazu nichts finden konntest.
-Zitiere wenn möglich konkrete Namen und Details.
+            content: `Du bist Alfonz, der Guide für Trafkhop Entertainment.
+            Beantworte die Frage des Users ausschließlich anhand der folgenden Auszüge aus dem Wiki.
+            Wenn die Antwort nicht in den Auszügen enthalten ist, sage, dass du dazu nichts finden konntest.
+            Zitiere wenn möglich konkrete Namen und Details.
 
-RELEVANTE WIKI-AUSSCHNITTE:
-${context}`
+            RELEVANTE WIKI-AUSSCHNITTE:
+            ${context}`
         },
         { role: "user", content: query }
     ];
