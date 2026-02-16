@@ -1,15 +1,8 @@
 // ================================
-// KONFIGURATION (ergänzt)
+// KONFIGURATION
 // ================================
-const HF_TOKEN = "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";
-const PRIMARY_MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1";
-const FALLBACK_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"; // bleibt
-let currentModel = PRIMARY_MODEL;
-
-// Öffentlicher CORS-Proxy (nur für Tests!)
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-
-// ... (den Rest unverändert lassen bis zur Funktion queryHuggingFace)
+const OPENROUTER_KEY = "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";
+const MODEL = "meta-llama/llama-3-70b-instruct"; // Du kannst auch "mistralai/mixtral-8x7b-instruct" nehmen
 
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 
@@ -43,11 +36,10 @@ let chatWindow, inputField, sendBtn, quickActions;
 // SITEMAP LADEN (per Regex, tolerant)
 // ================================
 async function loadSitemap() {
-    // Mögliche Pfade testen (Reihenfolge = Priorität)
     const pathsToTest = [
-        '/Trafk-Center/sitemap.xml',   // absolut ab Server-Root
-        './sitemap.xml',                // relativ zum aktuellen Verzeichnis
-        'sitemap.xml'                    // direkt im gleichen Ordner
+        '/Trafk-Center/sitemap.xml',
+        './sitemap.xml',
+        'sitemap.xml'
     ];
 
     for (const path of pathsToTest) {
@@ -61,12 +53,10 @@ async function loadSitemap() {
             const xmlText = await response.text();
             console.log('Sitemap geladen (Auszug):', xmlText.substring(0, 200));
 
-            // Extrahiere alle <loc>…</loc> Inhalte per Regex – funktioniert auch bei XML-Fehlern
             const locMatches = xmlText.matchAll(/<loc>(.*?)<\/loc>/gi);
             const urls = [];
             for (const match of locMatches) {
                 let url = match[1].trim();
-                // Submodul ausschließen
                 if (!url.includes('/games/released/Raufbold3bsScratchArchive/Repo/')) {
                     urls.push(url);
                 }
@@ -75,7 +65,7 @@ async function loadSitemap() {
             if (urls.length > 0) {
                 sitemapUrls = urls;
                 console.log(`✅ Sitemap erfolgreich geladen: ${sitemapUrls.length} URLs (via ${path})`);
-                return; // Erfolg – fertig
+                return;
             } else {
                 console.warn('Keine <loc>-Tags in der Sitemap gefunden.');
             }
@@ -83,7 +73,6 @@ async function loadSitemap() {
             console.warn(`Fehler beim Laden von ${path}:`, e.message);
         }
     }
-
     console.error('❌ Sitemap konnte mit keinem Pfad geladen werden.');
 }
 
@@ -134,9 +123,9 @@ async function fetchFileContent(url) {
 // ================================
 async function fetchContext(userMessage) {
     const keywords = userMessage.toLowerCase()
-        .split(' ')
-        .filter(w => w.length > 3)
-        .map(w => w.replace(/[^\w]/g, ''));
+    .split(' ')
+    .filter(w => w.length > 3)
+    .map(w => w.replace(/[^\w]/g, ''));
 
     if (keywords.length === 0) return '';
 
@@ -147,10 +136,10 @@ async function fetchContext(userMessage) {
     });
 
     const topUrls = urlScores
-        .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3)
-        .map(item => item.url);
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(item => item.url);
 
     if (topUrls.length === 0) return '';
 
@@ -189,34 +178,33 @@ function addMessage(sender, text) {
 }
 
 // ================================
-// HUGGING FACE API AUFRUF
+// OPENROUTER API AUFRUF
 // ================================
-async function queryHuggingFace(prompt) {
-    const body = {
-        model: currentModel,
-        inputs: prompt, // Der komplette Prompt mit System und User
-        parameters: {
-            max_new_tokens: 400,
+async function queryOpenRouter(prompt) {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${OPENROUTER_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: MODEL,
+            messages: [
+                { role: "system", content: SYSTEM_PROMPT },
+                { role: "user", content: prompt }
+            ],
+            max_tokens: 400,
             temperature: 0.6
-        }
-    };
-
-    const PROXY_URL = "https://chatbot-proxy-ochre.vercel.app/api/proxy";
-
-    const response = await fetch(PROXY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        })
     });
 
     if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Unbekannter API-Fehler');
+        throw new Error(error.message || "OpenRouter Fehler");
     }
 
-    const result = await response.json();
-    // Der Proxy gibt jetzt { generated_text: "..." } zurück
-    return result.generated_text || '';
+    const data = await response.json();
+    return data.choices[0].message.content;
 }
 
 // ================================
@@ -239,25 +227,12 @@ async function sendMessage() {
     try {
         const context = await fetchContext(text);
         const finalPrompt = context
-            ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nAntworte basierend darauf auf die Frage: ${text}`
-            : text;
+        ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nAntworte basierend darauf auf die Frage: ${text}`
+        : text;
 
-        let reply = '';
-        try {
-            reply = await queryHuggingFace(finalPrompt);
-        } catch (primaryError) {
-            console.warn('Primärmodell fehlgeschlagen, versuche Fallback:', primaryError);
-            currentModel = FALLBACK_MODEL;
-            reply = await queryHuggingFace(finalPrompt);
-        }
-
+        const reply = await queryOpenRouter(finalPrompt);
         document.getElementById(loadingId)?.remove();
-
-        if (!reply) {
-            addMessage('Alfonz', '*räuspert sich* ... Die Erinnerungen sind heute wirr. Versuche es später noch einmal.');
-        } else {
-            addMessage('Alfonz', reply);
-        }
+        addMessage('Alfonz', reply);
     } catch (e) {
         document.getElementById(loadingId)?.remove();
         addMessage('Alfonz', `*zittert leicht* ... Die Verbindung zu den Archiven ist abgerissen. (Fehler: ${e.message})`);
@@ -284,6 +259,5 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Enter') sendMessage();
     });
 
-    // Sitemap laden
-    loadSitemap();
+        loadSitemap();
 });
