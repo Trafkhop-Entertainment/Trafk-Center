@@ -194,22 +194,18 @@ function addMessage(sender, text) {
 async function queryHuggingFace(prompt) {
     const body = {
         model: currentModel,
-        inputs: `<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n${SYSTEM_PROMPT}<|eot_id|><|start_header_id|>user<|end_header_id|>\n${prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>`,
+        inputs: prompt, // Der komplette Prompt mit System und User
         parameters: {
             max_new_tokens: 400,
-            temperature: 0.6,
-            return_full_text: false
+            temperature: 0.6
         }
     };
 
-    // ⚠️ Hier deine Vercel-Proxy-URL eintragen!
     const PROXY_URL = "https://chatbot-proxy-ochre.vercel.app/api/proxy";
 
     const response = await fetch(PROXY_URL, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     });
 
@@ -219,8 +215,8 @@ async function queryHuggingFace(prompt) {
     }
 
     const result = await response.json();
-    // Das Format der Antwort kann variieren; normalerweise ist es ein Array mit generated_text
-    return result[0]?.generated_text || '';
+    // Der Proxy gibt jetzt { generated_text: "..." } zurück
+    return result.generated_text || '';
 }
 
 // ================================
