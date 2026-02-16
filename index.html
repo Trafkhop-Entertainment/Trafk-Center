@@ -122,7 +122,27 @@
 </div>
 </footer>
 
+    <div class="content" style="max-width: 60%; width: 100%;">
+        <div class="header">
+            <h2>Sprich mit Alfonz</h2>
+            <div class="date"><p>Die ewigen Archive</p></div>
+        </div>
 
+        <div id="chat-window" style="height: 400px; overflow-y: auto; margin-bottom: 20px; padding: 10px; border: 2px solid #371c67; border-radius: 10px; background: #30185e;">
+            <p style="color: #fff49e;"><em>*Ein altes, leises Rauschen erklingt*</em> Ah... ein Reisender. Ich bin Alfonz. Frag mich nach der Welt, und ich werde in meinen verblichenen Erinnerungen suchen...</p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="chat-input" placeholder="Frag mich nach dem Gesetzbuch, den Welten..." style="flex: 1; padding: 10px; border-radius: 10px; border: 2px solid #371c67; background: #5a3998; color: #fff8bd; font-family: 'Noto Sans', sans-serif; font-size: 16px;">
+            <button id="send-btn" class="header do" style="width: auto; height: auto; padding: 10px 20px; border-radius: 10px; cursor: pointer; border: none;">
+                <span>Fragen</span>
+            </button>
+        </div>
+
+        <div id="quick-actions" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+            </div>
+    </div>
+    <script src="chatbot/chatbot.js"></script>
 </body>
 
 </html>
