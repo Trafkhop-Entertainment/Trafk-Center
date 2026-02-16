@@ -92,7 +92,7 @@ main {
     margin-left: 25px;
     margin-right: 25px;
 }
-.content, button{
+.content{
     background: #5a3998; /*standard trafk color if not transparent*/
     padding: 30px;
     width: fit-content;
@@ -108,17 +108,6 @@ main {
     scrollbar-width: thin;
     color: #fff8bd;
 }
-
-button{
-padding: 10px;
-align-content: center;
-justify-content: center;
-align-items: center;
-}
-#chatbot {
-width: 100% !important;
-}
-.hidden { display: none !important; }
 
 .header {
     background: #9069da;
