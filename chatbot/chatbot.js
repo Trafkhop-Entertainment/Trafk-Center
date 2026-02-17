@@ -1,8 +1,9 @@
 // ================================
 // KONFIGURATION
 // ================================
-const HF_TOKEN = "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";
-const currentModel = "mistralai/Mixtral-8x7B-Instruct-v0.1";
+const GH_TOKEN = "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";
+let chatHistory = []; // Hier werden die letzten Nachrichten gespeichert
+const GH_MODEL = "gpt-4o-mini";
 
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 
@@ -84,24 +85,29 @@ function getRelativePath(url) {
 }
 
 async function fetchFileContent(url) {
-    const relativePath = getRelativePath(url);
-    const fetchUrl = `/Trafk-Center/${relativePath}`;
-
     try {
-        const response = await fetch(fetchUrl);
+        const response = await fetch(encodeURI(url));
         if (!response.ok) return '';
+        let text = await response.text();
 
-        const contentType = response.headers.get('content-type') || '';
-        const text = await response.text();
+        if (url.endsWith('.html')) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
 
-        if (contentType.includes('text/html') || relativePath.endsWith('.html')) {
-            const doc = new DOMParser().parseFromString(text, 'text/html');
-            const bodyText = doc.body ? doc.body.textContent || '' : '';
-            return bodyText.replace(/\s+/g, ' ').trim();
-        } else {
-            return text.replace(/\s+/g, ' ').trim();
+            // KRITISCH: Wir löschen alles, was Alfonz ablenkt
+            const junk = doc.querySelectorAll('script, style, nav, header, footer, .menu, #sidebar');
+            junk.forEach(el => el.remove());
+
+            // Wir suchen gezielt nach dem Content-Bereich.
+            // Falls du <main> oder <div class="content"> nutzt, ist das Gold wert.
+            const contentNode = doc.querySelector('main') || doc.querySelector('.content') || doc.body;
+            text = contentNode.innerText || contentNode.textContent;
         }
+
+        // Bereinigen: Macht aus 10 Leerzeichen eins, damit das Token-Limit nicht platzt
+        return `QUELLE: ${url}\nINHALT: ${text.replace(/\s+/g, ' ').trim().substring(0, 5000)}`;
     } catch (e) {
+        console.error("Fehler beim Entziffern:", e);
         return '';
     }
 }
@@ -110,38 +116,44 @@ async function fetchFileContent(url) {
 // KONTEXT FINDEN
 // ================================
 async function fetchContext(userMessage) {
-    const keywords = userMessage.toLowerCase()
-    .split(' ')
-    .filter(w => w.length > 3)
-    .map(w => w.replace(/[^\w]/g, ''));
-
-    if (keywords.length === 0) return '';
+    const msgLower = userMessage.toLowerCase();
+    // Zerlegt die Nachricht in Wörter und filtert Füllwörter raus
+    const words = msgLower.split(/\W+/).filter(w => w.length > 2);
 
     const urlScores = sitemapUrls.map(url => {
         const urlLower = url.toLowerCase();
-        const score = keywords.filter(k => urlLower.includes(k)).length;
+        let score = 0;
+
+        words.forEach(word => {
+            // 1. Volltreffer im Dateinamen (sehr wichtig)
+            if (urlLower.includes(word)) score += 15;
+
+            // 2. "Sloppy" Match: Erkennt auch Teilwörter (z.B. "hop" findet "hoppitex")
+            // Wir prüfen, ob das Wort zumindest zu 70% im Dateinamen vorkommt
+            if (word.length > 3 && urlLower.includes(word.substring(0, 4))) score += 5;
+        });
+
+        // 3. Bonus für Wiki/Lore-Ordner
+        if (score > 0 && (urlLower.includes('wiki') || urlLower.includes('lore'))) {
+            score += 10;
+        }
+
         return { url, score };
     });
 
+    // Wir nehmen die Top 3 der am besten passenden Dateien
     const topUrls = urlScores
-    .filter(item => item.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3)
-    .map(item => item.url);
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map(item => item.url);
 
     if (topUrls.length === 0) return '';
 
+    console.log("Alfonz durchsucht die Archive für:", topUrls);
+
     const contents = await Promise.all(topUrls.map(url => fetchFileContent(url)));
-    const contextParts = [];
-
-    for (let i = 0; i < topUrls.length; i++) {
-        if (contents[i]) {
-            const trimmed = contents[i].length > 2000 ? contents[i].substring(0, 2000) + '…' : contents[i];
-            contextParts.push(`Aus den Archiven (${topUrls[i]}):\n${trimmed}`);
-        }
-    }
-
-    return contextParts.join('\n\n---\n\n');
+    return contents.filter(c => c.length > 10).join('\n\n---\n\n');
 }
 
 // ================================
@@ -166,43 +178,47 @@ function addMessage(sender, text) {
 }
 
 // ================================
-// HUGGING FACE API AUFRUF (Direkt, ohne Proxy)
 // ================================
-async function queryHuggingFace(prompt) {
+async function queryGitHubModels(prompt) {
+    const URL = "https://models.inference.ai.azure.com/chat/completions";
+
+    // Wir nehmen die letzten 6 Nachrichten (3x User, 3x Alfonz),
+    // damit das Gedächtnis nicht zu groß für die API wird.
+    const historyWindow = chatHistory.slice(-6);
+
     const body = {
-        inputs: prompt,
-        parameters: {
-            max_new_tokens: 400,
-            temperature: 0.6
-        }
+        model: GH_MODEL,
+        messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            ...historyWindow, // Die bisherigen Nachrichten werden hier eingefügt
+            { role: "user", content: prompt }
+        ],
+        temperature: 0.6,
+        max_tokens: 500
     };
 
-    const HF_API_URL = `https://api-inference.huggingface.co/models/${currentModel}`;
-
-    const response = await fetch(HF_API_URL, {
+    const response = await fetch(URL, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${HF_TOKEN}`,
+            'Authorization': `Bearer ${GH_TOKEN}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
     });
 
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API Fehler (${response.status}): ${errorText}`);
+        const err = await response.json();
+        throw new Error(`GitHub API Fehler: ${err.error?.message || response.statusText}`);
     }
 
     const result = await response.json();
+    const reply = result.choices[0].message.content;
 
-    // HuggingFace gibt oft den Prompt mit im Ergebnis zurück.
-    // Falls das passiert, extrahieren wir nur den generierten Text.
-    let generatedText = result[0]?.generated_text || '';
-    if (generatedText.startsWith(prompt)) {
-        generatedText = generatedText.substring(prompt.length).trim();
-    }
+    // Speichere die aktuelle Unterhaltung im Gedächtnis
+    chatHistory.push({ role: "user", content: prompt });
+    chatHistory.push({ role: "assistant", content: reply });
 
-    return generatedText;
+    return reply;
 }
 
 // ================================
@@ -223,12 +239,15 @@ async function sendMessage() {
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
     try {
-        const context = await fetchContext(text);
+        // Wir nehmen die aktuelle Frage PLUS das Thema der letzten Frage für die Suche
+        const lastQuestion = chatHistory.length > 0 ? chatHistory[chatHistory.length - 2].content : "";
+        const searchQuery = `${text} ${lastQuestion}`;
+        const context = await fetchContext(searchQuery); // <- Jetzt sucht er mit beiden Begriffen!
         const finalPrompt = context
         ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nAntworte basierend darauf auf die Frage: ${text}`
         : text;
 
-        const reply = await queryHuggingFace(finalPrompt);
+        const reply = await queryGitHubModels(finalPrompt);
 
         document.getElementById(loadingId)?.remove();
 
