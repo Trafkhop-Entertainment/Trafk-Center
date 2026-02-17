@@ -1,7 +1,7 @@
 // ================================
 // KONFIGURATION
 // ================================
-const GH_TOKEN = "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";
+const PROXY_URL = "https://trafkhop-chatbotkey.hf.space/chat"; // Deine Space-URL
 let chatHistory = []; // Hier werden die letzten Nachrichten gespeichert
 const GH_MODEL = "gpt-4o-mini";
 
@@ -179,43 +179,35 @@ function addMessage(sender, text) {
 
 // ================================
 // ================================
-async function queryGitHubModels(prompt) {
-    const URL = "https://models.inference.ai.azure.com/chat/completions";
-
-    // Wir nehmen die letzten 6 Nachrichten (3x User, 3x Alfonz),
-    // damit das Gedächtnis nicht zu groß für die API wird.
+async function queryGitHubModels(finalPrompt, userText) {
+    // Wir nehmen nur die letzten 6 Nachrichten für das Gedächtnis
     const historyWindow = chatHistory.slice(-6);
 
     const body = {
-        model: GH_MODEL,
         messages: [
             { role: "system", content: SYSTEM_PROMPT },
-            ...historyWindow, // Die bisherigen Nachrichten werden hier eingefügt
-            { role: "user", content: prompt }
-        ],
-        temperature: 0.6,
-        max_tokens: 500
+            ...historyWindow,
+            { role: "user", content: finalPrompt } // Der aktuelle Prompt mit RAG-Kontext
+        ]
     };
 
-    const response = await fetch(URL, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${GH_TOKEN}`,
-            'Content-Type': 'application/json'
-        },
+    const response = await fetch(PROXY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     });
 
     if (!response.ok) {
-        const err = await response.json();
-        throw new Error(`GitHub API Fehler: ${err.error?.message || response.statusText}`);
+        throw new Error("Alfonz hat gerade Verbindungsprobleme via Hugging Face.");
     }
 
     const result = await response.json();
     const reply = result.choices[0].message.content;
 
-    // Speichere die aktuelle Unterhaltung im Gedächtnis
-    chatHistory.push({ role: "user", content: prompt });
+    // WICHTIG: Hier lösen wir das Token-Limit!
+    // Wir speichern nur die kurze Nutzerfrage (userText) in die History,
+    // NICHT den riesigen finalPrompt mit den Archiv-Auszügen.
+    chatHistory.push({ role: "user", content: userText });
     chatHistory.push({ role: "assistant", content: reply });
 
     return reply;
@@ -247,7 +239,7 @@ async function sendMessage() {
         ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nAntworte basierend darauf auf die Frage: ${text}`
         : text;
 
-        const reply = await queryGitHubModels(finalPrompt);
+        const reply = await queryGitHubModels(finalPrompt, text);
 
         document.getElementById(loadingId)?.remove();
 
