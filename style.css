@@ -92,7 +92,7 @@ main {
     margin-left: 25px;
     margin-right: 25px;
 }
-.content{
+.content, button{
     background: #5a3998; /*standard trafk color if not transparent*/
     padding: 30px;
     width: fit-content;
@@ -107,6 +107,21 @@ main {
     overflow-x: hidden;
     scrollbar-width: thin;
     color: #fff8bd;
+}
+#chatbotIframe {
+width: 600px;
+height: 350px;
+border: none;
+position: fixed;
+bottom: 0;
+right: 0;
+background: none;
+}
+
+#alfonz-content {
+background: transparent !important;
+width: 100%;
+height: 100%;
 }
 
 .header {

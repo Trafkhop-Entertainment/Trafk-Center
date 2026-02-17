@@ -15,19 +15,19 @@
 <header>
 <section id="logoundnav">
 <nav>
-<a class="header do" href="news.html">
+<a class="header do" href="news/news.html">
 <span>News</span>
 </a>
-<a class="header do" href="games.html">
+<a class="header do" href="games/games.html">
 <span>Games</span>
 </a>
 </nav>
 <img class="do" src="wiki/studio/Logo%20v2.png">
 <nav>
-<a class="header do" href="links.html">
+<a class="header do" href="links/links.html">
 <span>Links</span>
 </a>
-<a class="header do" href="wiki.html">
+<a class="header do" href="wiki/wiki.html">
 <span>Wiki</span>
 </a>
 </nav>
@@ -82,14 +82,13 @@
 
 <div class="content">
 <div class="header">
-<h1>Newest <a href="games.html" class="do">Projects</a></h1>
+<h1>Newest <a href="games/games.html" class="do">Projects</a></h1>
 </div>
-<a class="do" href="games/released/raufbold3bsscratcharchive.html"><p>Raufbold3b's Scratch Archive</p></a>
-<a class="do" href="games/released/trafkhopwebsite.html"><p>Trafkhop Entertainment Website</p></a>
+<a class="do" href="games/released/trafkhopwebsite/trafkhopwebsite.html"><p>Trafkhop Entertainment Website</p></a>
 </div>
 <div class="content">
 <div class="header">
-<h1>Newest <a href="news.html" class="do">News</a></h1>
+<h1>Newest <a href="news/news.html" class="do">News</a></h1>
 </div>
 <div class="header">
 <h2>Alfonz Wiki AI chatbot test</h2>
@@ -101,20 +100,20 @@
 </div>
 <div class="content">
 <div class="header">
-<h1><a href="links.html" class="do">Join</a> our Community</h1>
+<h1><a href="links/links.html" class="do">Join</a> our Community</h1>
 </div>
 <a class="do" href="https://www.youtube.com/channel/UCnT2V9uGCInXnq9rDaP5v0g"><p>Youtube</p></a>
 <a class="do" href="https://trafkhop-entertainment.itch.io"><p>Itch.io</p></a>
 <a class="do" href="https://discord.gg/SDSHNUe7EY"><p>Our Discord Server</p></a>
 </div>
 
-
+<iframe src="chatbot/chatbot.html" width="100%" height="100%" id="chatbotIframe"></iframe>
 </main>
 
 
 <footer>
 <a class="do" href="mailto:contact.trafkhop@proton.me">Contact via Email</a>
-<a class="do" href="LICENSE.html">License</a>
+<a class="do" href="license/LICENSE.html">License</a>
 <span>© 2026 Trafkhop Entertainment™. All rights reserved.</span>
 <div class="lautstärke">
     <label for="lautstärke">Volume:</label>
@@ -122,27 +121,6 @@
 </div>
 </footer>
 
-    <div class="content" style="max-width: 60%; width: 100%;">
-        <div class="header">
-            <h2>Sprich mit Alfonz</h2>
-            <div class="date"><p>Die ewigen Archive</p></div>
-        </div>
-
-        <div id="chat-window" style="height: 400px; overflow-y: auto; margin-bottom: 20px; padding: 10px; border: 2px solid #371c67; border-radius: 10px; background: #30185e;">
-            <p style="color: #fff49e;"><em>*Ein altes, leises Rauschen erklingt*</em> Ah... ein Reisender. Ich bin Alfonz. Frag mich nach der Welt, und ich werde in meinen verblichenen Erinnerungen suchen...</p>
-        </div>
-
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="chat-input" placeholder="Frag mich nach dem Gesetzbuch, den Welten..." style="flex: 1; padding: 10px; border-radius: 10px; border: 2px solid #371c67; background: #5a3998; color: #fff8bd; font-family: 'Noto Sans', sans-serif; font-size: 16px;">
-            <button id="send-btn" class="header do" style="width: auto; height: auto; padding: 10px 20px; border-radius: 10px; cursor: pointer; border: none;">
-                <span>Fragen</span>
-            </button>
-        </div>
-
-        <div id="quick-actions" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-            </div>
-    </div>
-    <script src="chatbot/chatbot.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,14 @@
+// Elemente anhand ihrer IDs auswählen
+const toggleBtn = document.getElementById('toggle-chatbot');
+const chatContent = document.getElementById('alfonz-content');
+
+// Event-Listener für den Klick hinzufügen
+toggleBtn.addEventListener('click', () => {
+    // toggle() fügt 'hidden' hinzu, wenn es fehlt,
+    // und entfernt es, wenn es vorhanden ist.
+    chatContent.classList.toggle('hidden');
+});
+
 // ================================
 // KONFIGURATION
 // ================================
