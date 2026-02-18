@@ -45,6 +45,34 @@ let sitemapUrls = [];
 let chatWindow, inputField, sendBtn, quickActions;
 
 // ================================
+// VOLLTEXT INDEX
+// ================================
+let searchIndex = [];
+let indexReady = false;
+
+function isBackupUrl(url) {
+    return url.toLowerCase().includes('/backup');
+}
+
+function shouldIndexUrl(url) {
+    const lower = url.toLowerCase();
+
+    // Ausschluss: Scratch HTML Games Repo
+    if (lower.includes('/games/released/raufbold3bsscratcharchive/repo/')) {
+        return false;
+    }
+
+    // Nur bestimmte Dateitypen erlauben
+    const allowedExtensions = ['.html', '.md', '.txt'];
+    const hasAllowedExtension = allowedExtensions.some(ext => lower.endsWith(ext));
+
+    if (!hasAllowedExtension) return false;
+
+    return true;
+}
+
+
+// ================================
 // SITEMAP LADEN
 // ================================
 async function loadSitemap() {
@@ -123,49 +151,103 @@ async function fetchFileContent(url) {
     }
 }
 
+
+async function buildSearchIndex() {
+    console.log("📚 Baue Volltext-Index...");
+
+    const relevantUrls = sitemapUrls.filter(shouldIndexUrl);
+
+    const fetchPromises = relevantUrls.map(async (url) => {
+        const content = await fetchFileContent(url);
+        if (!content) return null;
+
+        const cleanText = content
+        .replace(/^QUELLE:.*?\nINHALT:/, '')
+        .toLowerCase();
+
+        return {
+            url,
+            text: cleanText,
+            isBackup: isBackupUrl(url)
+        };
+    });
+
+    const results = await Promise.all(fetchPromises);
+    searchIndex = results.filter(Boolean);
+
+    indexReady = true;
+    console.log(`✅ Index bereit (${searchIndex.length} Dokumente)`);
+}
+
+
+
+
+
 // ================================
 // KONTEXT FINDEN
 // ================================
 async function fetchContext(userMessage) {
+    if (!indexReady) return '';
+
     const msgLower = userMessage.toLowerCase();
-    // Zerlegt die Nachricht in Wörter und filtert Füllwörter raus
+    const wantsBackup = /backup|früher|alte version|unterschied|damals|war anders/i.test(msgLower);
+
     const words = msgLower.split(/\W+/).filter(w => w.length > 2);
 
-    const urlScores = sitemapUrls.map(url => {
-        const urlLower = url.toLowerCase();
+    const scored = searchIndex.map(doc => {
         let score = 0;
 
-        words.forEach(word => {
-            // 1. Volltreffer im Dateinamen (sehr wichtig)
-            if (urlLower.includes(word)) score += 15;
-
-            // 2. "Sloppy" Match: Erkennt auch Teilwörter (z.B. "hop" findet "hoppitex")
-            // Wir prüfen, ob das Wort zumindest zu 70% im Dateinamen vorkommt
-            if (word.length > 3 && urlLower.includes(word.substring(0, 4))) score += 5;
-        });
-
-        // 3. Bonus für Wiki/Lore-Ordner
-        if (score > 0 && (urlLower.includes('wiki') || urlLower.includes('lore'))) {
-            score += 10;
+        // Intent-Erkennung
+        if (/wer|wer ist|charakter/i.test(msgLower) && doc.url.includes('/wiki/')) {
+            score += 15;
         }
 
-        return { url, score };
+        if (/geschichte|lore|hintergrund/i.test(msgLower) && doc.url.includes('/lore/')) {
+            score += 15;
+        }
+
+        if (/studio|über euch|trafkhop/i.test(msgLower) && doc.url.includes('/studio/')) {
+            score += 15;
+        }
+
+        // Backup-Regel
+        if (doc.isBackup && !wantsBackup) {
+            return { doc, score: -1 };
+        }
+
+        words.forEach(word => {
+            if (doc.text.includes(word)) score += 8;
+            if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
+        });
+
+            // Wiki/Lore Bonus
+            if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) {
+                score += 5;
+            }
+
+            return { doc, score };
     });
 
-    // Wir nehmen die Top 3 der am besten passenden Dateien
-    const topUrls = urlScores
-        .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3)
-        .map(item => item.url);
+    const topDocs = scored
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(x => x.doc);
 
-    if (topUrls.length === 0) return '';
+    if (topDocs.length === 0) return '';
 
-    console.log("Alfonz durchsucht die Archive für:", topUrls);
+    console.log("🔎 Alfonz findet:", topDocs.map(d => d.url));
 
-    const contents = await Promise.all(topUrls.map(url => fetchFileContent(url)));
-    return contents.filter(c => c.length > 10).join('\n\n---\n\n');
+    return topDocs
+    .map(d => {
+        const label = d.isBackup
+        ? `[BACKUP - VERALTETE INFO]\nQUELLE: ${d.url}`
+        : `QUELLE: ${d.url}`;
+        return `${label}\nINHALT: ${d.text.substring(0, 4000)}`;
+    })
+    .join('\n\n---\n\n');
 }
+
 
 // ================================
 // UI
@@ -213,7 +295,7 @@ async function queryGitHubModels(finalPrompt, userText) {
     }
 
     const result = await response.json();
-    const reply = result.choices[0].message.content;
+    const reply = result?.choices?.[0]?.message?.content || "";
 
     // WICHTIG: Hier lösen wir das Token-Limit!
     // Wir speichern nur die kurze Nutzerfrage (userText) in die History,
@@ -243,7 +325,13 @@ async function sendMessage() {
 
     try {
         // Wir nehmen die aktuelle Frage PLUS das Thema der letzten Frage für die Suche
-        const lastQuestion = chatHistory.length > 0 ? chatHistory[chatHistory.length - 2].content : "";
+        let lastQuestion = "";
+        for (let i = chatHistory.length - 1; i >= 0; i--) {
+            if (chatHistory[i].role === "user") {
+                lastQuestion = chatHistory[i].content;
+                break;
+            }
+        }
         const searchQuery = `${text} ${lastQuestion}`;
         const context = await fetchContext(searchQuery); // <- Jetzt sucht er mit beiden Begriffen!
         const finalPrompt = context
@@ -269,7 +357,7 @@ async function sendMessage() {
 // ================================
 // INIT
 // ================================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     chatWindow = document.getElementById('chat-window');
     inputField = document.getElementById('chat-input');
     sendBtn = document.getElementById('send-btn');
@@ -285,5 +373,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Enter') sendMessage();
     });
 
-        loadSitemap();
+        await loadSitemap();
+        await buildSearchIndex();
 });
