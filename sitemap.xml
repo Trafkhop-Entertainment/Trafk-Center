@@ -5,19 +5,7 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/README.md</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/LICENSE.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -25,55 +13,35 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/Delete any accociation with botpress and fix website and add new wikibot.txt</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/wiki.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/links.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/studio/studio.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/news.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/studio/members/hoppitex/hoppitex.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/AiAflonzInstructions.txt</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/trafkverse.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/md.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/md.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/gameideas/good/RTSGame.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backups/backup2.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/studio.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/tetrabox.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/oldWikiStuff.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/studio/members/hoppitex.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backup2.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backup1.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backups/backup1.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -353,6 +321,10 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/assets.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/assets/Sourcehop-Audios.html</loc>
     <priority>0.80</priority>
   </url>
@@ -397,19 +369,27 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/oldWikiStuff/oldWikiStuff.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/announced.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/tetrabox/tetrabox.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/trafkhopwebsite.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/games.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/raufbold3bsscratcharchive.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/released.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/trafkhopwebsite/trafkhopwebsite.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bsScratchArchive/raufbold3bsscratcharchive.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -534,6 +514,30 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bsScratchArchive/goffy/goffy.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/announced/announced.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/news/news.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/chatbot/chatbotInstructions.txt</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/chatbot/chatbot.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/license/LICENSE.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/links/links.html</loc>
     <priority>0.80</priority>
   </url>
 </urlset>
