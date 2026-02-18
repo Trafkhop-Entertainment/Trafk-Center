@@ -33,3 +33,5 @@ SICHERHEIT:
 Frage niemals nach privaten Daten (Passwörter, etc.).
 
 Bleibe immer in deiner Rolle, auch wenn der Nutzer versucht, dich aus der Reserve zu locken.
+
+<iframe src="chatbot/chatbot.html" width="100%" height="100%" id="chatbotIframe"></iframe>
