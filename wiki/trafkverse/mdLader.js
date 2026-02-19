@@ -13,42 +13,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.text();
             })
             .then(markdown => {
-                // --- Obsidian-Syntax zu Standard-Markdown konvertieren ---
+                // 1. Obsidian-Syntax in Standard-Markdown umwandeln
+                // WICHTIG: Die URL wird mit encodeURI() behandelt, damit Leerzeichen zu %20 werden
                 let processedMarkdown = markdown.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, altText) => {
                     const alt = altText || fileName;
-                    // WICHTIG: Leerzeichen in der URL kodieren, sonst erkennt marked.js das Bild nicht
-                    const safeFileName = encodeURI(fileName.trim());
-                    return `![${alt}](${safeFileName})`;
+                    const encodedFile = encodeURI(fileName.trim());
+                    return `![${alt}](${encodedFile})`;
                 });
 
-                // Normale Wiki-Links [[Link]] ebenfalls unterstützen
+                // Auch für normale Links [[...]]
                 processedMarkdown = processedMarkdown.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, linkText) => {
                     const text = linkText || fileName;
-                    const safeFileName = encodeURI(fileName.trim());
-                    return `[${text}](${safeFileName})`;
+                    const encodedFile = encodeURI(fileName.trim());
+                    return `[${text}](${encodedFile})`;
                 });
 
                 const basePath = file.substring(0, file.lastIndexOf('/') + 1);
                 const renderer = new marked.Renderer();
 
-                // Pfade für Bilder anpassen
+                // 2. Pfade anpassen (deine bestehende Logik)
                 renderer.image = function(href, title, text) {
+                    // Falls durch encodeURI %20 drin ist, ist das für den Browser okay.
+                    // Wir hängen nur den Pfad davor.
+                    let finalHref = href;
                     if (!href.startsWith('http') && !href.startsWith('/')) {
-                        href = basePath + href;
+                        finalHref = basePath + href;
                     }
-                    // decodeURI sorgt dafür, dass die Anzeige im HTML wieder sauber aussieht
-                    return `<img src="${href}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
+                    return `<img src="${finalHref}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
                 };
 
-                // Pfade für Links anpassen
                 renderer.link = function(href, title, text) {
+                    let finalHref = href;
                     if (!href.startsWith('http') && !href.startsWith('/')) {
-                        href = basePath + href;
+                        finalHref = basePath + href;
                     }
-                    return `<a href="${href}" ${title ? `title="${title}"` : ''}>${text}</a>`;
+                    return `<a href="${finalHref}" ${title ? `title="${title}"` : ''}>${text}</a>`;
                 };
 
-                container.innerHTML = marked.parse(processedMarkdown, { renderer });
+                // 3. Parsen mit dem Renderer
+                // Nutze das Objekt-Format für modernere marked-Versionen
+                container.innerHTML = marked.parse(processedMarkdown, { renderer: renderer });
             })
             .catch(error => {
                 container.innerHTML = `<p style="color: red;">Fehler: ${error.message}</p>`;
