@@ -332,10 +332,17 @@ async function sendMessage() {
                 break;
             }
         }
-        const searchQuery = `${text} ${lastQuestion}`;
+        let searchQuery = text;
+
+        // Nur bei echten Follow-Ups Kontext anhängen
+        const isFollowUp = /mehr|weiter|und was|genauer|details|erzähl|nochmal|was ist damit/i.test(text.toLowerCase());
+
+        if (isFollowUp && lastQuestion) {
+            searchQuery = `${text} ${lastQuestion}`;
+        }
         const context = await fetchContext(searchQuery); // <- Jetzt sucht er mit beiden Begriffen!
         const finalPrompt = context
-        ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nAntworte basierend darauf auf die Frage: ${text}`
+        ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten. Wenn die Antwort nicht darin steht, sage klar, dass sie nicht in den Archiven zu finden ist.\n\nFrage: ${text}`
         : text;
 
         const reply = await queryGitHubModels(finalPrompt, text);
