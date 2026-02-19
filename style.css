@@ -369,3 +369,6 @@ footer {
         right: 0;
     }
 }
+.content.md img {
+    max-width: 100%;
+}
