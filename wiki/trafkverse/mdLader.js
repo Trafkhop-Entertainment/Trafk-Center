@@ -7,56 +7,71 @@ document.addEventListener("DOMContentLoaded", () => {
         if (file) {
             fetch(file)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Datei "${file}" konnte nicht geladen werden.`);
-                }
+                if (!response.ok) throw new Error(`Datei "${file}" konnte nicht geladen werden.`);
                 return response.text();
             })
             .then(markdown => {
-                // 1. Obsidian-Syntax in Standard-Markdown umwandeln
-                // Wir nutzen encodeURI, um Leerzeichen in Pfaden für den Parser "lesbar" zu machen.
+                // 1. Obsidian Wiki-Links Vorverarbeitung
+                // Ersetzt ![[Bild.png]] durch ![Bild.png](Bild%20.png)
                 let processedMarkdown = markdown.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, altText) => {
-                    const alt = altText || fileName;
-                    const encodedFile = encodeURI(fileName.trim());
-                    return `![${alt}](${encodedFile})`;
+                    const encoded = encodeURI(fileName.trim());
+                    return `![${altText || fileName}](${encoded})`;
                 });
 
                 processedMarkdown = processedMarkdown.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, linkText) => {
-                    const text = linkText || fileName;
-                    const encodedFile = encodeURI(fileName.trim());
-                    return `[${text}](${encodedFile})`;
+                    const encoded = encodeURI(fileName.trim());
+                    return `[${linkText || fileName}](${encoded})`;
                 });
 
                 const basePath = file.substring(0, file.lastIndexOf('/') + 1);
                 const renderer = new marked.Renderer();
 
-                // 2. Renderer für Bilder (Repariert für marked v7+)
-                renderer.image = function(arg1, arg2, arg3) {
-                    // Falls marked ein Objekt übergibt (neuere Versionen)
-                    let href = typeof arg1 === 'object' ? arg1.href : arg1;
-                    let text = typeof arg1 === 'object' ? arg1.text : arg3;
-                    let title = typeof arg1 === 'object' ? arg1.title : arg2;
-
-                    if (href && !href.startsWith('http') && !href.startsWith('/')) {
-                        href = basePath + href;
+                // Hilfsfunktion für die Pfad-Logik (Sicher gegen Nicht-Strings)
+                const resolvePath = (path) => {
+                    if (typeof path !== 'string') return path;
+                    if (!path.startsWith('http') && !path.startsWith('/')) {
+                        return basePath + path;
                     }
-                    return `<img src="${href}" alt="${text || ''}" ${title ? `title="${title}"` : ''}>`;
+                    return path;
                 };
 
-                // 3. Renderer für Links (Repariert für marked v7+)
-                renderer.link = function(arg1, arg2, arg3) {
-                    let href = typeof arg1 === 'object' ? arg1.href : arg1;
-                    let text = typeof arg1 === 'object' ? arg1.text : arg3;
-                    let title = typeof arg1 === 'object' ? arg1.title : arg2;
+                // 2. Neuer, robuster Image-Renderer
+                renderer.image = function(token, title, text) {
+                    let href, alt;
 
-                    if (href && !href.startsWith('http') && !href.startsWith('/')) {
-                        href = basePath + href;
+                    // PRÜFUNG: Ist 'token' ein Objekt (neue API) oder ein String (alte API)?
+                    if (typeof token === 'object' && token !== null) {
+                        href = token.href;
+                        alt = token.text;
+                        title = token.title;
+                    } else {
+                        href = token;
+                        alt = text;
                     }
-                    return `<a href="${href}" ${title ? `title="${title}"` : ''}>${text}</a>`;
+
+                    const finalHref = resolvePath(href);
+                    return `<img src="${finalHref || ''}" alt="${alt || ''}" ${title ? `title="${title}"` : ''}>`;
                 };
 
-                // Parsen mit dem angepassten Renderer
-                container.innerHTML = marked.parse(processedMarkdown, { renderer });
+                // 3. Neuer, robuster Link-Renderer
+                renderer.link = function(token, title, text) {
+                    let href, linkText;
+
+                    if (typeof token === 'object' && token !== null) {
+                        href = token.href;
+                        linkText = token.text;
+                        title = token.title;
+                    } else {
+                        href = token;
+                        linkText = text;
+                    }
+
+                    const finalHref = resolvePath(href);
+                    return `<a href="${finalHref || ''}" ${title ? `title="${title}"` : ''}>${linkText || ''}</a>`;
+                };
+
+                // Markdown parsen mit dem neuen Renderer
+                container.innerHTML = marked.parse(processedMarkdown, { renderer: renderer });
             })
             .catch(error => {
                 container.innerHTML = `<p style="color: red;">Fehler: ${error.message}</p>`;
