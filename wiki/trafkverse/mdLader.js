@@ -14,14 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(markdown => {
                 // 1. Obsidian-Syntax in Standard-Markdown umwandeln
-                // WICHTIG: Die URL wird mit encodeURI() behandelt, damit Leerzeichen zu %20 werden
+                // Wir nutzen encodeURI, um Leerzeichen in Pfaden für den Parser "lesbar" zu machen.
                 let processedMarkdown = markdown.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, altText) => {
                     const alt = altText || fileName;
                     const encodedFile = encodeURI(fileName.trim());
                     return `![${alt}](${encodedFile})`;
                 });
 
-                // Auch für normale Links [[...]]
                 processedMarkdown = processedMarkdown.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, linkText) => {
                     const text = linkText || fileName;
                     const encodedFile = encodeURI(fileName.trim());
@@ -31,28 +30,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 const basePath = file.substring(0, file.lastIndexOf('/') + 1);
                 const renderer = new marked.Renderer();
 
-                // 2. Pfade anpassen (deine bestehende Logik)
-                renderer.image = function(href, title, text) {
-                    // Falls durch encodeURI %20 drin ist, ist das für den Browser okay.
-                    // Wir hängen nur den Pfad davor.
-                    let finalHref = href;
-                    if (!href.startsWith('http') && !href.startsWith('/')) {
-                        finalHref = basePath + href;
+                // 2. Renderer für Bilder (Repariert für marked v7+)
+                renderer.image = function(arg1, arg2, arg3) {
+                    // Falls marked ein Objekt übergibt (neuere Versionen)
+                    let href = typeof arg1 === 'object' ? arg1.href : arg1;
+                    let text = typeof arg1 === 'object' ? arg1.text : arg3;
+                    let title = typeof arg1 === 'object' ? arg1.title : arg2;
+
+                    if (href && !href.startsWith('http') && !href.startsWith('/')) {
+                        href = basePath + href;
                     }
-                    return `<img src="${finalHref}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
+                    return `<img src="${href}" alt="${text || ''}" ${title ? `title="${title}"` : ''}>`;
                 };
 
-                renderer.link = function(href, title, text) {
-                    let finalHref = href;
-                    if (!href.startsWith('http') && !href.startsWith('/')) {
-                        finalHref = basePath + href;
+                // 3. Renderer für Links (Repariert für marked v7+)
+                renderer.link = function(arg1, arg2, arg3) {
+                    let href = typeof arg1 === 'object' ? arg1.href : arg1;
+                    let text = typeof arg1 === 'object' ? arg1.text : arg3;
+                    let title = typeof arg1 === 'object' ? arg1.title : arg2;
+
+                    if (href && !href.startsWith('http') && !href.startsWith('/')) {
+                        href = basePath + href;
                     }
-                    return `<a href="${finalHref}" ${title ? `title="${title}"` : ''}>${text}</a>`;
+                    return `<a href="${href}" ${title ? `title="${title}"` : ''}>${text}</a>`;
                 };
 
-                // 3. Parsen mit dem Renderer
-                // Nutze das Objekt-Format für modernere marked-Versionen
-                container.innerHTML = marked.parse(processedMarkdown, { renderer: renderer });
+                // Parsen mit dem angepassten Renderer
+                container.innerHTML = marked.parse(processedMarkdown, { renderer });
             })
             .catch(error => {
                 container.innerHTML = `<p style="color: red;">Fehler: ${error.message}</p>`;
