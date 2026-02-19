@@ -13,31 +13,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.text();
             })
             .then(markdown => {
-                // --- NEU: Obsidian Wiki-Link Support ---
-                // Sucht nach ![[bild.png]] oder ![[bild.png|alt-text]]
-                // Und wandelt es um in ![alt-text](bild.png)
+                // --- Obsidian-Syntax zu Standard-Markdown konvertieren ---
                 let processedMarkdown = markdown.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, altText) => {
                     const alt = altText || fileName;
-                    return `![${alt}](${fileName})`;
+                    // WICHTIG: Leerzeichen in der URL kodieren, sonst erkennt marked.js das Bild nicht
+                    const safeFileName = encodeURI(fileName.trim());
+                    return `![${alt}](${safeFileName})`;
                 });
 
-                // Falls du auch normale Wiki-Links [[Seite]] unterstützen willst:
+                // Normale Wiki-Links [[Link]] ebenfalls unterstützen
                 processedMarkdown = processedMarkdown.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, linkText) => {
                     const text = linkText || fileName;
-                    return `[${text}](${fileName})`;
+                    const safeFileName = encodeURI(fileName.trim());
+                    return `[${text}](${safeFileName})`;
                 });
-                // ---------------------------------------
 
                 const basePath = file.substring(0, file.lastIndexOf('/') + 1);
                 const renderer = new marked.Renderer();
 
+                // Pfade für Bilder anpassen
                 renderer.image = function(href, title, text) {
                     if (!href.startsWith('http') && !href.startsWith('/')) {
                         href = basePath + href;
                     }
+                    // decodeURI sorgt dafür, dass die Anzeige im HTML wieder sauber aussieht
                     return `<img src="${href}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
                 };
 
+                // Pfade für Links anpassen
                 renderer.link = function(href, title, text) {
                     if (!href.startsWith('http') && !href.startsWith('/')) {
                         href = basePath + href;
@@ -45,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return `<a href="${href}" ${title ? `title="${title}"` : ''}>${text}</a>`;
                 };
 
-                // Wichtig: Nutze hier das 'processedMarkdown'
                 container.innerHTML = marked.parse(processedMarkdown, { renderer });
             })
             .catch(error => {
