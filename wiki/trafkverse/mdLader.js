@@ -71,7 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 // Markdown parsen mit dem neuen Renderer
-                container.innerHTML = marked.parse(processedMarkdown, { renderer: renderer });
+                container.innerHTML = marked.parse(processedMarkdown, {
+                    renderer: renderer,
+                    breaks: true, // Erzeugt <br> bei einfachen Zeilenumbrüchen
+                    gfm: true     // GitHub Flavored Markdown (standardmäßig meist an)
+                });
             })
             .catch(error => {
                 container.innerHTML = `<p style="color: red;">Fehler: ${error.message}</p>`;
