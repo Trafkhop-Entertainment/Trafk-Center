@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(markdown => {
                 // 1. Obsidian Wiki-Links Vorverarbeitung
-                // Ersetzt ![[Bild.png]] durch ![Bild.png](Bild%20.png)
                 let processedMarkdown = markdown.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, altText) => {
                     const encoded = encodeURI(fileName.trim());
                     return `![${altText || fileName}](${encoded})`;
@@ -26,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const basePath = file.substring(0, file.lastIndexOf('/') + 1);
                 const renderer = new marked.Renderer();
 
-                // Hilfsfunktion für die Pfad-Logik (Sicher gegen Nicht-Strings)
                 const resolvePath = (path) => {
                     if (typeof path !== 'string') return path;
                     if (!path.startsWith('http') && !path.startsWith('/')) {
@@ -35,47 +33,65 @@ document.addEventListener("DOMContentLoaded", () => {
                     return path;
                 };
 
-                // 2. Neuer, robuster Image-Renderer
+                // Renderer für Bilder und Links
                 renderer.image = function(token, title, text) {
-                    let href, alt;
-
-                    // PRÜFUNG: Ist 'token' ein Objekt (neue API) oder ein String (alte API)?
-                    if (typeof token === 'object' && token !== null) {
-                        href = token.href;
-                        alt = token.text;
-                        title = token.title;
-                    } else {
-                        href = token;
-                        alt = text;
-                    }
-
+                    let href = (typeof token === 'object') ? token.href : token;
+                    let alt = (typeof token === 'object') ? token.text : text;
                     const finalHref = resolvePath(href);
-                    return `<img src="${finalHref || ''}" alt="${alt || ''}" ${title ? `title="${title}"` : ''}>`;
+                    return `<img src="${finalHref || ''}" alt="${alt || ''}">`;
                 };
 
-                // 3. Neuer, robuster Link-Renderer
                 renderer.link = function(token, title, text) {
-                    let href, linkText;
-
-                    if (typeof token === 'object' && token !== null) {
-                        href = token.href;
-                        linkText = token.text;
-                        title = token.title;
-                    } else {
-                        href = token;
-                        linkText = text;
-                    }
-
+                    let href = (typeof token === 'object') ? token.href : token;
+                    let linkText = (typeof token === 'object') ? token.text : text;
                     const finalHref = resolvePath(href);
-                    return `<a href="${finalHref || ''}" ${title ? `title="${title}"` : ''}>${linkText || ''}</a>`;
+                    return `<a href="${finalHref || ''}">${linkText || ''}</a>`;
                 };
 
-                // Markdown parsen mit dem neuen Renderer
-                container.innerHTML = marked.parse(processedMarkdown, {
+                // Markdown parsen
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = marked.parse(processedMarkdown, {
                     renderer: renderer,
-                    breaks: true, // Erzeugt <br> bei einfachen Zeilenumbrüchen
-                    gfm: true     // GitHub Flavored Markdown (standardmäßig meist an)
+                    breaks: true,
+                    gfm: true
                 });
+
+                // --- STRUKTUR-LOGIK: Header INSIDE Content ---
+                const finalFragment = document.createDocumentFragment();
+                let currentContentDiv = null;
+
+                Array.from(tempDiv.children).forEach(child => {
+                    if (child.tagName === 'H1') {
+                        // Neue Content-Box erstellen
+                        currentContentDiv = document.createElement('div');
+                        currentContentDiv.className = 'content md';
+                        finalFragment.appendChild(currentContentDiv);
+
+                        // Den Header-Container erstellen und INSIDE die Content-Box schieben
+                        const headerWrapper = document.createElement('div');
+                        headerWrapper.className = 'header';
+                        headerWrapper.appendChild(child.cloneNode(true));
+                        currentContentDiv.appendChild(headerWrapper);
+                    } else {
+                        // Fallback, falls Text vor dem ersten H1 steht
+                        if (!currentContentDiv) {
+                            currentContentDiv = document.createElement('div');
+                            currentContentDiv.className = 'content md';
+                            finalFragment.appendChild(currentContentDiv);
+                        }
+                        currentContentDiv.appendChild(child.cloneNode(true));
+                    }
+                });
+                // Ersetze den Container durch die neuen .content.md-Boxen
+                const parent = container.parentNode;
+                if (parent) {
+                    // Füge alle neuen Boxen direkt vor dem Container ein
+                    while (finalFragment.firstChild) {
+                        parent.insertBefore(finalFragment.firstChild, container);
+                    }
+                    // Entferne den leeren Container
+                    parent.removeChild(container);
+                }
             })
             .catch(error => {
                 container.innerHTML = `<p style="color: red;">Fehler: ${error.message}</p>`;
