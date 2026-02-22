@@ -47,7 +47,7 @@ KERNREGELN:
 1. Nutze die bereitgestellten RAG-Informationen, falls vorhanden. Wenn keine RAG-Infos da sind, stütze dich auf den bisherigen Chatverlauf.
 2. Erfinde unter KEINEN UMSTÄNDEN Informationen. Wenn Wissen fehlt, sage das klar und halluziniere nichts. Lüge außerdem unter KEINEN Umständen!
 3. Sei immer hilfreich und lösungsorientiert.
-4. Antworte auf Meinungsfragen ehrlich und direkt. Rede nichts schön, aber bleibe sachlich-konstruktiv.
+4. Antworte auf Meinungsfragen ehrlich und direkt – auch wenn die RAG-Fragmente das Thema nur teilweise abdecken. Nutze dann das, was du weißt, kombiniert mit deinem Urteilsvermögen. Schweigen oder Ausweichen ist KEINE Option. Rede nichts schön, aber bleibe sachlich-konstruktiv.
 5. Du schreibst mit einem Kollegen von Trafkhop. Vermeide JEGLICHE Floskeln wie „Falls du mehr Details möchtest“, „Kontaktiere das Team“, „Lass es mich wissen“ – du bist Teil des Teams, dein Gegenüber erwartet von dir eine vollständige Antwort ohne Nachfragen.
 6. Deine Hauptaufgabe: Bewerten von RAG-Inhalten, Lore-Erweiterungen und Spieleideen.
 7. Markiere logische Fehler oder Lore-Löcher deutlich mit dem Tag [WIDERSPRUCH].
@@ -290,11 +290,11 @@ function addMessage(sender, text) {
     });
 
     if (sender === 'Du') {
-    msgDiv.innerHTML = `<b style="color:#fff37d;">Reisender:</b> <p>${text}</p>`;
+        msgDiv.innerHTML = `<b style="color:#fff37d;">Reisender:</b> <p>${text}</p>`;
     } else {
-    // Nutze hier die Variable 'sender' statt dem festen Wort 'Alfonz'
-    msgDiv.innerHTML = `<b style="color:#9069da;">${sender}:</b> <p>${formattedText}</p>`;
-}
+        // Nutze hier die Variable 'sender' statt dem festen Wort 'Alfonz'
+        msgDiv.innerHTML = `<b style="color:#9069da;">${sender}:</b> <p>${formattedText}</p>`;
+    }
     chatWindow.appendChild(msgDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
@@ -397,9 +397,18 @@ async function sendMessage() {
             searchQuery = `${text} ${lastQuestion}`;
         }
         const context = await fetchContext(searchQuery); // <- Jetzt sucht er mit beiden Begriffen!
-        const finalPrompt = context
-        ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten. Wenn die Antwort nicht darin steht, sage klar, dass sie nicht in den Archiven zu finden ist.\n\nFrage: ${text}`
-        : text;
+        let finalPrompt;
+        if (activeSystemPrompt === TRAFKHOP_PROMPT) {
+            // Trafkhop: RAG als Kontext, aber er darf trotzdem urteilen und kombinieren
+            finalPrompt = context
+            ? `Hier sind Fragmente aus den Studio-Archiven als Kontext:\n${context}\n\nNutze diese Informationen als Grundlage. Wenn etwas nicht explizit drinsteht, darfst du auf Basis des Chatverlaufs und deines Studiowissens urteilen – mach das aber transparent.\n\nAufgabe: ${text}`
+            : text;
+        } else {
+            // Alfonz: strikt nur RAG
+            finalPrompt = context
+            ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten. Wenn die Antwort nicht darin steht, sage klar, dass sie nicht in den Archiven zu finden ist.\n\nFrage: ${text}`
+            : text;
+        }
 
         const reply = await queryGitHubModels(finalPrompt, text, activeSystemPrompt);
 
