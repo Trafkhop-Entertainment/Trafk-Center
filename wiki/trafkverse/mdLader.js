@@ -62,18 +62,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 Array.from(tempDiv.children).forEach(child => {
                     if (child.tagName === 'H1') {
-                        // Neue Content-Box erstellen
                         currentContentDiv = document.createElement('div');
                         currentContentDiv.className = 'content md';
+
+                        // ID von H1 auf die Content-Box übertragen für Anker-Links
+                        if (child.id) {
+                            currentContentDiv.id = child.id;
+                            child.removeAttribute('id');
+                        }
+
                         finalFragment.appendChild(currentContentDiv);
 
-                        // Den Header-Container erstellen und INSIDE die Content-Box schieben
                         const headerWrapper = document.createElement('div');
                         headerWrapper.className = 'header';
                         headerWrapper.appendChild(child.cloneNode(true));
                         currentContentDiv.appendChild(headerWrapper);
                     } else {
-                        // Fallback, falls Text vor dem ersten H1 steht
                         if (!currentContentDiv) {
                             currentContentDiv = document.createElement('div');
                             currentContentDiv.className = 'content md';
@@ -82,15 +86,26 @@ document.addEventListener("DOMContentLoaded", () => {
                         currentContentDiv.appendChild(child.cloneNode(true));
                     }
                 });
-                // Ersetze den Container durch die neuen .content.md-Boxen
+
+                // --- DOM AKTUALISIERUNG ---
                 const parent = container.parentNode;
                 if (parent) {
-                    // Füge alle neuen Boxen direkt vor dem Container ein
                     while (finalFragment.firstChild) {
                         parent.insertBefore(finalFragment.firstChild, container);
                     }
-                    // Entferne den leeren Container
                     parent.removeChild(container);
+
+                    // --- NEU: ANKER-SCROLLING NACH LADEN ---
+                    // Wir warten einen winzigen Moment (setTimeout), damit der Browser das Layout berechnen kann
+                    setTimeout(() => {
+                        const currentHash = window.location.hash;
+                        if (currentHash) {
+                            const targetElement = document.querySelector(currentHash);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }
+                    }, 100);
                 }
             })
             .catch(error => {
