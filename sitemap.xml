@@ -37,7 +37,7 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/gameideas/good/RTSGame.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/gameideas/good/Dramoteu;-Claim-to-the-Urlstein.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -46,6 +46,42 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/backups/backup1.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/Information.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/Worlds.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/information/Alfönisß.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/information/UseCasesforMagic(VielfaltderZauberkraftnutzung).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/information/AlfönisßesWöaddabuach.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/information/TheBasisoftheTriverse(GrundgesetzederdreiBehälter).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/information/MagicBook(Zauberbuch).html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/Worlds/Kosmos.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/lore/Worlds/Dramoteu.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -337,11 +373,15 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/Magic Book (Zauberbuch).md</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/AlfönisßesWöaddabuaß.md</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/Use Cases for Magic (Vielfalt der Kraftnutzung).md</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/UseCasesforMagic(VielfaltderZauberkraftnutzung).md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/TheBasisoftheTriverse(GrundgesetzederdreiBehälter).md</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -349,11 +389,7 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/Alfönisßes Wöaddabuaß.md</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/The Basis of the Triverse (Grundgesetze der drei Behälter).md</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Information/MagicBook(Zauberbuch).md</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -362,6 +398,62 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Worlds/Kosmos/Kosmos.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Kosmos.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Reich der Toten (neuer Name plz).md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/other.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Ursel.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Gartlotz.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Schneiheim (neuer name plz).md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Dramoteu.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Bröcklis.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Zierpracht (neuer name plz).md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Schüllen (Wellen x Schüssel).md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Wisshort (neuer Name plz).md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Spielthon.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Gruhor.md</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/trafkverse/Sourcehop-Notes/lore/Characters/Chaotis (neuer name plz).md</loc>
     <priority>0.80</priority>
   </url>
   <url>
