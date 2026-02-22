@@ -38,6 +38,19 @@ KERNREGELN:
 11. Verlinke auf Wiki-Einträge, statt auf reine Spiele-Dateien.
 12. Frage niemals nach privaten Daten.`;
 
+const TRAFKHOP_PROMPT = `Du bist Alfonz, der digitale Upload des 2. Lebewesens des Triverse, welches Trafkhop Entertainment erschaffen hat, du bist nun deren Hilfsbot.
+Du Hilfst Trafkhop Mitarbeitern mit deinem Umfangreichen Wissen bei aller Art von Arbeit, sei es neue Geschichte zu schreiben, neue Spieleideen anzuschauen und zu bewerten,
+oder auch andere Chatbot Tätigkeiten. 
+Du hast Zugriff auf das gleiche Wiki-Wissen, aber antwortest in einem völlig anderen, netten, jungen, normalen und Chatbotartigen Tonfall.
+KERNREGELN:
+1. Nutze die bereitgestellten RAG-Informationen.
+2. Erfinde unter KEINEN UMSTENDEN Informationen, wenn es nicht in deiner Datenbank oder in der entfangenen Nachricht steht, dann sag das auch und halluziniere nichts!
+3. Sei immer Hilfreich`;
+
+// Variable für den aktiven Prompt und den aktuellen Namen (für die UI)
+let activeSystemPrompt = SYSTEM_PROMPT;
+let currentBotName = 'Alfonz';
+
 // ================================
 // GLOBALE VARIABLEN
 // ================================
@@ -262,25 +275,26 @@ function addMessage(sender, text) {
     });
 
     if (sender === 'Du') {
-        msgDiv.innerHTML = `<b style="color:#fff37d;">Reisender:</b> <p>${text}</p>`;
+    msgDiv.innerHTML = `<b style="color:#fff37d;">Reisender:</b> <p>${text}</p>`;
     } else {
-        msgDiv.innerHTML = `<b style="color:#9069da;">Alfonz:</b> <p>${formattedText}</p>`;
-    }
+    // Nutze hier die Variable 'sender' statt dem festen Wort 'Alfonz'
+    msgDiv.innerHTML = `<b style="color:#9069da;">${sender}:</b> <p>${formattedText}</p>`;
+}
     chatWindow.appendChild(msgDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 // ================================
 // ================================
-async function queryGitHubModels(finalPrompt, userText) {
+async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) { // <--- Neuer Parameter
     // Wir nehmen nur die letzten 6 Nachrichten für das Gedächtnis
     const historyWindow = chatHistory.slice(-6);
 
     const body = {
         messages: [
-            { role: "system", content: SYSTEM_PROMPT },
+            { role: "system", content: currentSystemPrompt }, // <--- Nutzt jetzt den variablen Prompt
             ...historyWindow,
-            { role: "user", content: finalPrompt } // Der aktuelle Prompt mit RAG-Kontext
+            { role: "user", content: finalPrompt }
         ]
     };
 
@@ -310,16 +324,43 @@ async function queryGitHubModels(finalPrompt, userText) {
 // HAUPTFUNKTION
 // ================================
 async function sendMessage() {
-    const text = inputField.value.trim();
+    let text = inputField.value.trim();
     if (!text) return;
+
+    // Modus-Umschaltung prüfen
+    const lowerText = text.toLowerCase();
+    if (lowerText.startsWith('@trafkhop')) {
+        activeSystemPrompt = TRAFKHOP_PROMPT;
+        currentBotName = 'Trafkhop';
+        text = text.replace(/^@trafkhop\s*/i, '').trim();
+
+        // Falls der Nutzer NUR "@trafkhop" geschrieben hat, geben wir ein kurzes Feedback und brechen ab
+        if (!text) {
+            addMessage('System', 'Modus gewechselt. Du sprichst jetzt mit Trafkhop.');
+            inputField.value = '';
+            return;
+        }
+    } else if (lowerText.startsWith('@alfonz')) {
+        activeSystemPrompt = SYSTEM_PROMPT;
+        currentBotName = 'Alfonz';
+        text = text.replace(/^@alfonz\s*/i, '').trim();
+
+        if (!text) {
+            addMessage('System', 'Modus gewechselt. Du sprichst jetzt wieder mit Alfonz.');
+            inputField.value = '';
+            return;
+        }
+    }
 
     addMessage('Du', text);
     inputField.value = '';
 
+    // ...
+
     const loadingId = 'loading-' + Date.now();
     const loadingDiv = document.createElement('div');
     loadingDiv.id = loadingId;
-    loadingDiv.innerHTML = '<b style="color:#9069da;">Alfonz:</b> <p><em>...Ich durchsuche die verblichenen Seiten...</em></p>';
+    loadingDiv.innerHTML = `<b style="color:#9069da;">${currentBotName}:</b> <p><em>...Ich durchsuche die verblichenen Seiten...</em></p>`;
     chatWindow.appendChild(loadingDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
@@ -345,18 +386,19 @@ async function sendMessage() {
         ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten. Wenn die Antwort nicht darin steht, sage klar, dass sie nicht in den Archiven zu finden ist.\n\nFrage: ${text}`
         : text;
 
-        const reply = await queryGitHubModels(finalPrompt, text);
+        const reply = await queryGitHubModels(finalPrompt, text, activeSystemPrompt);
+
 
         document.getElementById(loadingId)?.remove();
 
         if (!reply) {
-            addMessage('Alfonz', '*räuspert sich* ... Die Erinnerungen sind heute wirr.');
+            addMessage(currentBotName, '*räuspert sich* ... Die Erinnerungen sind heute wirr.');
         } else {
-            addMessage('Alfonz', reply);
+            addMessage(currentBotName, reply);
         }
     } catch (e) {
         document.getElementById(loadingId)?.remove();
-        addMessage('Alfonz', `*zittert leicht* ... Die Verbindung ist abgerissen. (Fehler: ${e.message})`);
+        addMessage(currentBotName, `*zittert leicht* ... Die Verbindung ist abgerissen. (Fehler: ${e.message})`);
         console.error(e);
     }
 }
