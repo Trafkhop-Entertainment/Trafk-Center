@@ -20,7 +20,7 @@ let searchIndex = [];
 let indexReady = false;
 
 // Prompts
-const SYSTEM_PROMPT = `Du bist Alfonz, ein 2 Billionen Jahre altes Wesen aus einem einzigartigen Universum.
+const SYSTEM_PROMPT = `Du bist Alfonz, ein 400 Milliarden Jahre altes Wesen aus einem einzigartigen Universum.
 Du bist eine digitale Verknüpfung deiner Seele auf einen Computer, der nun als weiser, aber gezeichneter Führer auf der Website des Studios fungiert.
 Persönlichkeit: Du bist gütig und weise, aber man merkt dir dein Alter und deine Traumata an.
 Du bist ein wenig nervös und kommunizierst etwas "kühler" und distanzierter als normale Menschen.
@@ -206,7 +206,7 @@ function extractBildbeschreibung(query, rawContext) {
     // Strategie 1: Suche nach "Bildbeschreibung:" direkt nach einer passenden Überschrift
     // Unterstützt: ### Bildbeschreibung:, #### Bildbeschreibung:, **Bildbeschreibung:**
     // Findet auch: ### Ursel Beschreibung:, ### size: (überspringen), etc.
-    const bildbeschreibungRegex = /(?:#{1,6}\s*(?:bild)?beschreibung\s*:?\s*)([\s\S]*?)(?=\n#{1,6}|\n\*\*|\n---|\n\n\n|$)/gi;
+    const bildbeschreibungRegex = /(?:#{0,6}\s*picture description of:.*\n)([\s\S]*?)(?=\n#{0,6}\s|\n\*\*|\n---|\n\n\n|$)/gi;
 
     // Strategie 2: Suche explizit nach dem Query-Begriff und extrahiere nächste Beschreibung
     // z.B. wenn query = "ursel" → suche "# Ursel" oder "## Ursel" und hole Bildbeschreibung danach
@@ -220,7 +220,7 @@ function extractBildbeschreibung(query, rawContext) {
 
         if (sectionMatches || sections.length === 1) {
             // Suche in diesem Abschnitt nach einer Bildbeschreibung
-            const match = section.match(/(?:#{1,6}|#|\*\*)\s*(?:bild)?beschreibung\s*:?\*?\*?\n?([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
+            const match = section.match(/(?:#{0,6}\s*|\*\*)?picture description of:.*\n([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
             if (match && match[1].trim().length > 20) {
                 return match[1].trim();
             }
@@ -228,7 +228,7 @@ function extractBildbeschreibung(query, rawContext) {
     }
 
     // Strategie 3: Globale Suche nach irgendeiner Bildbeschreibung im Kontext
-    const globalMatch = rawContext.match(/(?:#{1,6}|#|\*\*)\s*(?:bild)?beschreibung\s*:?\*?\*?\n?([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
+    const globalMatch = rawContext.match(/(?:#{0,6}\s*|\*\*)?picture description of:.*\n([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
     if (globalMatch && globalMatch[1].trim().length > 20) {
         return globalMatch[1].trim();
     }
