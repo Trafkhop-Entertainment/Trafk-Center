@@ -262,9 +262,9 @@ async function sendMessage() {
             // Wir schneiden den Kontext auf 200 Zeichen ab, um Fehler zu vermeiden.
             let imagePrompt = query;
             if (context) {
-                // Wir filtern grob nach dem Wort "Bildbeschreibung" falls vorhanden
-                const cleanedContext = context.replace(/QUELLE:.*?\nINHALT:/g, '').substring(0, 200);
-                imagePrompt = `${query}, detailed fantasy concept art, visual description: ${cleanedContext}`;
+                const cleanedContext = context.replace(/QUELLE:.*?\nINHALT:/g, '').substring(0, 300);
+                // Wir sagen der KI explizit, dass es "weird" sein soll
+                imagePrompt = `A surreal vision of ${query}. ${cleanedContext}. Style: weird vintage digital art, distorted 3D.`;
             }
 
             const imageUrl = await generateImage(imagePrompt);
