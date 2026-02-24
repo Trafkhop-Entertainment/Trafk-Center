@@ -53,6 +53,19 @@ KERNREGELN:
 5. TEAM-MODUS: Du bist Teil des Studios. Schreib so, als würdest du in einem internen Slack-Channel antworten. Keine Höflichkeitsfloskeln, kein "Lass mich wissen, wenn...". Deine Antwort steht für sich.
 6. KREATIVITÄT: Wenn der Nutzer eine Idee präsentiert, spinn sie weiter. Gib nicht nur Feedback, sondern liefere proaktiv einen "Trafkhop-Twist", der das Ganze einzigartiger macht.`;
 
+const IMAGE_PROMPT_SYSTEM = `You are an expert at writing image generation prompts for Stable Diffusion / FLUX models.
+Your task: Convert a lore description into a precise, visual image prompt.
+
+RULES:
+- Output ONLY the prompt, nothing else. No explanation, no preamble.
+- Max 200 words.
+- Be extremely specific about shapes, colors, lighting, atmosphere.
+- Start with the most important subject, then environment, then style/mood.
+- Use comma-separated descriptors.
+- Good style tags for fantasy: "fantasy concept art, digital painting, detailed, atmospheric lighting"
+- NEVER add photorealism tags unless the description asks for it.
+- NEVER add tags that would degrade quality (no "blurry", "low res", etc).`;
+
 let activeSystemPrompt = SYSTEM_PROMPT;
 let currentBotName = 'Alfonz';
 
@@ -121,6 +134,7 @@ async function buildSearchIndex() {
         return {
             url,
             text: content.replace(/^QUELLE:.*?\nINHALT:/, '').toLowerCase(),
+                                           rawText: content.replace(/^QUELLE:.*?\nINHALT:/, ''), // Originaltext für Bildextraktion
                                            isBackup: isBackupUrl(url)
         };
     });
@@ -162,6 +176,102 @@ async function fetchContext(userMessage) {
 }
 
 // ================================
+// BILDBESCHREIBUNG EXTRAKTION
+// Sucht in Markdown-Dateien nach:
+//   ### Bildbeschreibung: (oder ### <Name>Beschreibung:)
+//   Direkt nach dem gesuchten Begriff (z.B. "# Ursel" → nächste Bildbeschreibung)
+// ================================
+function extractBildbeschreibung(query, rawContext) {
+    if (!rawContext) return null;
+
+    const queryLower = query.toLowerCase();
+
+    // Strategie 1: Suche nach "Bildbeschreibung:" direkt nach einer passenden Überschrift
+    // Unterstützt: ### Bildbeschreibung:, #### Bildbeschreibung:, **Bildbeschreibung:**
+    // Findet auch: ### Ursel Beschreibung:, ### size: (überspringen), etc.
+    const bildbeschreibungRegex = /(?:#{1,6}\s*(?:bild)?beschreibung\s*:?\s*)([\s\S]*?)(?=\n#{1,6}|\n\*\*|\n---|\n\n\n|$)/gi;
+
+    // Strategie 2: Suche explizit nach dem Query-Begriff und extrahiere nächste Beschreibung
+    // z.B. wenn query = "ursel" → suche "# Ursel" oder "## Ursel" und hole Bildbeschreibung danach
+    const sections = rawContext.split(/(?=#{1,6}\s)/);
+
+    for (const section of sections) {
+        // Prüfe ob dieser Abschnitt zum Query passt
+        const firstLine = section.split('\n')[0].toLowerCase();
+        const queryWords = queryLower.split(/\s+/).filter(w => w.length > 2);
+        const sectionMatches = queryWords.some(word => firstLine.includes(word));
+
+        if (sectionMatches || sections.length === 1) {
+            // Suche in diesem Abschnitt nach einer Bildbeschreibung
+            const match = section.match(/(?:#{1,6}|#|\*\*)\s*(?:bild)?beschreibung\s*:?\*?\*?\n?([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
+            if (match && match[1].trim().length > 20) {
+                return match[1].trim();
+            }
+        }
+    }
+
+    // Strategie 3: Globale Suche nach irgendeiner Bildbeschreibung im Kontext
+    const globalMatch = rawContext.match(/(?:#{1,6}|#|\*\*)\s*(?:bild)?beschreibung\s*:?\*?\*?\n?([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
+    if (globalMatch && globalMatch[1].trim().length > 20) {
+        return globalMatch[1].trim();
+    }
+
+    return null;
+}
+
+// Holt den rawText der Top-Dokumente für Bildextraktion
+async function fetchRawContextForImage(query) {
+    if (!indexReady) return { context: '', rawText: '' };
+    const msgLower = query.toLowerCase();
+    const words = msgLower.split(/\W+/).filter(w => w.length > 2);
+
+    const scored = searchIndex.map(doc => {
+        let score = 0;
+        words.forEach(word => {
+            if (doc.text.includes(word)) score += 8;
+            if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
+        });
+            if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
+            return { doc, score };
+    });
+
+    const topDocs = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
+
+    const contextText = topDocs.map(x => x.doc.text.substring(0, 3000)).join('\n\n---\n\n');
+    const rawText = topDocs.map(x => x.doc.rawText || x.doc.text).join('\n\n---\n\n');
+
+    return { context: contextText, rawText };
+}
+
+// Nutzt das LLM um aus einer Lore-Beschreibung einen guten Bildprompt zu bauen
+async function buildImagePromptWithLLM(query, beschreibung) {
+    const userMsg = `Convert this lore description into a Stable Diffusion / FLUX image prompt.
+    Subject/Query: "${query}"
+    Lore description:
+    ${beschreibung}`;
+
+    try {
+        const body = {
+            messages: [
+                { role: "system", content: IMAGE_PROMPT_SYSTEM },
+                { role: "user", content: userMsg }
+            ]
+        };
+        const response = await fetch(PROXY_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+        if (!response.ok) throw new Error("LLM nicht erreichbar");
+        const result = await response.json();
+        return result?.choices?.[0]?.message?.content?.trim() || null;
+    } catch (e) {
+        console.warn("LLM Prompt-Bau fehlgeschlagen:", e);
+        return null;
+    }
+}
+
+// ================================
 // API AUFRUFE
 // ================================
 async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
@@ -190,7 +300,6 @@ async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
 }
 
 async function generateImage(prompt) {
-    // Ruft deinen eigenen Proxy-Server auf!
     const API_URL = "https://trafkhop-chatbotkey.hf.space/image";
 
     const response = await fetch(API_URL, {
@@ -203,7 +312,6 @@ async function generateImage(prompt) {
 
     if (!response.ok) throw new Error("Die Bild-KI antwortet nicht oder ist überlastet.");
 
-    // Wandelt die empfangenen Rohdaten (Blob) in eine lokale Bild-URL für den Browser um
     const blob = await response.blob();
     return URL.createObjectURL(blob);
 }
@@ -255,22 +363,31 @@ async function sendMessage() {
         chatWindow.scrollTop = chatWindow.scrollHeight;
 
         try {
-            // RAG Kontext holen
-            const context = await fetchContext(query);
+            // RAG: Kontext + Rohdaten holen
+            const { context, rawText } = await fetchRawContextForImage(query);
 
-            // Prompt für die KI bauen (DALL-E mini braucht kurze, prägnante Beschreibungen)
-            // Wir schneiden den Kontext auf 200 Zeichen ab, um Fehler zu vermeiden.
-            let imagePrompt = query;
-            if (context) {
-                const cleanedContext = context.replace(/QUELLE:.*?\nINHALT:/g, '').substring(0, 300);
-                // Wir sagen der KI explizit, dass es "weird" sein soll
-                imagePrompt = `A vision of ${query}. ${cleanedContext}. Style: old 3d, crt, vintage.`;
+            let imagePrompt = query; // Fallback: nur der Name
+
+            // Schritt 1: Versuche eine Bildbeschreibung aus dem Markdown zu extrahieren
+            const bildbeschreibung = extractBildbeschreibung(query, rawText);
+
+            if (bildbeschreibung) {
+                // Schritt 2: LLM baut daraus einen sauberen SDXL/FLUX Prompt
+                console.log("✅ Bildbeschreibung gefunden:", bildbeschreibung.substring(0, 100));
+                const llmPrompt = await buildImagePromptWithLLM(query, bildbeschreibung);
+                imagePrompt = llmPrompt || bildbeschreibung.substring(0, 400);
+            } else if (context) {
+                // Kein Bildbeschreibung-Block → LLM aus allgemeinem Kontext
+                console.log("⚠️ Keine Bildbeschreibung gefunden, nutze Kontext...");
+                const llmPrompt = await buildImagePromptWithLLM(query, context.substring(0, 600));
+                imagePrompt = llmPrompt || `${query}, fantasy concept art`;
             }
+
+            console.log("🎨 Finaler Bildprompt:", imagePrompt);
 
             const imageUrl = await generateImage(imagePrompt);
             document.getElementById(loadingId)?.remove();
 
-            // Bild im Chat ausgeben
             addMessage('System', `Hier ist eine Vision aus der Bibleothek:<br><img src="${imageUrl}" style="max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0px 0px 10px #160930;">`);
         } catch (e) {
             document.getElementById(loadingId)?.remove();
