@@ -86,7 +86,7 @@ function shouldIndexUrl(url) {
 async function fetchFileContent(url) {
     try {
         const response = await fetch(encodeURI(url));
-        if (!response.ok) return '';
+        if (!response.ok) return { flat: '', raw: '' };
         let text = await response.text();
 
         if (url.endsWith('.html')) {
@@ -96,11 +96,18 @@ async function fetchFileContent(url) {
             junk.forEach(el => el.remove());
             const contentNode = doc.querySelector('main') || doc.querySelector('.content') || doc.body;
             text = contentNode.innerText || contentNode.textContent;
+            // HTML: collapse whitespace is fine, structure is gone anyway
+            const flat = text.replace(/\s+/g, ' ').trim().substring(0, 5000);
+            return { flat: `QUELLE: ${url}\nINHALT: ${flat}`, raw: flat };
+        } else {
+            // MD/TXT: preserve newlines for regex matching!
+            const trimmed = text.trim().substring(0, 8000);
+            const flat = trimmed.replace(/\s+/g, ' ').trim(); // only for search scoring
+            return { flat: `QUELLE: ${url}\nINHALT: ${flat}`, raw: trimmed };
         }
-        return `QUELLE: ${url}\nINHALT: ${text.replace(/\s+/g, ' ').trim().substring(0, 5000)}`;
     } catch (e) {
         console.error("Fehler beim Entziffern:", e);
-        return '';
+        return { flat: '', raw: '' };
     }
 }
 
@@ -129,12 +136,12 @@ async function buildSearchIndex() {
     console.log("📚 Baue Volltext-Index...");
     const relevantUrls = sitemapUrls.filter(shouldIndexUrl);
     const fetchPromises = relevantUrls.map(async (url) => {
-        const content = await fetchFileContent(url);
-        if (!content) return null;
+        const { flat, raw } = await fetchFileContent(url);
+        if (!flat) return null;
         return {
             url,
-            text: content.replace(/^QUELLE:.*?\nINHALT:/, '').toLowerCase(),
-                                           rawText: content.replace(/^QUELLE:.*?\nINHALT:/, ''), // Originaltext für Bildextraktion
+            text: flat.replace(/^QUELLE:.*?\nINHALT:/, '').toLowerCase(), // für Suche: lowercase, flach
+                                           rawText: raw, // für Bildextraktion: Original-Markdown mit Zeilenumbrüchen!
                                            isBackup: isBackupUrl(url)
         };
     });
@@ -151,6 +158,7 @@ async function fetchContext(userMessage) {
     const wantsBackup = /backup|früher|alte version|unterschied|damals|war anders/i.test(msgLower);
     const words = msgLower.split(/\W+/).filter(w => w.length > 2);
 
+    // URL-Pfad als zusätzliche Suchbasis (Dateiname + Ordnername)
     const scored = searchIndex.map(doc => {
         let score = 0;
         if (/wer|wer ist|charakter/i.test(msgLower) && doc.url.includes('/wiki/')) score += 15;
@@ -158,9 +166,18 @@ async function fetchContext(userMessage) {
         if (/studio|über euch|trafkhop/i.test(msgLower) && doc.url.includes('/studio/')) score += 15;
         if (doc.isBackup && !wantsBackup) return { doc, score: -1 };
 
+        // URL-Segmente extrahieren (z.B. "Ursel" aus ".../Worlds/Ursel/Ursel.md")
+        const urlLower = doc.url.toLowerCase();
+        const urlSegments = urlLower.split(/[\/\.\-_]/).filter(s => s.length > 2);
+
         words.forEach(word => {
+            // Textinhalt
             if (doc.text.includes(word)) score += 8;
             if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
+            // URL-Pfad – exakter Treffer im Segment zählt stark (Dateiname = Thema)
+            if (urlSegments.some(seg => seg === word)) score += 20;
+            // URL-Pfad Teilmatch
+            if (urlSegments.some(seg => seg.includes(word) || word.includes(seg))) score += 8;
         });
             if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
             return { doc, score };
@@ -231,11 +248,24 @@ async function fetchRawContextForImage(query) {
             if (doc.text.includes(word)) score += 8;
             if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
         });
-            if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
-            return { doc, score };
+            // Bonus für URLs die den Suchbegriff direkt im Pfad haben
+            words.forEach(word => {
+                if (doc.url.toLowerCase().includes(word)) score += 20;
+            });
+                if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
+                return { doc, score };
     });
 
-    const topDocs = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
+    const allScored = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score);
+    const topDocs = allScored.slice(0, 3);
+
+    if (topDocs.length === 0) {
+        console.warn(`⚠️ Keine Dokumente für Query "${query}" gefunden! Scores alle 0.`);
+        console.log("📋 Index enthält", searchIndex.length, "Dokumente");
+        console.log("📋 URL-Probe:", searchIndex.slice(0,3).map(d => d.url));
+    } else {
+        console.log("🔍 Top-Dokumente:", topDocs.map(x => `score:${x.score} → ${x.doc.url.split('/').slice(-2).join('/')}`));
+    }
 
     const contextText = topDocs.map(x => x.doc.text.substring(0, 3000)).join('\n\n---\n\n');
     const rawText = topDocs.map(x => x.doc.rawText || x.doc.text).join('\n\n---\n\n');
