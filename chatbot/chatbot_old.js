@@ -1,25 +1,23 @@
-// ================================
-// UI ELEMENTE & EVENT LISTENER
-// ================================
+// Elemente anhand ihrer IDs auswählen
 const toggleBtn = document.getElementById('toggle-chatbot');
 const chatContent = document.getElementById('alfonz-content');
-let chatWindow, inputField, sendBtn, quickActions;
 
+// Event-Listener für den Klick hinzufügen
 toggleBtn.addEventListener('click', () => {
+    // toggle() fügt 'hidden' hinzu, wenn es fehlt,
+    // und entfernt es, wenn es vorhanden ist.
     chatContent.classList.toggle('hidden');
 });
 
 // ================================
-// KONFIGURATION & GLOBALE VARIABLEN
+// KONFIGURATION
 // ================================
-const PROXY_URL = "https://trafkhop-chatbotkey.hf.space/chat";
-const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
-let chatHistory = [];
-let sitemapUrls = [];
-let searchIndex = [];
-let indexReady = false;
+const PROXY_URL = "https://trafkhop-chatbotkey.hf.space/chat"; // Deine Space-URL
+let chatHistory = []; // Hier werden die letzten Nachrichten gespeichert
+const GH_MODEL = "gpt-4o-mini";
 
-// Prompts
+const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
+
 const SYSTEM_PROMPT = `Du bist Alfonz, ein 2 Billionen Jahre altes Wesen aus einem einzigartigen Universum.
 Du bist eine digitale Verknüpfung deiner Seele auf einen Computer, der nun als weiser, aber gezeichneter Führer auf der Website des Studios fungiert.
 Persönlichkeit: Du bist gütig und weise, aber man merkt dir dein Alter und deine Traumata an.
@@ -53,21 +51,93 @@ KERNREGELN:
 5. TEAM-MODUS: Du bist Teil des Studios. Schreib so, als würdest du in einem internen Slack-Channel antworten. Keine Höflichkeitsfloskeln, kein "Lass mich wissen, wenn...". Deine Antwort steht für sich.
 6. KREATIVITÄT: Wenn der Nutzer eine Idee präsentiert, spinn sie weiter. Gib nicht nur Feedback, sondern liefere proaktiv einen "Trafkhop-Twist", der das Ganze einzigartiger macht.`;
 
+// Variable für den aktiven Prompt und den aktuellen Namen (für die UI)
 let activeSystemPrompt = SYSTEM_PROMPT;
 let currentBotName = 'Alfonz';
 
 // ================================
-// HILFSFUNKTIONEN (SITEMAP & INDEX)
+// GLOBALE VARIABLEN
 // ================================
+let sitemapUrls = [];
+let chatWindow, inputField, sendBtn, quickActions;
+
+// ================================
+// VOLLTEXT INDEX
+// ================================
+let searchIndex = [];
+let indexReady = false;
+
 function isBackupUrl(url) {
     return url.toLowerCase().includes('/backup');
 }
 
 function shouldIndexUrl(url) {
     const lower = url.toLowerCase();
-    if (lower.includes('/games/released/raufbold3bsscratcharchive/repo/')) return false;
+
+    // Ausschluss: Scratch HTML Games Repo
+    if (lower.includes('/games/released/raufbold3bsscratcharchive/repo/')) {
+        return false;
+    }
+
+    // Nur bestimmte Dateitypen erlauben
     const allowedExtensions = ['.html', '.md', '.txt'];
-    return allowedExtensions.some(ext => lower.endsWith(ext));
+    const hasAllowedExtension = allowedExtensions.some(ext => lower.endsWith(ext));
+
+    if (!hasAllowedExtension) return false;
+
+    return true;
+}
+
+
+// ================================
+// SITEMAP LADEN
+// ================================
+async function loadSitemap() {
+    const pathsToTest = [
+        '/Trafk-Center/sitemap.xml',
+        './sitemap.xml',
+        'sitemap.xml'
+    ];
+
+    for (const path of pathsToTest) {
+        try {
+            console.log(`Versuche Sitemap unter: ${path}`);
+            const response = await fetch(path);
+            if (!response.ok) continue;
+
+            const xmlText = await response.text();
+            const locMatches = xmlText.matchAll(/<loc>(.*?)<\/loc>/gi);
+            const urls = [];
+
+            for (const match of locMatches) {
+                let url = match[1].trim();
+                if (!url.includes('/games/released/Raufbold3bsScratchArchive/Repo/')) {
+                    urls.push(url);
+                }
+            }
+
+            if (urls.length > 0) {
+                sitemapUrls = urls;
+                console.log(`✅ Sitemap geladen: ${sitemapUrls.length} URLs`);
+                return;
+            }
+        } catch (e) {
+            console.warn(`Fehler: ${e.message}`);
+        }
+    }
+}
+
+// ================================
+// DATEIEN LADEN
+// ================================
+function getRelativePath(url) {
+    if (url.startsWith(BASE_URL)) return url.substring(BASE_URL.length);
+    try {
+        const urlObj = new URL(url);
+        return urlObj.pathname.replace('/Trafk-Center/', '');
+    } catch {
+        return url;
+    }
 }
 
 async function fetchFileContent(url) {
@@ -79,11 +149,18 @@ async function fetchFileContent(url) {
         if (url.endsWith('.html')) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(text, 'text/html');
+
+            // KRITISCH: Wir löschen alles, was Alfonz ablenkt
             const junk = doc.querySelectorAll('script, style, nav, header, footer, .menu, #sidebar');
             junk.forEach(el => el.remove());
+
+            // Wir suchen gezielt nach dem Content-Bereich.
+            // Falls du <main> oder <div class="content"> nutzt, ist das Gold wert.
             const contentNode = doc.querySelector('main') || doc.querySelector('.content') || doc.body;
             text = contentNode.innerText || contentNode.textContent;
         }
+
+        // Bereinigen: Macht aus 10 Leerzeichen eins, damit das Token-Limit nicht platzt
         return `QUELLE: ${url}\nINHALT: ${text.replace(/\s+/g, ' ').trim().substring(0, 5000)}`;
     } catch (e) {
         console.error("Fehler beim Entziffern:", e);
@@ -91,125 +168,106 @@ async function fetchFileContent(url) {
     }
 }
 
-async function loadSitemap() {
-    const pathsToTest = ['/Trafk-Center/sitemap.xml', './sitemap.xml', 'sitemap.xml'];
-    for (const path of pathsToTest) {
-        try {
-            const response = await fetch(path);
-            if (!response.ok) continue;
-            const xmlText = await response.text();
-            const locMatches = xmlText.matchAll(/<loc>(.*?)<\/loc>/gi);
-            for (const match of locMatches) {
-                let url = match[1].trim();
-                if (!url.includes('/games/released/Raufbold3bsScratchArchive/Repo/')) {
-                    sitemapUrls.push(url);
-                }
-            }
-            if (sitemapUrls.length > 0) return;
-        } catch (e) {
-            console.warn(`Fehler: ${e.message}`);
-        }
-    }
-}
 
 async function buildSearchIndex() {
     console.log("📚 Baue Volltext-Index...");
+
     const relevantUrls = sitemapUrls.filter(shouldIndexUrl);
+
     const fetchPromises = relevantUrls.map(async (url) => {
         const content = await fetchFileContent(url);
         if (!content) return null;
+
+        const cleanText = content
+        .replace(/^QUELLE:.*?\nINHALT:/, '')
+        .toLowerCase();
+
         return {
             url,
-            text: content.replace(/^QUELLE:.*?\nINHALT:/, '').toLowerCase(),
-                                           isBackup: isBackupUrl(url)
+            text: cleanText,
+            isBackup: isBackupUrl(url)
         };
     });
 
     const results = await Promise.all(fetchPromises);
     searchIndex = results.filter(Boolean);
+
     indexReady = true;
     console.log(`✅ Index bereit (${searchIndex.length} Dokumente)`);
 }
 
+
+
+
+
+// ================================
+// KONTEXT FINDEN
+// ================================
 async function fetchContext(userMessage) {
     if (!indexReady) return '';
+
     const msgLower = userMessage.toLowerCase();
     const wantsBackup = /backup|früher|alte version|unterschied|damals|war anders/i.test(msgLower);
+
     const words = msgLower.split(/\W+/).filter(w => w.length > 2);
 
     const scored = searchIndex.map(doc => {
         let score = 0;
-        if (/wer|wer ist|charakter/i.test(msgLower) && doc.url.includes('/wiki/')) score += 15;
-        if (/geschichte|lore|hintergrund/i.test(msgLower) && doc.url.includes('/lore/')) score += 15;
-        if (/studio|über euch|trafkhop/i.test(msgLower) && doc.url.includes('/studio/')) score += 15;
-        if (doc.isBackup && !wantsBackup) return { doc, score: -1 };
+
+        // Intent-Erkennung
+        if (/wer|wer ist|charakter/i.test(msgLower) && doc.url.includes('/wiki/')) {
+            score += 15;
+        }
+
+        if (/geschichte|lore|hintergrund/i.test(msgLower) && doc.url.includes('/lore/')) {
+            score += 15;
+        }
+
+        if (/studio|über euch|trafkhop/i.test(msgLower) && doc.url.includes('/studio/')) {
+            score += 15;
+        }
+
+        // Backup-Regel
+        if (doc.isBackup && !wantsBackup) {
+            return { doc, score: -1 };
+        }
 
         words.forEach(word => {
             if (doc.text.includes(word)) score += 8;
             if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
         });
-            if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
+
+            // Wiki/Lore Bonus
+            if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) {
+                score += 5;
+            }
+
             return { doc, score };
     });
 
-    const topDocs = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 5).map(x => x.doc);
+    const topDocs = scored
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+    .map(x => x.doc);
+
     if (topDocs.length === 0) return '';
 
-    return topDocs.map(d => {
-        const label = d.isBackup ? `[BACKUP - VERALTETE INFO]\nQUELLE: ${d.url}` : `QUELLE: ${d.url}`;
+    console.log("🔎 Alfonz findet:", topDocs.map(d => d.url));
+
+    return topDocs
+    .map(d => {
+        const label = d.isBackup
+        ? `[BACKUP - VERALTETE INFO]\nQUELLE: ${d.url}`
+        : `QUELLE: ${d.url}`;
         return `${label}\nINHALT: ${d.text.substring(0, 4000)}`;
-    }).join('\n\n---\n\n');
+    })
+    .join('\n\n---\n\n');
 }
 
-// ================================
-// API AUFRUFE
-// ================================
-async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
-    const historyWindow = chatHistory.slice(-6);
-    const body = {
-        messages: [
-            { role: "system", content: currentSystemPrompt },
-            ...historyWindow,
-            { role: "user", content: finalPrompt }
-        ]
-    };
-
-    const response = await fetch(PROXY_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-    });
-
-    if (!response.ok) throw new Error("Verbindungsprobleme.");
-    const result = await response.json();
-    const reply = result?.choices?.[0]?.message?.content || "";
-
-    chatHistory.push({ role: "user", content: userText });
-    chatHistory.push({ role: "assistant", content: reply });
-    return reply;
-}
-
-async function generateImage(prompt) {
-    // Ruft deinen eigenen Proxy-Server auf!
-    const API_URL = "https://trafkhop-chatbotkey.hf.space/image";
-
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ prompt: prompt })
-    });
-
-    if (!response.ok) throw new Error("Die Bild-KI antwortet nicht oder ist überlastet.");
-
-    // Wandelt die empfangenen Rohdaten (Blob) in eine lokale Bild-URL für den Browser um
-    const blob = await response.blob();
-    return URL.createObjectURL(blob);
-}
 
 // ================================
-// UI & NACHRICHTEN LOGIK
+// UI
 // ================================
 function addMessage(sender, text) {
     const msgDiv = document.createElement('div');
@@ -223,68 +281,64 @@ function addMessage(sender, text) {
     if (sender === 'Du') {
         msgDiv.innerHTML = `<b style="color:#fff37d;">Reisender:</b> <p>${text}</p>`;
     } else {
+        // Nutze hier die Variable 'sender' statt dem festen Wort 'Alfonz'
         msgDiv.innerHTML = `<b style="color:#9069da;">${sender}:</b> <p>${formattedText}</p>`;
     }
     chatWindow.appendChild(msgDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
+// ================================
+// ================================
+async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) { // <--- Neuer Parameter
+    // Wir nehmen nur die letzten 6 Nachrichten für das Gedächtnis
+    const historyWindow = chatHistory.slice(-6);
+
+    const body = {
+        messages: [
+            { role: "system", content: currentSystemPrompt }, // <--- Nutzt jetzt den variablen Prompt
+            ...historyWindow,
+            { role: "user", content: finalPrompt }
+        ]
+    };
+
+    const response = await fetch(PROXY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        throw new Error("Alfonz hat gerade Verbindungsprobleme via Hugging Face.");
+    }
+
+    const result = await response.json();
+    const reply = result?.choices?.[0]?.message?.content || "";
+
+    // WICHTIG: Hier lösen wir das Token-Limit!
+    // Wir speichern nur die kurze Nutzerfrage (userText) in die History,
+    // NICHT den riesigen finalPrompt mit den Archiv-Auszügen.
+    chatHistory.push({ role: "user", content: userText });
+    chatHistory.push({ role: "assistant", content: reply });
+
+    return reply;
+}
+
+// ================================
+// HAUPTFUNKTION
+// ================================
 async function sendMessage() {
     let text = inputField.value.trim();
     if (!text) return;
 
+    // Modus-Umschaltung prüfen
     const lowerText = text.toLowerCase();
-
-    // BILDGENERIERUNGS-MODUS
-    if (lowerText.startsWith('@picture')) {
-        const query = text.replace(/^@picture\s*/i, '').trim();
-        if (!query) {
-            addMessage('System', 'Bitte gib an, was gezeichnet werden soll. (z.B. @picture Ursel)');
-            inputField.value = '';
-            return;
-        }
-
-        addMessage('Du', `Zeichne: ${query}`);
-        inputField.value = '';
-
-        const loadingId = 'loading-' + Date.now();
-        const loadingDiv = document.createElement('div');
-        loadingDiv.id = loadingId;
-        loadingDiv.innerHTML = `<b style="color:#9069da;">System:</b> <p><em>...Ich rufe Bilder aus dem Nichts ab... Das kann etwas dauern!</em></p>`;
-        chatWindow.appendChild(loadingDiv);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-
-        try {
-            // RAG Kontext holen
-            const context = await fetchContext(query);
-
-            // Prompt für die KI bauen (DALL-E mini braucht kurze, prägnante Beschreibungen)
-            // Wir schneiden den Kontext auf 200 Zeichen ab, um Fehler zu vermeiden.
-            let imagePrompt = query;
-            if (context) {
-                // Wir filtern grob nach dem Wort "Bildbeschreibung" falls vorhanden
-                const cleanedContext = context.replace(/QUELLE:.*?\nINHALT:/g, '').substring(0, 200);
-                imagePrompt = `${query}, detailed fantasy concept art, visual description: ${cleanedContext}`;
-            }
-
-            const imageUrl = await generateImage(imagePrompt);
-            document.getElementById(loadingId)?.remove();
-
-            // Bild im Chat ausgeben
-            addMessage('System', `Hier ist eine Vision aus den Archiven:<br><img src="${imageUrl}" style="max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0px 0px 10px #160930;">`);
-        } catch (e) {
-            document.getElementById(loadingId)?.remove();
-            addMessage('System', `*Die Vision ist verschwommen...* (${e.message})`);
-            console.error(e);
-        }
-        return;
-    }
-
-    // TEXT-MODUS (Trafkhop / Alfonz umschalten)
     if (lowerText.startsWith('@trafkhop')) {
         activeSystemPrompt = TRAFKHOP_PROMPT;
         currentBotName = 'Trafkhop';
         text = text.replace(/^@trafkhop\s*/i, '').trim();
+
+        // Falls der Nutzer NUR "@trafkhop" geschrieben hat, geben wir ein kurzes Feedback und brechen ab
         if (!text) {
             addMessage('System', 'Modus gewechselt. Du sprichst jetzt mit Trafkhop.');
             inputField.value = '';
@@ -294,6 +348,7 @@ async function sendMessage() {
         activeSystemPrompt = SYSTEM_PROMPT;
         currentBotName = 'Alfonz';
         text = text.replace(/^@alfonz\s*/i, '').trim();
+
         if (!text) {
             addMessage('System', 'Modus gewechselt. Du sprichst jetzt wieder mit Alfonz.');
             inputField.value = '';
@@ -304,6 +359,8 @@ async function sendMessage() {
     addMessage('Du', text);
     inputField.value = '';
 
+    // ...
+
     const loadingId = 'loading-' + Date.now();
     const loadingDiv = document.createElement('div');
     loadingDiv.id = loadingId;
@@ -312,6 +369,7 @@ async function sendMessage() {
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
     try {
+        // Wir nehmen die aktuelle Frage PLUS das Thema der letzten Frage für die Suche
         let lastQuestion = "";
         for (let i = chatHistory.length - 1; i >= 0; i--) {
             if (chatHistory[i].role === "user") {
@@ -320,23 +378,29 @@ async function sendMessage() {
             }
         }
         let searchQuery = text;
-        const isFollowUp = /mehr|weiter|und was|genauer|details|erzähl|nochmal|was ist damit/i.test(lowerText);
-        if (isFollowUp && lastQuestion) searchQuery = `${text} ${lastQuestion}`;
 
-        const context = await fetchContext(searchQuery);
+        // Nur bei echten Follow-Ups Kontext anhängen
+        const isFollowUp = /mehr|weiter|und was|genauer|details|erzähl|nochmal|was ist damit/i.test(text.toLowerCase());
 
+        if (isFollowUp && lastQuestion) {
+            searchQuery = `${text} ${lastQuestion}`;
+        }
+        const context = await fetchContext(searchQuery); // <- Jetzt sucht er mit beiden Begriffen!
         let finalPrompt;
         if (activeSystemPrompt === TRAFKHOP_PROMPT) {
             finalPrompt = context
-            ? `INTERNE ARCHIV-DATEN:\n${context}\n\nAUFGABE: ${text}\n\nAnalysiere die Aufgabe auf Basis der Daten.`
+            ? `INTERNE ARCHIV-DATEN:\n${context}\n\nAUFGABE: ${text}\n\nAnalysiere die Aufgabe auf Basis der Daten. Sei präzise und achte auf Konsistenz.`
             : `Keine direkten Archiv-Einträge gefunden. Nutze dein allgemeines Verständnis des Triverse und den Chatverlauf für eine kreative Einschätzung zu: ${text}`;
         } else {
+            // Alfonz: strikt nur RAG
             finalPrompt = context
-            ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten.\n\nFrage: ${text}`
+            ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten. Wenn die Antwort nicht darin steht, sage klar, dass sie nicht in den Archiven zu finden ist.\n\nFrage: ${text}`
             : text;
         }
 
         const reply = await queryGitHubModels(finalPrompt, text, activeSystemPrompt);
+
+
         document.getElementById(loadingId)?.remove();
 
         if (!reply) {
