@@ -250,7 +250,7 @@ async function sendMessage() {
         const loadingId = 'loading-' + Date.now();
         const loadingDiv = document.createElement('div');
         loadingDiv.id = loadingId;
-        loadingDiv.innerHTML = `<b style="color:#9069da;">System:</b> <p><em>...Ich rufe Bilder aus dem Nichts ab... Das kann etwas dauern!</em></p>`;
+        loadingDiv.innerHTML = `<b style="color:#9069da;">System:</b> <p><em>...Ich rufe Bilder aus der Bibleothek ab...</em></p>`;
         chatWindow.appendChild(loadingDiv);
         chatWindow.scrollTop = chatWindow.scrollHeight;
 
@@ -264,14 +264,14 @@ async function sendMessage() {
             if (context) {
                 const cleanedContext = context.replace(/QUELLE:.*?\nINHALT:/g, '').substring(0, 300);
                 // Wir sagen der KI explizit, dass es "weird" sein soll
-                imagePrompt = `A surreal vision of ${query}. ${cleanedContext}. Style: weird vintage digital art, distorted 3D.`;
+                imagePrompt = `A vision of ${query}. ${cleanedContext}. Style: old 3d, crt, vintage.`;
             }
 
             const imageUrl = await generateImage(imagePrompt);
             document.getElementById(loadingId)?.remove();
 
             // Bild im Chat ausgeben
-            addMessage('System', `Hier ist eine Vision aus den Archiven:<br><img src="${imageUrl}" style="max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0px 0px 10px #160930;">`);
+            addMessage('System', `Hier ist eine Vision aus der Bibleothek:<br><img src="${imageUrl}" style="max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0px 0px 10px #160930;">`);
         } catch (e) {
             document.getElementById(loadingId)?.remove();
             addMessage('System', `*Die Vision ist verschwommen...* (${e.message})`);
@@ -332,7 +332,7 @@ async function sendMessage() {
             : `Keine direkten Archiv-Einträge gefunden. Nutze dein allgemeines Verständnis des Triverse und den Chatverlauf für eine kreative Einschätzung zu: ${text}`;
         } else {
             finalPrompt = context
-            ? `Hier sind Fragmente aus den Archiven:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten.\n\nFrage: ${text}`
+            ? `Hier sind Fragmente aus der Bibleothek:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten.\n\nFrage: ${text}`
             : text;
         }
 
