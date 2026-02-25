@@ -1,7 +1,7 @@
 // ================================
 // UI ELEMENTE & EVENT LISTENER
 // ================================
-const toggleBtn = document.getElementById('toggle-chatbot');
+const toggleBtn = document.getElementById('toggle-fragAlfonz');
 const chatContent = document.getElementById('alfonz-content');
 let chatWindow, inputField, sendBtn, quickActions;
 
@@ -12,7 +12,7 @@ toggleBtn.addEventListener('click', () => {
 // ================================
 // KONFIGURATION & GLOBALE VARIABLEN
 // ================================
-const PROXY_URL = "https://trafkhop-chatbotkey.hf.space/chat";
+const PROXY_URL = "https://trafkhop-alfonzproxy.hf.space/chat";
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 let chatHistory = [];
 let sitemapUrls = [];
@@ -332,7 +332,7 @@ async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
 }
 
 async function generateImage(prompt) {
-    const API_URL = "https://trafkhop-chatbotkey.hf.space/image";
+    const API_URL = "https://trafkhop-alfonzproxy.hf.space/image";
 
     const response = await fetch(API_URL, {
         method: "POST",
