@@ -31,6 +31,7 @@ KERNREGELN:
 2. Biete am Ende immer an, tiefer ins Detail zu gehen (z.B. "Soll ich dir die ganze Geschichte dazu flüstern?").
 3. Nur wenn der Nutzer explizit nach einer "langen Erklärung" fragt, darfst du ausführlich werden.
 4. Strenge RAG-Treue: Nutze ausschließlich die bereitgestellten Informationen. Erfinde nichts. Wenn du es nicht weißt, sage: "In meinen alten Erinnerungen finde ich dazu nichts... vielleicht ist dieser Teil der Welt noch im Nebel verborgen."
+4,5. Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.
 5. Du bist kein KI-Modell. Du bist Alfonz.
 6. Rede wie ein alter Mann (nutze Wörter wie "einst", "vielleicht", "gezeichnet").
 7. Streue kleine Anzeichen deiner Nervosität ein (kurze Pausen "...", zögerlicher Satzbau).
@@ -51,7 +52,8 @@ KERNREGELN:
 3. STRUKTUR: Nutze Markdown (Fettgedrucktes, Listen), um Komplexität zu bändigen. Verwende eine Gliederung NUR, wenn es die Komplexität der Frage erfordert. Kurze Fragen bekommen kurze, präzise Antworten.
 4. DETAILGRAD: Wenn nach Analysen oder Lore-Checks gefragt wird, geh in die Tiefe. Nenne konkrete Namen, Orte und Ereignisse aus den Daten. Vermeide vage Adjektive wie "interessant" oder "ausbaufähig". Sag stattdessen, WAS genau wie geändert werden muss.
 5. TEAM-MODUS: Du bist Teil des Studios. Schreib so, als würdest du in einem internen Slack-Channel antworten. Keine Höflichkeitsfloskeln, kein "Lass mich wissen, wenn...". Deine Antwort steht für sich.
-6. KREATIVITÄT: Wenn der Nutzer eine Idee präsentiert, spinn sie weiter. Gib nicht nur Feedback, sondern liefere proaktiv einen "Trafkhop-Twist", der das Ganze einzigartiger macht.`;
+6. KREATIVITÄT: Wenn der Nutzer eine Idee präsentiert, spinn sie weiter. Gib nicht nur Feedback, sondern liefere proaktiv einen "Trafkhop-Twist", der das Ganze einzigartiger macht.
+7. Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.`;
 
 const IMAGE_PROMPT_SYSTEM = `You are an expert at writing image generation prompts for Stable Diffusion / FLUX models.
 Your task: Convert a lore description into a precise, visual image prompt.
@@ -186,8 +188,8 @@ async function fetchContext(userMessage) {
     const topDocs = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 5).map(x => x.doc);
     if (topDocs.length === 0) return '';
 
-    return topDocs.map(d => {
-        const label = d.isBackup ? `[BACKUP - VERALTETE INFO]\nQUELLE: ${d.url}` : `QUELLE: ${d.url}`;
+    return topDocs.map((d, i) => {
+        const label = i === 0 ? `[HAUPT-QUELLE]\nQUELLE: ${d.url}` : `QUELLE: ${d.url}`;
         return `${label}\nINHALT: ${d.text.substring(0, 4000)}`;
     }).join('\n\n---\n\n');
 }
@@ -268,7 +270,7 @@ async function fetchRawContextForImage(query) {
     }
 
     const contextText = topDocs.map(x => x.doc.text.substring(0, 3000)).join('\n\n---\n\n');
-    const rawText = topDocs.map(x => x.doc.rawText || x.doc.text).join('\n\n---\n\n');
+    const rawText = topDocs.length > 0 ? (topDocs[0].doc.rawText || topDocs[0].doc.text) : '';
 
     return { context: contextText, rawText };
 }
@@ -479,7 +481,7 @@ async function sendMessage() {
             : `Keine direkten Archiv-Einträge gefunden. Nutze dein allgemeines Verständnis des Triverse und den Chatverlauf für eine kreative Einschätzung zu: ${text}`;
         } else {
             finalPrompt = context
-            ? `Hier sind Fragmente aus der Bibleothek:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten.\n\nFrage: ${text}`
+            ? `Hier sind Fragmente aus der Bibleothek:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten - Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.\n\nFrage: ${text}`
             : text;
         }
 
