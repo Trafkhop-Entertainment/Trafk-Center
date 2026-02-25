@@ -1,13 +1,7 @@
 // ================================
 // UI ELEMENTE & EVENT LISTENER
 // ================================
-const toggleBtn = document.getElementById('toggle-chatbot');
-const chatContent = document.getElementById('alfonz-content');
 let chatWindow, inputField, sendBtn, quickActions;
-
-toggleBtn.addEventListener('click', () => {
-    chatContent.classList.toggle('hidden');
-});
 
 // ================================
 // KONFIGURATION & GLOBALE VARIABLEN
@@ -504,6 +498,15 @@ async function sendMessage() {
 // INIT
 // ================================
 document.addEventListener('DOMContentLoaded', async function() {
+    const toggleBtn = document.getElementById('toggle-chatbot');
+    const chatContent = document.getElementById('alfonz-content');
+
+    if (toggleBtn && chatContent) {
+        toggleBtn.addEventListener('click', () => {
+            chatContent.classList.toggle('hidden');
+        });
+    }
+
     chatWindow = document.getElementById('chat-window');
     inputField = document.getElementById('chat-input');
     sendBtn = document.getElementById('send-btn');
