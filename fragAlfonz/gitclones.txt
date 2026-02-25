@@ -1,2 +1,0 @@
-git clone git@hf.co:spaces/Trafkhop/AlfonzImageGen
-git clone git@hf.co:spaces/Trafkhop/AlfonzProxy

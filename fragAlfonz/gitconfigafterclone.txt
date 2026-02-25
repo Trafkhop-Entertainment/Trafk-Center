@@ -1,0 +1,2 @@
+git remote set-url --push origin git@hf.co:spaces/Trafkhop/AlfonzImageGen
+git remote set-url --push origin git@hf.co:spaces/Trafkhop/AlfonzProxy
