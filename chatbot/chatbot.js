@@ -332,17 +332,20 @@ async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
 }
 
 async function generateImage(prompt) {
-    try {
-        // Puter generiert das Bild direkt im Browser des Nutzers
-        // Das verbraucht KEINE Credits deines Hugging Face Accounts.
-        const imageElement = await puter.ai.txt2img(prompt, { model: 'flux' });
+    const API_URL = "https://trafkhop-chatbotkey.hf.space/image";
 
-        // Puter gibt ein HTML-Element zurück, wir extrahieren die Quelle (src)
-        return imageElement.src;
-    } catch (e) {
-        console.error("Puter Generierung fehlgeschlagen:", e);
-        throw new Error("Die Vision konnte nicht manifestiert werden.");
-    }
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt: prompt })
+    });
+
+    if (!response.ok) throw new Error("Die Bild-KI antwortet nicht oder ist überlastet.");
+
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
 }
 
 // ================================
@@ -417,8 +420,6 @@ async function sendMessage() {
             const imageUrl = await generateImage(imagePrompt);
             document.getElementById(loadingId)?.remove();
 
-            // Da Puter ein Blob oder eine Data-URL liefern kann,
-            // bleibt die Logik mit dem <img> Tag gleich.
             addMessage('System', `Hier ist eine Vision aus der Bibleothek:<br><img src="${imageUrl}" style="max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0px 0px 10px #160930;">`);
         } catch (e) {
             document.getElementById(loadingId)?.remove();
@@ -517,10 +518,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     inputField.addEventListener('keypress', e => {
         if (e.key === 'Enter') sendMessage();
     });
-
-    if (!puter.auth.isSignedIn()) {
-    addMessage('System', 'Bitte [Button: Hier klicken], um die Bild-Visionen freizuschalten (Puter Login).');
-    }
 
         await loadSitemap();
         await buildSearchIndex();
