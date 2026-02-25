@@ -518,6 +518,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (e.key === 'Enter') sendMessage();
     });
 
+    if (!puter.auth.isSignedIn()) {
+    addMessage('System', 'Bitte [Button: Hier klicken], um die Bild-Visionen freizuschalten (Puter Login).');
+    }
+
         await loadSitemap();
         await buildSearchIndex();
 });
