@@ -332,14 +332,12 @@ async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
 }
 
 async function generateImage(prompt) {
-    // Puter.js nutzt interne Credits, die für dich als Entwickler
-    // kostenlos sind. Es unterstützt sehr lange Prompts.
     try {
-        // 'flux' oder 'dall-e-3' sind gute Optionen für detaillierte Lore
+        // Puter generiert das Bild direkt im Browser des Nutzers
+        // Das verbraucht KEINE Credits deines Hugging Face Accounts.
         const imageElement = await puter.ai.txt2img(prompt, { model: 'flux' });
 
-        // Puter gibt ein HTMLImageElement zurück.
-        // Wir brauchen die URL für deine bestehende Logik:
+        // Puter gibt ein HTML-Element zurück, wir extrahieren die Quelle (src)
         return imageElement.src;
     } catch (e) {
         console.error("Puter Generierung fehlgeschlagen:", e);
