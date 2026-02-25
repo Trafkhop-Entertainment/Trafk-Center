@@ -1,7 +1,7 @@
 // ================================
 // UI ELEMENTE & EVENT LISTENER
 // ================================
-const toggleBtn = document.getElementById('toggle-fragAlfonz');
+const toggleBtn = document.getElementById('toggle-FragAlfonz');
 const chatContent = document.getElementById('alfonz-content');
 let chatWindow, inputField, sendBtn, quickActions;
 
