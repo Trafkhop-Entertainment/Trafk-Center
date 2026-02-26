@@ -25,3 +25,9 @@
 [submodule "games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive"]
 	path = games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive
 	url = git@github.com:Trafkhop-Entertainment/Raufbold3bs-Scratch-Archive.git
+[submodule "fragAlfonz/AlfonzProxy"]
+	path = fragAlfonz/AlfonzProxy
+	url = git@hf.co:spaces/Trafkhop/AlfonzProxy
+[submodule "fragAlfonz/AlfonzImageGen"]
+	path = fragAlfonz/AlfonzImageGen
+	url = git@hf.co:spaces/Trafkhop/AlfonzImageGen
