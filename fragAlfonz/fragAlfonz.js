@@ -117,7 +117,7 @@ async function loadSitemap() {
             const locMatches = xmlText.matchAll(/<loc>(.*?)<\/loc>/gi);
             for (const match of locMatches) {
                 let url = match[1].trim();
-                if (!url.includes('/games/released/Raufbold3bsScratchArchive/Repo/')) {
+                if (!url.includes('/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/')) {
                     sitemapUrls.push(url);
                 }
             }
