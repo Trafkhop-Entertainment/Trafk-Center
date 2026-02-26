@@ -16,12 +16,12 @@
 [submodule "wiki/assets/Sourcehop-Models"]
 	path = wiki/assets/Sourcehop-Models
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Models
-[submodule "games/released/Raufbold3bsScratchArchive/Repo"]
-	path = games/released/Raufbold3bsScratchArchive/Repo
-	url = git@github.com:Trafkhop-Entertainment/Raufbold3bs-Scratch-Archive
 [submodule "wiki/assets/Sourcehop-Documents"]
 	path = wiki/assets/Sourcehop-Documents
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Documents.git
 [submodule "games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games"]
 	path = games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games
 	url = git@github.com:Trafkhop-Entertainment/HoppiTex-Concept-Games.git
+[submodule "games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive"]
+	path = games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive
+	url = git@github.com:Trafkhop-Entertainment/Raufbold3bs-Scratch-Archive.git
