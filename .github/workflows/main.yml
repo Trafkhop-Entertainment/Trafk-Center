@@ -16,6 +16,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.HF_SSH_KEY }}
 
+      - name: Add HF to known_hosts
+        run: ssh-keyscan huggingface.co >> ~/.ssh/known_hosts
+
       - uses: actions/checkout@v4
         with:
           submodules: recursive
