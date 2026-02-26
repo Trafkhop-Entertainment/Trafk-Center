@@ -22,12 +22,6 @@
 [submodule "wiki/assets/Sourcehop-Documents"]
 	path = wiki/assets/Sourcehop-Documents
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Documents.git
-[submodule "fragAlfonz/AlfonzImageGen"]
-	path = fragAlfonz/AlfonzImageGen
-	url = https://huggingface.co/spaces/Trafkhop/AlfonzImageGen
-[submodule "fragAlfonz/AlfonzProxy"]
-	path = fragAlfonz/AlfonzProxy
-	url = https://huggingface.co/spaces/Trafkhop/AlfonzProxy
 [submodule "games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games"]
 	path = games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games
 	url = git@github.com:Trafkhop-Entertainment/HoppiTex-Concept-Games.git
