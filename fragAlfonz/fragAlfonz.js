@@ -7,7 +7,7 @@ let chatWindow, inputField, sendBtn, quickActions;
 // KONFIGURATION & GLOBALE VARIABLEN
 // ================================
 const PROXY_URL = "https://trafkhop-alfonzproxy.hf.space/chat";
-const IMAGE_SPACE_URL = "https://huggingface.co/spaces/black-forest-labs/FLUX.1-schnell"; // ← Hier deine HF Space URL eintragen
+const IMAGE_SPACE_URL = "https://huggingface.co/spaces/Qwen/Qwen-Image"; // ← Hier deine HF Space URL eintragen
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 let chatHistory = [];
 let sitemapUrls = [];
@@ -55,7 +55,7 @@ Your task: Convert a lore description into a precise, visual image prompt.
 
 RULES:
 - Output ONLY the prompt, nothing else. No explanation, no preamble.
-- Max 200 words.
+- Max 850 words or as many as needed to make the image as intended.
 - Be extremely specific about shapes, colors, lighting, atmosphere.
 - Start with the most important subject, then environment, then style/mood.
 - Use comma-separated descriptors.
