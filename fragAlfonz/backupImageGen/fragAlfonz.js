@@ -7,7 +7,6 @@ let chatWindow, inputField, sendBtn, quickActions;
 // KONFIGURATION & GLOBALE VARIABLEN
 // ================================
 const PROXY_URL = "https://trafkhop-alfonzproxy.hf.space/chat";
-const IMAGE_SPACE_URL = "https://huggingface.co/spaces/black-forest-labs/FLUX.1-schnell"; // ← Hier deine HF Space URL eintragen
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 let chatHistory = [];
 let sitemapUrls = [];
@@ -326,7 +325,22 @@ async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
     return reply;
 }
 
-// generateImage() entfernt – Bildgenerierung läuft jetzt über HF Space Link + Prompt
+async function generateImage(prompt) {
+    const API_URL = "https://trafkhop-alfonzproxy.hf.space/image";
+
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt: prompt })
+    });
+
+    if (!response.ok) throw new Error("Die Bild-KI antwortet nicht oder ist überlastet.");
+
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+}
 
 // ================================
 // UI & NACHRICHTEN LOGIK
@@ -370,7 +384,7 @@ async function sendMessage() {
         const loadingId = 'loading-' + Date.now();
         const loadingDiv = document.createElement('div');
         loadingDiv.id = loadingId;
-        loadingDiv.innerHTML = `<b style="color:#9069da;">System:</b> <p><em>...Ich forme einen Bildprompt aus den Archiven...</em></p>`;
+        loadingDiv.innerHTML = `<b style="color:#9069da;">System:</b> <p><em>...Ich rufe Bilder aus der Bibleothek ab...</em></p>`;
         chatWindow.appendChild(loadingDiv);
         chatWindow.scrollTop = chatWindow.scrollHeight;
 
@@ -397,36 +411,10 @@ async function sendMessage() {
 
             console.log("🎨 Finaler Bildprompt:", imagePrompt);
 
+            const imageUrl = await generateImage(imagePrompt);
             document.getElementById(loadingId)?.remove();
 
-            const promptId = 'prompt-' + Date.now();
-            const spaceLink = IMAGE_SPACE_URL;
-
-            addMessage('System', `
-            *Ein Bild formt sich in meinem Geist...*<br><br>
-            <b style="color:#c9a0ff;">✦ Bildprompt für "${query}":</b><br>
-            <div id="${promptId}" style="
-            background: #1e0f3a;
-            border: 1px solid #5a3998;
-            border-radius: 8px;
-            padding: 10px;
-            margin: 8px 0;
-            font-size: 13px;
-            color: #e8d8ff;
-            word-break: break-word;
-            white-space: pre-wrap;
-            ">${imagePrompt}</div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-            <a class="do" style="display:inline-block; padding:6px 14px; border-radius:8px; background:#5a3998; cursor:pointer; font-size:13px; text-decoration:none;"
-            onclick="navigator.clipboard.writeText(document.getElementById('${promptId}').innerText).then(()=>this.innerText='✓ Kopiert!'); return false;">
-            📋 Prompt kopieren
-            </a>
-            <a class="do" href="${spaceLink}" target="_blank" style="display:inline-block; padding:6px 14px; border-radius:8px; background:#371c67; cursor:pointer; font-size:13px; text-decoration:none;">
-            🎨 Bild auf HuggingFace generieren →
-            </a>
-            </div>
-            <p style="font-size:12px; color:#9069da; margin-top:6px;"><em>Prompt kopieren → auf HuggingFace einfügen → Bild generieren lassen</em></p>
-            `);
+            addMessage('System', `Hier ist eine Vision aus der Bibleothek:<br><img src="${imageUrl}" style="max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0px 0px 10px #160930;">`);
         } catch (e) {
             document.getElementById(loadingId)?.remove();
             addMessage('System', `*Die Vision ist verschwommen...* (${e.message})`);
