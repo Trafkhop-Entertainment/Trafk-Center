@@ -346,6 +346,8 @@ function fetchBildbeschreibungForTerm(term) {
         });
         if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
         if (doc.url.endsWith('.md')) score += 20;
+        // Spieleideen haben meist keine Bildbeschreibungen → stark abwerten
+        if (doc.url.toLowerCase().includes('/gameideas/') || doc.url.toLowerCase().includes('/sourcehop-notes/')) score -= 40;
         return { doc, score };
     }).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
 
