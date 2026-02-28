@@ -341,10 +341,12 @@ function fetchBildbeschreibungForTerm(term) {
     const scored = searchIndex.map(doc => {
         let score = 0;
         termWords.forEach(word => {
-            if (doc.url.toLowerCase().includes(word)) score += 30; // URL-Match ist stärkster Indikator
+            if (doc.url.toLowerCase().includes(word)) score += 30;
             if (doc.text.includes(word)) score += 8;
         });
         if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
+        // MD-Dateien bevorzugen: sie behalten die Markdown-Struktur inkl. picture description of: Blöcke
+        if (doc.url.endsWith('.md')) score += 20;
         return { doc, score };
     }).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
 
@@ -357,17 +359,35 @@ function fetchBildbeschreibungForTerm(term) {
     console.log(`🔍 "${term}" → ${bestDoc.url.split('/').slice(-2).join('/')} (score: ${scored[0].score})`);
 
     const rawText = bestDoc.rawText || bestDoc.text;
-    const beschreibung = extractBildbeschreibung(term, rawText);
 
-    if (beschreibung) {
-        console.log(`✅ Bildbeschreibung für "${term}" gefunden`);
+    // Strategie A: Markdown-basierte Extraktion (für .md Dateien mit Zeilenumbrüchen)
+    let beschreibung = extractBildbeschreibung(term, rawText);
+
+    // Strategie B: Flache Suche – findet "picture description of:" auch ohne Zeilenstruktur
+    if (!beschreibung) {
+        const flatIdx = rawText.search(/picture description of:/i);
+        if (flatIdx !== -1) {
+            // Alles ab dem Treffer, bis zum nächsten Abschnitt oder max 3000 Zeichen
+            const slice = rawText.substring(flatIdx);
+            const endMatch = slice.search(/\n#{1,6}\s|\n---|\n\n\n/);
+            const extracted = endMatch > 20 ? slice.substring(0, endMatch).trim() : slice.substring(0, 3000).trim();
+            // Den "picture description of: ..." Header selbst überspringen (erste Zeile/Satz)
+            const afterHeader = extracted.replace(/^picture description of:[^\n]*\n?/i, '').trim();
+            if (afterHeader.length > 20) {
+                beschreibung = afterHeader;
+                console.log(`✅ Bildbeschreibung für "${term}" via Flat-Search gefunden`);
+            }
+        }
     } else {
+        console.log(`✅ Bildbeschreibung für "${term}" via Markdown-Extraktion gefunden`);
+    }
+
+    if (!beschreibung) {
         console.log(`⚠️ Kein Bildbeschreibungs-Block für "${term}", nutze Roh-Kontext`);
     }
 
-    // Fallback: ersten relevanten Absatz aus rawText nehmen
-    const fallbackText = rawText ? rawText.substring(0, 800) : null;
-    return { term, beschreibung: beschreibung || fallbackText, doc: bestDoc };
+    const fallbackText = rawText ? rawText.substring(0, 3000) : null;
+    return { term, beschreibung: beschreibung || fallbackText, hasRealDescription: !!beschreibung, doc: bestDoc };
 }
 
 // Kombiniert mehrere Lore-Beschreibungen zu einem Bildprompt
