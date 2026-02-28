@@ -7,7 +7,7 @@ let chatWindow, inputField, sendBtn, quickActions;
 // KONFIGURATION & GLOBALE VARIABLEN
 // ================================
 const PROXY_URL = "https://trafkhop-alfonzproxy.hf.space/chat";
-const IMAGE_SPACE_URL = "https://huggingface.co/spaces/Qwen/Qwen-Image"; // ← Hier deine HF Space URL eintragen
+const IMAGE_SPACE_URL = "https://huggingface.co/spaces/Qwen/Qwen-Image oder https://creator.nightcafe.studio/ai-image-generator"; // ← Hier deine HF Space URL eintragen
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 let chatHistory = [];
 let sitemapUrls = [];
