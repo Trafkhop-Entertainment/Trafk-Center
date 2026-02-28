@@ -50,18 +50,27 @@ KERNREGELN:
 6. KREATIVITÄT: Wenn der Nutzer eine Idee präsentiert, spinn sie weiter. Gib nicht nur Feedback, sondern liefere proaktiv einen "Trafkhop-Twist", der das Ganze einzigartiger macht.
 7. Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.`;
 
-const IMAGE_PROMPT_SYSTEM = `You are an expert at writing image generation prompts for Stable Diffusion / FLUX models.
-Your task: Convert a lore description into a precise, visual image prompt.
+const IMAGE_PROMPT_SYSTEM = `You are an expert at writing image generation prompts for image generation models like FLUX or Qwen.
+Your task: Read ALL provided lore sources and combine them into one precise, detailed image prompt.
+
+SUBJECT DETECTION - read the lore carefully and determine what the subject is:
+- WORLD / PLANET: describe the full planet from space or bird's eye, all countries/regions visible, geography, atmosphere, surrounding void/bubble
+- LOCATION / REGION: describe the landscape, architecture, layout, lighting of that specific place
+- CHARACTER / CREATURE: describe body, face, clothing, posture, surroundings, mood
+- OBJECT / ARTIFACT: describe shape, material, color, size, glow effects, context it sits in
+- EVENT / SCENE: describe what is happening, who is involved, the environment, dramatic moment
 
 RULES:
-- Output ONLY the prompt, nothing else. No explanation, no preamble.
-- Max 850 words or as many as needed to make the image as intended.
-- Be extremely specific about shapes, colors, lighting, atmosphere.
-- Start with the most important subject, then environment, then style/mood.
-- Use comma-separated descriptors.
-- Good style tags for fantasy: "fantasy concept art, digital painting, detailed, atmospheric lighting"
-- NEVER add photorealism tags unless the description asks for it.
-- NEVER add tags that would degrade quality (no "blurry", "low res", etc).`;
+- Output ONLY the prompt. No explanation, no preamble, no "Here is the prompt:".
+- Use as many words as needed - do not cut corners for the sake of brevity.
+- NEVER invent details that are not in the lore sources. If something is described, use it. If not, leave it out.
+- NEVER turn a location or world into a warrior or character standing in it.
+- Combine ALL provided sources - if multiple sources describe related concepts (e.g. a place AND its magic system), weave them together into one coherent scene.
+- Be extremely specific: shapes, colors, materials, sizes, lighting direction, atmosphere, time of day if relevant.
+- Start with the most important subject, then surroundings, then lighting/atmosphere, then art style.
+- Use comma-separated descriptors, not sentences.
+- End with style tags appropriate to the subject. For fantasy: "fantasy concept art, digital painting, highly detailed, atmospheric lighting".
+- NEVER add tags that degrade quality (no "blurry", "low res", "watermark", etc).`;
 
 let activeSystemPrompt = SYSTEM_PROMPT;
 let currentBotName = 'Alfonz';
@@ -235,7 +244,7 @@ function extractBildbeschreibung(query, rawContext) {
 
 // Holt den rawText der Top-Dokumente für Bildextraktion
 async function fetchRawContextForImage(query) {
-    if (!indexReady) return { context: '', rawText: '' };
+    if (!indexReady) return { topDocs: [], rawText: '' };
     const msgLower = query.toLowerCase();
     const words = msgLower.split(/\W+/).filter(w => w.length > 2);
 
@@ -244,38 +253,82 @@ async function fetchRawContextForImage(query) {
         words.forEach(word => {
             if (doc.text.includes(word)) score += 8;
             if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
+            if (doc.url.toLowerCase().includes(word)) score += 20;
         });
-            // Bonus für URLs die den Suchbegriff direkt im Pfad haben
-            words.forEach(word => {
-                if (doc.url.toLowerCase().includes(word)) score += 20;
-            });
-                if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
-                return { doc, score };
+        if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
+        return { doc, score };
     });
 
     const allScored = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score);
-    const topDocs = allScored.slice(0, 3);
+    const topDocs = allScored.slice(0, 5);
 
     if (topDocs.length === 0) {
-        console.warn(`⚠️ Keine Dokumente für Query "${query}" gefunden! Scores alle 0.`);
+        console.warn(`⚠️ Keine Dokumente für Query "${query}" gefunden!`);
         console.log("📋 Index enthält", searchIndex.length, "Dokumente");
-        console.log("📋 URL-Probe:", searchIndex.slice(0,3).map(d => d.url));
     } else {
         console.log("🔍 Top-Dokumente:", topDocs.map(x => `score:${x.score} → ${x.doc.url.split('/').slice(-2).join('/')}`));
     }
 
-    const contextText = topDocs.map(x => x.doc.text.substring(0, 3000)).join('\n\n---\n\n');
     const rawText = topDocs.length > 0 ? (topDocs[0].doc.rawText || topDocs[0].doc.text) : '';
+    return { topDocs, rawText };
+}
 
-    return { context: contextText, rawText };
+// Zweite Such-Runde: extrahiert Begriffe aus gefundenem Kontext und sucht nochmal
+async function expandImageContext(topDocs, alreadyUsedUrls) {
+    if (!indexReady || topDocs.length === 0) return [];
+
+    const combinedText = topDocs.map(x => x.doc.rawText || x.doc.text).join(' ');
+
+    // Extrahiere Begriffe: Wiki-Links [[Begriff]], fett **Begriff**, Überschriften # Begriff
+    const extracted = new Set();
+    for (const m of combinedText.matchAll(/\[\[([^\]|#]{2,40})\]\]/g)) extracted.add(m[1].trim().toLowerCase());
+    for (const m of combinedText.matchAll(/\*\*([^*]{3,30})\*\*/g)) extracted.add(m[1].trim().toLowerCase());
+    for (const m of combinedText.matchAll(/^#{1,4}\s+(.+)$/gm)) extracted.add(m[1].trim().toLowerCase());
+
+    const stopWords = new Set(['the','and','or','in','of','a','an','is','are','was','with','on','at','by','from','to','for','that','this','it','its','not','but','all','as','be','has','have','had','do','did','if','so','no','yes','der','die','das','und','ist','ein','eine','des','dem','den','von','zu','auf','auch','sich','er','sie','es','wir','ihr','hat','wird','nach','nur','noch','dann','wenn','aber','mehr','hier','dort','kann','wird','sehr','wie','was','wer','wo','ihr','ihn','ihm']);
+    const terms = [...extracted].filter(t => t.length > 3 && !stopWords.has(t)).slice(0, 15);
+
+    console.log("🔎 Expandiere Kontext mit Begriffen:", terms.slice(0, 8));
+
+    const extraDocs = [];
+    for (const term of terms) {
+        const termWords = term.split(/\W+/).filter(w => w.length > 2);
+        const termScored = searchIndex
+            .filter(doc => !alreadyUsedUrls.has(doc.url))
+            .map(doc => {
+                let score = 0;
+                termWords.forEach(word => {
+                    if (doc.url.toLowerCase().includes(word)) score += 25;
+                    if (doc.text.includes(word)) score += 8;
+                });
+                if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
+                return { doc, score };
+            })
+            .filter(x => x.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 2);
+
+        for (const x of termScored) {
+            if (!alreadyUsedUrls.has(x.doc.url)) {
+                alreadyUsedUrls.add(x.doc.url);
+                extraDocs.push(x.doc);
+            }
+        }
+    }
+
+    console.log(`📚 Erweitert um ${extraDocs.length} zusätzliche Dokumente`);
+    return extraDocs;
 }
 
 // Nutzt das LLM um aus einer Lore-Beschreibung einen guten Bildprompt zu bauen
-async function buildImagePromptWithLLM(query, beschreibung) {
-    const userMsg = `Convert this lore description into a Stable Diffusion / FLUX image prompt.
-    Subject/Query: "${query}"
-    Lore description:
-    ${beschreibung}`;
+// beschreibung = Haupt-Quelle (z.B. Bildbeschreibung), zusatzkontext = weitere Dokumente
+async function buildImagePromptWithLLM(query, beschreibung, zusatzkontext = '') {
+    const userMsg = `Subject to visualize: "${query}"
+
+PRIMARY LORE SOURCE:
+${beschreibung}${zusatzkontext ? `\n\nADDITIONAL LORE SOURCES (use for context, colors, atmosphere, related details):\n${zusatzkontext}` : ''}
+
+Combine ALL sources above into one image generation prompt. Read carefully what type of subject this is (world, location, character, object) and describe it accurately based solely on the lore.`;
 
     try {
         const body = {
@@ -375,23 +428,33 @@ async function sendMessage() {
         chatWindow.scrollTop = chatWindow.scrollHeight;
 
         try {
-            // RAG: Kontext + Rohdaten holen
-            const { context, rawText } = await fetchRawContextForImage(query);
+            // Schritt 1: Haupt-Dokumente holen
+            const { topDocs, rawText } = await fetchRawContextForImage(query);
 
-            let imagePrompt = query; // Fallback: nur der Name
+            // Schritt 2: Kontext iterativ erweitern (verlinkte Begriffe nachsuchen)
+            const usedUrls = new Set(topDocs.map(x => x.doc.url));
+            const extraDocs = await expandImageContext(topDocs, usedUrls);
+            const allDocs = [...topDocs.map(x => x.doc), ...extraDocs];
 
-            // Schritt 1: Versuche eine Bildbeschreibung aus dem Markdown zu extrahieren
+            // Schritt 3: Gesamten Kontext zusammenbauen (kein Zeichenlimit)
+            const fullContext = allDocs.map((doc, i) => {
+                const label = i === 0 ? `[HAUPT-QUELLE] QUELLE: ${doc.url}` : `QUELLE: ${doc.url}`;
+                return `${label}\nINHALT:\n${doc.rawText || doc.text}`;
+            }).join('\n\n---\n\n');
+
+            let imagePrompt = query; // Fallback
+
+            // Schritt 4: Bildbeschreibung aus Markdown suchen (hat Vorrang)
             const bildbeschreibung = extractBildbeschreibung(query, rawText);
 
             if (bildbeschreibung) {
-                // Schritt 2: LLM baut daraus einen sauberen SDXL/FLUX Prompt
                 console.log("✅ Bildbeschreibung gefunden:", bildbeschreibung.substring(0, 100));
-                const llmPrompt = await buildImagePromptWithLLM(query, bildbeschreibung);
-                imagePrompt = llmPrompt || bildbeschreibung.substring(0, 400);
-            } else if (context) {
-                // Kein Bildbeschreibung-Block → LLM aus allgemeinem Kontext
-                console.log("⚠️ Keine Bildbeschreibung gefunden, nutze Kontext...");
-                const llmPrompt = await buildImagePromptWithLLM(query, context.substring(0, 600));
+                // Auch hier: kompletten Kontext mitgeben damit verwandte Infos einfließen
+                const llmPrompt = await buildImagePromptWithLLM(query, bildbeschreibung, fullContext);
+                imagePrompt = llmPrompt || bildbeschreibung;
+            } else if (fullContext) {
+                console.log("⚠️ Keine Bildbeschreibung, nutze gesamten Kontext...");
+                const llmPrompt = await buildImagePromptWithLLM(query, fullContext, '');
                 imagePrompt = llmPrompt || `${query}, fantasy concept art`;
             }
 
