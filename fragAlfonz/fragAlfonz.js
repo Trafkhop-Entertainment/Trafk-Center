@@ -345,7 +345,6 @@ function fetchBildbeschreibungForTerm(term) {
             if (doc.text.includes(word)) score += 8;
         });
         if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
-        // MD-Dateien bevorzugen: sie behalten die Markdown-Struktur inkl. picture description of: Blöcke
         if (doc.url.endsWith('.md')) score += 20;
         return { doc, score };
     }).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
@@ -359,27 +358,16 @@ function fetchBildbeschreibungForTerm(term) {
     console.log(`🔍 "${term}" → ${bestDoc.url.split('/').slice(-2).join('/')} (score: ${scored[0].score})`);
 
     const rawText = bestDoc.rawText || bestDoc.text;
+    let beschreibung = null;
 
-    // Strategie A: Markdown-basierte Extraktion (für .md Dateien mit Zeilenumbrüchen)
-    let beschreibung = extractBildbeschreibung(term, rawText);
-
-    // Strategie B: Flache Suche – findet "picture description of:" auch ohne Zeilenstruktur
-    if (!beschreibung) {
-        const flatIdx = rawText.search(/picture description of:/i);
-        if (flatIdx !== -1) {
-            // Alles ab dem Treffer, bis zum nächsten Abschnitt oder max 3000 Zeichen
-            const slice = rawText.substring(flatIdx);
-            const endMatch = slice.search(/\n#{1,6}\s|\n---|\n\n\n/);
-            const extracted = endMatch > 20 ? slice.substring(0, endMatch).trim() : slice.substring(0, 3000).trim();
-            // Den "picture description of: ..." Header selbst überspringen (erste Zeile/Satz)
-            const afterHeader = extracted.replace(/^picture description of:[^\n]*\n?/i, '').trim();
-            if (afterHeader.length > 20) {
-                beschreibung = afterHeader;
-                console.log(`✅ Bildbeschreibung für "${term}" via Flat-Search gefunden`);
-            }
-        }
-    } else {
-        console.log(`✅ Bildbeschreibung für "${term}" via Markdown-Extraktion gefunden`);
+    // Suche nach "picture description of:" – funktioniert in Markdown UND flachem HTML-Text
+    const picIdx = rawText.search(/picture description of:/i);
+    if (picIdx !== -1) {
+        const fromPic = rawText.substring(picIdx);
+        // Ende des Blocks: nächste Markdown-Überschrift oder max 3000 Zeichen
+        const endMatch = fromPic.search(/\n#{1,6}\s|\n---|\n\n\n/);
+        beschreibung = (endMatch > 20 ? fromPic.substring(0, endMatch) : fromPic.substring(0, 3000)).trim();
+        console.log(`✅ Bildbeschreibung für "${term}" gefunden (${beschreibung.length} Zeichen)`);
     }
 
     if (!beschreibung) {
