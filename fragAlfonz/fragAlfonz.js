@@ -642,7 +642,21 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     if (toggleBtn && chatContent) {
         toggleBtn.addEventListener('click', () => {
-            chatContent.classList.toggle('hidden');
+            const isHidden = chatContent.classList.toggle('hidden');
+
+            // Greife auf das Iframe in der index.html zu
+            const iframe = window.parent.document.getElementById('chatbotIframe');
+            if (iframe) {
+                if (isHidden) {
+                    // Chat ist zu -> Iframe schrumpfen
+                    iframe.style.width = '285px';
+                    iframe.style.height = '85px';
+                } else {
+                    // Chat ist offen -> Iframe vergrößern
+                    iframe.style.width = '850px';
+                    iframe.style.height = '500px';
+                }
+            }
         });
     }
 

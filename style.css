@@ -22,14 +22,14 @@ main {
 
 
 #logoundnav {
-    background: #5a3998; /*standard trafk color if not transparent*/
+    background: #8a5dd1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .borderbottom {
-    border-bottom: 5px solid #603ea3;
-    box-shadow: 0 2px 5px #160930;
+    border-bottom: 5px solid #5a3998;
+    box-shadow: 0 2px 5px #311d57;
 }
 #logoundnav img.do {
     max-height: 150px;
@@ -37,10 +37,11 @@ main {
     max-width: none !important;
     margin-top: 35px;
     margin-bottom: 25px;
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 25px #fff49e); /*standard kraft color if not transparent*/
+    filter: drop-shadow(0px 0px 1px #fff49e)    drop-shadow(0px 0px 16px #fff49e); /*standard kraft color if not transparent*/
+    transition: transform .165s ease, filter .165s ease;
 }
 #logoundnav img.do:hover {
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 12px #fff49e);
+    filter: drop-shadow(0px 0px 2px #fff49e)    drop-shadow(0px 0px 23px #fff49e);
     cursor: pointer;
 }
 nav {
@@ -58,9 +59,10 @@ nav .header {
     justify-content: center;
     width: 112.5px;
     height: 112.5px;
-    border: 5px solid #371c67;
+    border: 5px solid #4f308a;
     border-radius: 50%;
-    background: #936cde;
+    background: #5a3998;  /*standard trafk color if not transparent*/
+    box-shadow: none;
 }
 nav .header.do {
     display: inline-flex;
@@ -68,18 +70,13 @@ nav .header.do {
     justify-content: center;
     color: #fff287;
     font-size: 30px;
-    filter: none;
+    filter: drop-shadow(0px 0px 0px #432678) drop-shadow(0px 0px 5px #432678);
+    text-decoration: underline #fff287;
 }
 nav .header.do:hover{
-    filter: none;
+    filter: drop-shadow(0px 0px 5px #432678) drop-shadow(0px 10px 10px #432678);
+    translate: 0 -10px;
 }
-nav .header.do span {
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 7px #fff49e);
-}
-nav .header.do:hover span {
-    filter: drop-shadow(0px 0px 0px #fff49e)    drop-shadow(0px 0px 2px #fff49e);
-}
-
 
 
 
@@ -94,15 +91,15 @@ main {
     margin-right: 25px;
 }
 .content, button{
-    background: #442777;
+    background: #6b48ae;
     padding: 30px;
     width: fit-content;
     height: fit-content;
     margin-bottom: 25px;
     max-width: 35%;
     max-height: 600px;
-    border: 5px solid #371c67;
-    box-shadow: 0px 0px 10px #160930;
+    border: 5px solid #553393;
+    box-shadow: 0px 0px 15px #5a379a;
     overflow: scroll auto;
     border-radius: 20px;
     overflow-x: hidden;
@@ -110,11 +107,11 @@ main {
     color: #fff8bd;
 }
 #chatbotIframe {
-    width: 350px;
-    height: 600px;
+    width: 285px;
+    height: 85px;
     border: none;
     position: fixed;
-    bottom: 0;
+    bottom: 85px;
     right: 20px;
     background: transparent;
     z-index: 1000;
@@ -127,9 +124,9 @@ height: 100%;
 }
 
 .header {
-    background: #845dce;
-    box-shadow: 0px 0px 10px #2e1757;
-    border: 5px solid #603ea3;
+    background: #5a3998;
+    box-shadow: 0px 0px 15px #4a2b83;
+    border: 5px solid #4c2d85;
     border-radius: 20px;
     width: 100%;
     padding: 15px;
@@ -142,29 +139,29 @@ height: 100%;
 }
 h1 {
     font-size: 40px;
-    color: #fff37d;
+    color: #fdf5ab;
     margin-left: 40px;
 }
 h2 {
     font-size: 35px;
-    color: #fff37d;
+    color: #fdf5ab;
     margin-left: 35px;
 }
 h3 {
     font-size: 30px;
-    color: #fff37d;
+    color: #fdf5ab;
     margin-left: 30px;
 }
 h4 {
     font-size: 25px;
-    color: #fff37d;
+    color: #fdf5ab;
     margin-left: 25px;
 }
 .header .date {
     position: absolute;
     top: 0px;
     right: 5px;
-    color: #ffeb3c;
+    color: #fff6a5;
         z-index: 2;
 }
 .header .date p {
@@ -210,9 +207,9 @@ color: #fff8bd;
 
 .do {
     display: inline-block;
-    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 7px #fff49e);
+    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 5px #fff49e);
     transform-origin: center;
-    transition: transform .15s ease, filter .15s ease, translate .15s ease, box-shadow .15s ease;
+    transition: transform .165s ease, filter .165s ease, translate .165s ease, box-shadow .165s ease, color 0.165s ease;
     will-change: transform, filter;
     color: #fff49e;
     text-decoration: underline #fff49e;
@@ -220,23 +217,19 @@ color: #fff8bd;
 .do:hover {
     color: #fff49e;
     cursor: pointer;
-    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 2px #fff49e);
+    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 7px #fff49e);
     transform: scale(1.1); /* Standard-Scale für alles, was .do hat */
-    translate: 0 -10px;
 }
 nav a.header.do {
-    filter: none;
-}
-nav .header.do span {
-    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 7px #fff49e);
-    transition: filter .25s ease;
 }
 nav .header.do:hover {
-    filter: none;
     transform: scale(1.05) !important;
 }
+nav .header.do span {
+filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 6px #fff49e);
+}
 nav .header.do:hover span {
-    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 2px #fff49e);
+    filter: drop-shadow(0px 0px 0px #fff49e) drop-shadow(0px 0px 8px #fff49e);
 }
 a.do:has(> p) {
     transform: none;
@@ -275,11 +268,11 @@ footer {
     align-items: center;
     justify-content: center;
     width: 100%;
-    border-top: 5px solid #603ea3;
-    height: 50px;
-    box-shadow: 0px -2px 5px #160930;
+    border-top: 5px solid #5a3998;
+    height: fit-content;
+    box-shadow: 0 -2px 5px #311d57;
     gap: 12%;
-    background: #5a3998;
+    background: #8a5dd1;
 }
 
 
@@ -308,7 +301,7 @@ footer {
 
 
 
-@media (max-width: 1050px) {
+@media (max-width: 1080px) {
     p, span, a p, a span{
     font-size: 12px;
     }
@@ -370,22 +363,13 @@ footer {
         margin-right: 0 !important;
         padding: 10px;
     }
+    main {
+        align-content: flex-start;
+    }
     .header {
     margin-left: 0 !important;
     margin-right: 0 !important;
     }
-
-    footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    border-top: 5px solid #603ea3;
-    height: 50px;
-    box-shadow: 0px -2px 5px #160930;
-    gap: 12%;
-    background: #5a3998;
-}
 
     footer {
         height: fit-content;
@@ -398,41 +382,66 @@ footer {
         margin: 0;
         text-align: center;
     }
-
-    #chatbotIframe {
-        width: 100%;
-        right: 0;
-    }
 }
 
 @media (prefers-color-scheme: light) {
   body {
-  background: snow;
+  background: white;
   }
   #logoundnav, footer {
-  background: #c299ff;
-  }
-  nav .header {
-  background: #976ee3;
-  border: 5px solid #8759cb;
-  box-shadow: 0 2px 10px #411d7d;
+  background: #faf7c7;
   }
   .borderbottom {
-  border-bottom: 5px solid #976ee3;
-    box-shadow: 0 2px 5px #976ee3;
-  }
-  nav .header.do:hover {
-  box-shadow: 0 5px 10px #32116d;
+  border-bottom: 5px solid #ddd69a;
+    box-shadow: 0 2px 5px #d5cd92;
   }
   .content {
-  background: #ac8ceb;
+  background: #fffaed;
+  border: 5px solid #f3ecda;
+  box-shadow: 0 0 15px #efe8d5;
+  }
+  #logoundnav img.do {
+      filter: drop-shadow(0px 0px 2px #5a3998)    drop-shadow(0px 0px 15px #5a3998);
+ }
+  #logoundnav img.do:hover {
+      filter: drop-shadow(0px 0px 3px #5a3998)    drop-shadow(0px 0px 25px #5a3998);
   }
   .header {
-  background: #8a62d4;
+  background: #fffad6;
+  box-shadow: 0px 0px 15px #eae3b3;
+  border: 5px solid #efe9bd;
   }
   footer {
-    border-top: 5px solid #976ee3;
-    box-shadow: 0px -2px 5px #976ee3;
-    background: #c299ff;
+    border-top: 5px solid #ddd69a;
+    box-shadow: 0px -2px 5px #d5cd92;
+}
+p, span, a p, a span, footer span {
+color: #784fc6;
+}
+a.do {
+color: #5a3998;
+}
+a.do:hover {
+color: #5a3998;
+}
+nav .header.do span {
+color: #fff8bd;
+}
+a.do {
+filter: drop-shadow(0px 0px 0px #5a3998) drop-shadow(0px 0px 5px #5a3998);
+text-decoration: underline #5a3998;
+}
+a.do:hover {
+filter: drop-shadow(0px 0px 0px #5a3998) drop-shadow(0px 0px 7px #5a3998);
+}
+h1, h2, h3, h4 {
+color: #a271ff;
+}
+nav .header.do {
+    filter: drop-shadow(0px 0px 0px #432678) drop-shadow(0px 0px 5px #432678);
+}
+nav .header.do:hover{
+    filter: drop-shadow(0px 0px 5px #432678) drop-shadow(0px 10px 10px #432678);
 }
 }
+/*fff8bd, 5a3998*/
