@@ -107,15 +107,14 @@ main {
     color: #fff8bd;
 }
 #chatbotIframe {
-    width: 285px;
-    height: 85px;
+    width: 350px;
+    height: 600px;
     border: none;
     position: fixed;
-    bottom: 85px;
-    right: 20px;
+    bottom: 0px;
+    right: 0px;
     background: transparent;
     z-index: 1000;
-    font-size: 15px;
 }
 
 #alfonz-content {
@@ -415,7 +414,7 @@ footer {
     border-top: 5px solid #ddd69a;
     box-shadow: 0px -2px 5px #d5cd92;
 }
-p, span, a p, a span, footer span {
+p, span, a p, a span, footer span, footer label {
 color: #784fc6;
 }
 a.do {
