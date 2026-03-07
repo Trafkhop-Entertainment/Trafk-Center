@@ -7,7 +7,7 @@
             audio.volume = currentVol;
         });
 
-        const slider = document.getElementById('lautstärke');
+        const slider = document.getElementById('volume');
         if (slider) {
             slider.value = getStoredVol();
         }
@@ -24,7 +24,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         applyStorageVolume();
 
-        const slider = document.getElementById('lautstärke');
+        const slider = document.getElementById('volume');
         if (slider) {
             slider.addEventListener('input', (e) => {
                 localStorage.setItem('site-volume', e.target.value);

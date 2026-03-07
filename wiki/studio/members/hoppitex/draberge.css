@@ -1,0 +1,133 @@
+:root {
+--orange: #ed9121;
+--orange-dark: #c87a1c;
+--lightorange: #ffc37a;
+--lightorange-dark: #d6a466;
+--darkorange: #cc770f;
+--darkorange-dark: #a35f0c;
+}
+
+
+
+header {
+    background: var(--orange);
+    justify-content: normal;
+}
+section {
+    background: var(--lightorange);
+    filter: drop-shadow(0px 3px 3px var(--lightorange-dark)) drop-shadow(0px 3px 3px var(--lightorange-dark));
+}
+header h1 {
+    padding-left: 26%;
+    font-size: 85px;
+    transition: translate 2s ease-in-out, scale !important;
+    color: black !important;
+}
+header h1:hover {
+    translate: 300% !important;
+    scale: 1 !important;
+}
+nav {
+    background: var(--lightorange);
+    filter: drop-shadow(0px 3px 3px var(--lightorange-dark)) drop-shadow(0px 3px 3px var(--lightorange-dark));
+}
+footer {
+    background: var(--lightorange);
+    filter: drop-shadow(0px -3px 3px var(--lightorange-dark)) drop-shadow(0px -3px 3px var(--lightorange-dark));
+}
+.acrlogo {
+     width: 135px;
+     height: 135px;
+     transition: rotate 60s ease-in-out , scale 60s ease-in-out !important;
+}
+.acrlogo:hover {
+    rotate: -499680deg !important;
+    scale: 1.35 !important;
+}
+.header {
+    background: var(--orange);
+    filter: drop-shadow(0px 3px 3px var(--orange-dark)) drop-shadow(0px 3px 3px var(--orange-dark));
+}
+#cars img {
+    max-width: 350px;
+}
+#foods img {
+    max-width: 125px;
+}
+#gamesandtoys img {
+    max-width: 200px;
+}
+#OS img {
+    max-width: 850px;
+}
+#OS {
+    max-width: 65%;
+}
+#cup img {
+    max-width: 450px;
+}
+#glasses img {
+    max-width: 450px;
+}
+
+@media (max-width: 1080px) {
+    header h1 {
+        font-size: 45px;
+    }
+    #cars img {
+    max-width: 140px;
+    }
+    #foods img {
+    max-width: 180px;
+    }
+    img {
+    max-width: 150px;
+    }
+    #gamesandtoys img {
+        max-width: 140px;
+    }
+    #OS img {
+    max-width: 400px;
+    }
+    #OS {
+    max-width: 85%;
+    }
+    iframe {
+    height: 85%;
+    width: 85%;
+    }
+    #cup img {
+    max-width: 170px;
+    }
+    #glasses img {
+    max-width: 170px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    header {
+        background: var(--orange);
+    }
+    header h1, footer {
+        color: white !important;
+    }
+
+    section {
+        background: var(--orange);
+        filter: drop-shadow(0px 3px 3px var(--orange-dark)) drop-shadow(0px 3px 3px var(--orange-dark));
+    }
+
+    nav {
+        background: var(--darkorange);
+        filter: drop-shadow(0px 3px 3px var(--darkorange-dark)) drop-shadow(0px 3px 3px var(--darkorange-dark));
+    }
+    footer {
+        background: var(--darkorange);
+        filter: drop-shadow(0px -3px 3px var(--darkorange-dark)) drop-shadow(0px -3px 3px var(--darkorange-dark));
+    }
+
+    .header {
+        background: var(--darkorange);
+        filter: drop-shadow(0px 3px 3px var(--darkorange-dark)) drop-shadow(0px 3px 3px var(--darkorange-dark));
+    }
+}

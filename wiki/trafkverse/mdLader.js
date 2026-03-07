@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.text();
             })
             .then(markdown => {
-                // 1. Obsidian Wiki-Links Vorverarbeitung
                 let processedMarkdown = markdown.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, fileName, altText) => {
                     const encoded = encodeURI(fileName.trim());
                     return `![${altText || fileName}](${encoded})`;
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return path;
                 };
 
-                // Renderer für Bilder und Links
                 renderer.image = function(token, title, text) {
                     let href = (typeof token === 'object') ? token.href : token;
                     let alt = (typeof token === 'object') ? token.text : text;
@@ -48,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return `<a href="${finalHref || ''}">${linkText || ''}</a>`;
                 };
 
-                // Markdown parsen
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = marked.parse(processedMarkdown, {
                     renderer: renderer,
@@ -56,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     gfm: true
                 });
 
-                // --- STRUKTUR-LOGIK: Header INSIDE Content ---
                 const finalFragment = document.createDocumentFragment();
                 let currentContentDiv = null;
 
@@ -65,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         currentContentDiv = document.createElement('div');
                         currentContentDiv.className = 'content md';
 
-                        // ID von H1 auf die Content-Box übertragen für Anker-Links
                         if (child.id) {
                             currentContentDiv.id = child.id;
                             child.removeAttribute('id');
@@ -95,8 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     parent.removeChild(container);
 
-                    // --- NEU: ANKER-SCROLLING NACH LADEN ---
-                    // Wir warten einen winzigen Moment (setTimeout), damit der Browser das Layout berechnen kann
                     setTimeout(() => {
                         const currentHash = window.location.hash;
                         if (currentHash) {
