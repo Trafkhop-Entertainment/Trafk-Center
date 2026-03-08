@@ -36,8 +36,9 @@ footer {
     filter: drop-shadow(0px -3px 3px var(--lightorange-dark)) drop-shadow(0px -3px 3px var(--lightorange-dark));
 }
 .acrlogo {
-     width: 135px;
-     height: 135px;
+     width: 135px !important;
+     height: 135px !important;
+     min-width: auto !important;
      transition: rotate 60s ease-in-out , scale 60s ease-in-out !important;
 }
 .acrlogo:hover {
@@ -62,6 +63,7 @@ footer {
 }
 #OS {
     max-width: 65%;
+    max-height: fit-content;
 }
 #cup img {
     max-width: 450px;
