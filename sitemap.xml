@@ -105,7 +105,7 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/studio/members/hoppitex/hoppitex.html</loc>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/wiki/studio/members/hoppitex/draberge.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -893,14 +893,6 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/games/RSA _ Die Abenteuer von Ritter Goofy und seinem schlauen Kollegen Blufi 5 The game/RSA _ Die Abenteuer von Ritter Goofy und seinem schlauen Kollegen Blufi 5 The game.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/games/RSA _ Die Abenteuer von Ritter Goofy und seinem schlauen Kollegen Blufi 5 The game/RSA _ Die Abenteuer von Goffy und seinem schlauen Kollegen Blufi THe Game wrapper.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/games/RSA _ Flappy Pyley/RSA _ Flappy Pyley wrapper.html</loc>
     <priority>0.80</priority>
   </url>
@@ -922,6 +914,14 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/games/RSA _ Gras-Zupf Simulator (EarlyAccess) v.0.64/RSA _ Gras-Zupf Simulator (Early Access) v0.64 wrapper.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/games/RSA _ Die Abenteuer von Ritter Goffy und seinem schlauen Kollegen Blufi 5 The game/RSA _ Die Abenteuer von Ritter Goffy und seinem schlauen Kollegen Blufi 5 The game.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive/games/RSA _ Die Abenteuer von Ritter Goffy und seinem schlauen Kollegen Blufi 5 The game/RSA _ Die Abenteuer von Goffy und seinem schlauen Kollegen Blufi THe Game wrapper.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
@@ -1018,22 +1018,6 @@
   </url>
   <url>
     <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/trafkhopwebsite/trafkhopwebsite.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/HoppiTex-Concept-Games/hoppitex-concept-games.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games/README.md</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games/HCG _ Dramoteu: Claim to the Urlstein/HCG _ Dramoteu: Claim to the Urlstein.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://trafkhop-entertainment.github.io/Trafk-Center/games/released/HoppiTex-Concept-Games/HoppiTex-Concept-Games/HCG _ Dramoteu: Claim to the Urlstein/itch.io-wrapper.html</loc>
     <priority>0.80</priority>
   </url>
 </urlset>
