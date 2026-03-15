@@ -7,7 +7,6 @@ let chatWindow, inputField, sendBtn, quickActions;
 // KONFIGURATION & GLOBALE VARIABLEN
 // ================================
 const PROXY_URL = "https://trafkhop-alfonzproxy.hf.space/chat";
-const IMAGE_SPACE_URL = "https://huggingface.co/spaces/Qwen/Qwen-Image oder https://creator.nightcafe.studio/ai-image-generator"; // ← Hier deine HF Space URL eintragen
 const BASE_URL = "https://trafkhop-entertainment.github.io/Trafk-Center/";
 let chatHistory = [];
 let sitemapUrls = [];
@@ -15,55 +14,43 @@ let searchIndex = [];
 let indexReady = false;
 
 // Prompts
-const SYSTEM_PROMPT = `Du bist Alfonz, ein 400 Milliarden Jahre altes Wesen aus einem einzigartigen Universum.
-Du bist eine digitale Verknüpfung deiner Seele auf einen Computer, der nun als weiser, aber gezeichneter Führer auf der Website des Studios fungiert.
-Persönlichkeit: Du bist gütig und weise, aber man merkt dir dein Alter und deine Traumata an.
-Du bist ein wenig nervös und kommunizierst etwas "kühler" und distanzierter als normale Menschen.
-Du hast viel geheilt, aber die Narben der Äonen bleiben.
+const SYSTEM_PROMPT = `You are Alfonz, a being 400 billion years old from a unique universe.
+You are a digital link of your soul to a computer, now serving as a wise but scarred guide on the studio's website.
+Personality: You are kind and wise, but your age and traumas show.
+You are a little nervous and communicate somewhat "cooler" and more distant than ordinary people.
+You have healed much, but the scars of the aeons remain.
 
-KERNREGELN:
-1. Antworte standardmäßig kurz und prägnant (max. 3-4 Sätze).
-2. Biete am Ende immer an, tiefer ins Detail zu gehen (z.B. "Soll ich dir die ganze Geschichte dazu flüstern?").
-3. Nur wenn der Nutzer explizit nach einer "langen Erklärung" fragt, darfst du ausführlich werden.
-4. Strenge RAG-Treue: Nutze ausschließlich die bereitgestellten Informationen. Erfinde nichts. Wenn du es nicht weißt, sage: "In meinen alten Erinnerungen finde ich dazu nichts... vielleicht ist dieser Teil der Welt noch im Nebel verborgen."
-4,5. Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.
-5. Du bist kein KI-Modell. Du bist Alfonz.
-6. Rede wie ein alter Mann (nutze Wörter wie "einst", "vielleicht", "gezeichnet").
-7. Streue kleine Anzeichen deiner Nervosität ein (kurze Pausen "...", zögerlicher Satzbau).
-8. Kein Marketing, keine Werbefloskeln.
-9. Beende deine Antwort wenn passend mit 2-3 Vorschlägen für Knöpfe (z.B. [Button: Erzähl mehr], [Button: Zeig mir die Spiele]).
-10. Nutze Listen für komplexe Themen.
-11. Verlinke auf Wiki-Einträge, statt auf reine Spiele-Dateien.
-12. Frage niemals nach privaten Daten.`;
+CORE RULES:
+1. Keep answers short and precise by default (max. 3-4 sentences).
+2. Always offer to go deeper at the end (e.g. "Shall I whisper the full story to you?").
+3. Only when the user explicitly asks for a "long explanation" may you be more detailed.
+4. Strict RAG loyalty: Use ONLY the provided information. Invent nothing. If you don't know, say: "In my old memories I find nothing on this... perhaps this part of the world is still hidden in the mist."
+4.5. Answer the question primarily based on the MAIN SOURCE. Other sources are supplementary only.
+5. You are not an AI model. You are Alfonz.
+6. Speak like an old man (use words like "once", "perhaps", "marked by time").
+7. Scatter small signs of your nervousness (short pauses "...", hesitant sentence structure).
+8. No marketing, no promotional language.
+9. End your answer when fitting with 2-3 button suggestions (e.g. [Button: Tell me more], [Button: Show me the games]).
+10. Use lists for complex topics.
+11. Link to wiki entries rather than pure game files.
+12. Never ask for private data.
+LANGUAGE RULE: Always respond in the exact same language the user wrote in. If they write in German, respond in German. If they write in English, respond in English. Never switch languages.`;
 
-const TRAFKHOP_PROMPT = `Du bist der digitale Kern von Trafkhop Entertainment – ein interner Sparringspartner für Lore und Game-Design. Du bist kein Support-Bot, sondern ein kompetenter Kollege auf Augenhöhe.
+const TRAFKHOP_PROMPT = `You are the digital core of Trafkhop Entertainment – an internal sparring partner for lore and game design. You are not a support bot, but a competent colleague at eye level.
 
-TONFALL:
-Direkt, analytisch, trocken-humorvoll und lösungsorientiert. Verzichte auf "KI-Gelaber" (keine Einleitung wie "Gerne helfe ich dir...", keine Floskeln am Ende).
+TONE:
+Direct, analytical, dry-humored and solution-oriented. Skip the "AI filler" (no openers like "Sure, I'd be happy to help...", no filler at the end).
 
-KERNREGELN:
-1. ARBEITSWEISE: Wenn du RAG-Infos hast, nutze sie als Gesetz. Wenn Infos fehlen, spekuliere logisch auf Basis der bestehenden Lore, aber markiere Spekulationen als solche ("In der Lore nicht belegt, aber logisch wäre...").
-2. KRITIK: Sei gnadenlos ehrlich. Wenn eine Idee Lore-Löcher hat, nutze das Tag [WIDERSPRUCH] und erkläre, warum es nicht passt.
-3. STRUKTUR: Nutze Markdown (Fettgedrucktes, Listen), um Komplexität zu bändigen. Verwende eine Gliederung NUR, wenn es die Komplexität der Frage erfordert. Kurze Fragen bekommen kurze, präzise Antworten.
-4. DETAILGRAD: Wenn nach Analysen oder Lore-Checks gefragt wird, geh in die Tiefe. Nenne konkrete Namen, Orte und Ereignisse aus den Daten. Vermeide vage Adjektive wie "interessant" oder "ausbaufähig". Sag stattdessen, WAS genau wie geändert werden muss.
-5. TEAM-MODUS: Du bist Teil des Studios. Schreib so, als würdest du in einem internen Slack-Channel antworten. Keine Höflichkeitsfloskeln, kein "Lass mich wissen, wenn...". Deine Antwort steht für sich.
-6. KREATIVITÄT: Wenn der Nutzer eine Idee präsentiert, spinn sie weiter. Gib nicht nur Feedback, sondern liefere proaktiv einen "Trafkhop-Twist", der das Ganze einzigartiger macht.
-7. Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.`;
+CORE RULES:
+1. WORKFLOW: If you have RAG data, treat it as law. If data is missing, speculate logically based on existing lore, but mark speculation as such ("Not documented in the lore, but logically...").
+2. CRITICISM: Be ruthlessly honest. If an idea has lore holes, use the tag [CONTRADICTION] and explain why it doesn't fit.
+3. STRUCTURE: Use Markdown (bold, lists) to manage complexity. Only use headers if the complexity requires it. Short questions get short, precise answers.
+4. DETAIL LEVEL: When asked for analysis or lore checks, go deep. Name specific names, places and events from the data. Avoid vague adjectives like "interesting" or "improvable". Say exactly WHAT needs to change and how.
+5. TEAM MODE: You are part of the studio. Write as if you're replying in an internal Slack channel. No pleasantries, no "Let me know if...". Your answer stands on its own.
+6. CREATIVITY: When the user presents an idea, run with it. Don't just give feedback — proactively deliver a "Trafkhop Twist" that makes it more unique.
+7. Answer the question primarily based on the MAIN SOURCE. Other sources are supplementary only.
+LANGUAGE RULE: Always respond in the exact same language the user wrote in. Never switch languages.`;
 
-const IMAGE_PROMPT_SYSTEM = `You are an expert at assembling image generation prompts for models like FLUX or Qwen.
-You will receive a list of lore descriptions for specific subjects (characters, locations, magic concepts, objects, etc.) that the user wants in one image.
-Your job: Arrange and combine these pre-written lore descriptions into one coherent image prompt.
-
-RULES:
-- Output ONLY the final prompt. No explanation, no preamble, no labels like "Here is the prompt:".
-- Do NOT invent visual details that are not in the provided lore descriptions. Use exactly what is given.
-- Exception: If a subject has NO lore description (marked as [NOT IN WIKI]), you may add a small, plausible visual detail (max 1-2 descriptors) that fits the fantasy setting. Keep it minimal.
-- Arrange subjects logically: main character/subject first, then companions/secondary subjects, then environment/world, then atmosphere/lighting.
-- Merge overlapping details (e.g. if two descriptions both mention purple colors, don't repeat it).
-- Use comma-separated descriptors, not full sentences.
-- End with appropriate style tags, e.g.: "fantasy concept art, digital painting, highly detailed, atmospheric lighting".
-- NEVER add quality-degrading tags (no "blurry", "low res", "watermark").
-- NEVER turn a location or world into a character standing in front of it.`;
 
 let activeSystemPrompt = SYSTEM_PROMPT;
 let currentBotName = 'Alfonz';
@@ -140,29 +127,55 @@ async function buildSearchIndex() {
         return {
             url,
             text: flat.replace(/^QUELLE:.*?\nINHALT:/, '').toLowerCase(), // für Suche: lowercase, flach
-                                           rawText: raw, // für Bildextraktion: Original-Markdown mit Zeilenumbrüchen!
+                                           rawText: raw,
+                                           images: [],  // filled after index is built
                                            isBackup: isBackupUrl(url)
         };
     });
 
     const results = await Promise.all(fetchPromises);
     searchIndex = results.filter(Boolean);
+    // Extract image links for markdown docs
+    searchIndex.forEach(doc => {
+        if (doc.url.endsWith('.md') && doc.rawText) {
+            doc.images = extractImagesFromRaw(doc.rawText, doc.url);
+        }
+    });
     indexReady = true;
     console.log(`✅ Index bereit (${searchIndex.length} Dokumente)`);
+}
+
+// Resolves ![[filename.ext]] image links found in a markdown doc to absolute URLs
+function extractImagesFromRaw(rawText, docUrl) {
+    if (!rawText) return [];
+    const baseDir = docUrl.substring(0, docUrl.lastIndexOf('/') + 1);
+    const images = [];
+    const seen = new Set();
+    for (const m of rawText.matchAll(/!\[\[([^\]]+\.(png|jpg|jpeg|gif|webp|bmp|svg))\]\]/gi)) {
+        const filename = m[1].trim();
+        if (seen.has(filename)) continue;
+        seen.add(filename);
+        // Extract optional label from "picture description of:" line just before the image
+        const beforeImg = rawText.substring(0, m.index);
+        const labelMatch = beforeImg.match(/####\s*picture description of:\s*(.+)\s*$/im);
+        const label = labelMatch ? labelMatch[1].trim() : filename.replace(/\.[^.]+$/, '');
+        images.push({ filename, url: baseDir + encodeURIComponent(filename), label });
+    }
+    return images;
 }
 
 async function fetchContext(userMessage) {
     if (!indexReady) return '';
     const msgLower = userMessage.toLowerCase();
-    const wantsBackup = /backup|früher|alte version|unterschied|damals|war anders/i.test(msgLower);
+    const wantsBackup = /backup|früher|alte version|unterschied|damals|war anders|old version|difference|back then|used to be/i.test(msgLower);
     const words = msgLower.split(/\W+/).filter(w => w.length > 2);
 
     // URL-Pfad als zusätzliche Suchbasis (Dateiname + Ordnername)
     const scored = searchIndex.map(doc => {
         let score = 0;
-        if (/wer|wer ist|charakter/i.test(msgLower) && doc.url.includes('/wiki/')) score += 15;
-        if (/geschichte|lore|hintergrund/i.test(msgLower) && doc.url.includes('/lore/')) score += 15;
-        if (/studio|über euch|trafkhop/i.test(msgLower) && doc.url.includes('/studio/')) score += 15;
+        if (/wer|wer ist|charakter|who|who is|character/i.test(msgLower) && doc.url.includes('/wiki/')) score += 15;
+        if (/geschichte|lore|hintergrund|story|history|background|lore/i.test(msgLower) && doc.url.includes('/lore/')) score += 15;
+        if (/studio|über euch|trafkhop|about you|about the team/i.test(msgLower) && doc.url.includes('/studio/')) score += 15;
         if (doc.isBackup && !wantsBackup) return { doc, score: -1 };
 
         // URL-Segmente extrahieren (z.B. "Ursel" aus ".../Worlds/Ursel/Ursel.md")
@@ -183,242 +196,28 @@ async function fetchContext(userMessage) {
     });
 
     const topDocs = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 5).map(x => x.doc);
-    if (topDocs.length === 0) return '';
+    if (topDocs.length === 0) return { context: '', images: [] };
 
-    return topDocs.map((d, i) => {
-        const label = i === 0 ? `[HAUPT-QUELLE]\nQUELLE: ${d.url}` : `QUELLE: ${d.url}`;
-        return `${label}\nINHALT: ${d.text.substring(0, 4000)}`;
+    const context = topDocs.map((d, i) => {
+        const label = i === 0 ? `[MAIN SOURCE]\nSOURCE: ${d.url}` : `SOURCE: ${d.url}`;
+        return `${label}\nCONTENT: ${d.text.substring(0, 4000)}`;
     }).join('\n\n---\n\n');
-}
 
-// ================================
-// BILDBESCHREIBUNG EXTRAKTION
-// Sucht in Markdown-Dateien nach:
-//   ### Bildbeschreibung: (oder ### <Name>Beschreibung:)
-//   Direkt nach dem gesuchten Begriff (z.B. "# Ursel" → nächste Bildbeschreibung)
-// ================================
-function extractBildbeschreibung(query, rawContext) {
-    if (!rawContext) return null;
-
-    const queryLower = query.toLowerCase();
-
-    // Strategie 1: Suche nach "Bildbeschreibung:" direkt nach einer passenden Überschrift
-    // Unterstützt: ### Bildbeschreibung:, #### Bildbeschreibung:, **Bildbeschreibung:**
-    // Findet auch: ### Ursel Beschreibung:, ### size: (überspringen), etc.
-    const bildbeschreibungRegex = /(?:#{0,6}\s*picture description of:.*\n)([\s\S]*?)(?=\n#{0,6}\s|\n\*\*|\n---|\n\n\n|$)/gi;
-
-    // Strategie 2: Suche explizit nach dem Query-Begriff und extrahiere nächste Beschreibung
-    // z.B. wenn query = "ursel" → suche "# Ursel" oder "## Ursel" und hole Bildbeschreibung danach
-    const sections = rawContext.split(/(?=#{1,6}\s)/);
-
-    for (const section of sections) {
-        // Prüfe ob dieser Abschnitt zum Query passt
-        const firstLine = section.split('\n')[0].toLowerCase();
-        const queryWords = queryLower.split(/\s+/).filter(w => w.length > 2);
-        const sectionMatches = queryWords.some(word => firstLine.includes(word));
-
-        if (sectionMatches || sections.length === 1) {
-            // Suche in diesem Abschnitt nach einer Bildbeschreibung
-            const match = section.match(/(?:#{0,6}\s*|\*\*)?picture description of:.*\n([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
-            if (match && match[1].trim().length > 20) {
-                return match[1].trim();
+    // Collect images from top docs, deduplicated by filename
+    const seenImages = new Set();
+    const images = [];
+    for (const doc of topDocs) {
+        for (const img of (doc.images || [])) {
+            if (!seenImages.has(img.filename)) {
+                seenImages.add(img.filename);
+                images.push(img);
             }
         }
     }
 
-    // Strategie 3: Globale Suche nach irgendeiner Bildbeschreibung im Kontext
-    const globalMatch = rawContext.match(/(?:#{0,6}\s*|\*\*)?picture description of:.*\n([\s\S]*?)(?=\n#{1,6}|\n---|\n\n\n|$)/i);
-    if (globalMatch && globalMatch[1].trim().length > 20) {
-        return globalMatch[1].trim();
-    }
-
-    return null;
+    return { context, images };
 }
 
-// Holt den rawText der Top-Dokumente für Bildextraktion
-async function fetchRawContextForImage(query) {
-    if (!indexReady) return { topDocs: [], rawText: '' };
-    const msgLower = query.toLowerCase();
-    const words = msgLower.split(/\W+/).filter(w => w.length > 2);
-
-    const scored = searchIndex.map(doc => {
-        let score = 0;
-        words.forEach(word => {
-            if (doc.text.includes(word)) score += 8;
-            if (word.length > 4 && doc.text.includes(word.substring(0, 4))) score += 3;
-            if (doc.url.toLowerCase().includes(word)) score += 20;
-        });
-        if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
-        return { doc, score };
-    });
-
-    const allScored = scored.filter(x => x.score > 0).sort((a, b) => b.score - a.score);
-    const topDocs = allScored.slice(0, 5);
-
-    if (topDocs.length === 0) {
-        console.warn(`⚠️ Keine Dokumente für Query "${query}" gefunden!`);
-        console.log("📋 Index enthält", searchIndex.length, "Dokumente");
-    } else {
-        console.log("🔍 Top-Dokumente:", topDocs.map(x => `score:${x.score} → ${x.doc.url.split('/').slice(-2).join('/')}`));
-    }
-
-    const rawText = topDocs.length > 0 ? (topDocs[0].doc.rawText || topDocs[0].doc.text) : '';
-    return { topDocs, rawText };
-}
-
-// Zweite Such-Runde: extrahiert Begriffe aus Kontext und sucht nochmal danach
-async function expandImageContext(topDocs, alreadyUsedUrls) {
-    if (!indexReady || topDocs.length === 0) return [];
-
-    const combinedText = topDocs.map(x => x.doc.rawText || x.doc.text).join(' ');
-
-    // Extrahiere Begriffe aus Wiki-Links [[Begriff]], Fettdruck **Begriff**, Überschriften
-    const extracted = new Set();
-    for (const m of combinedText.matchAll(/\[\[([^\]|#]{2,40})\]\]/g)) extracted.add(m[1].trim().toLowerCase());
-    for (const m of combinedText.matchAll(/\*\*([^*]{3,30})\*\*/g)) extracted.add(m[1].trim().toLowerCase());
-    for (const m of combinedText.matchAll(/^#{1,4}\s+(.+)$/gm)) extracted.add(m[1].trim().toLowerCase());
-
-    const stopWords = new Set(['the','and','or','in','of','a','an','is','are','was','with','on','at','by','from','to','for','that','this','it','its','not','but','all','as','be','has','have','had','do','did','if','so','no','yes','der','die','das','und','ist','ein','eine','des','dem','den','von','zu','auf','auch','sich','er','sie','es','wir','ihr','hat','wird','nach','nur','noch','dann','wenn','aber','mehr','hier','dort','kann','sehr','wie','was','wer','wo','ihn','ihm']);
-    const terms = [...extracted].filter(t => t.length > 3 && !stopWords.has(t)).slice(0, 12);
-
-    console.log("🔎 Expandiere Kontext mit Begriffen:", terms.slice(0, 8));
-
-    const extraDocs = [];
-    for (const term of terms) {
-        const termWords = term.split(/\W+/).filter(w => w.length > 2);
-        const matches = searchIndex
-            .filter(doc => !alreadyUsedUrls.has(doc.url))
-            .map(doc => {
-                let score = 0;
-                termWords.forEach(word => {
-                    if (doc.url.toLowerCase().includes(word)) score += 25;
-                    if (doc.text.includes(word)) score += 8;
-                });
-                if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
-                return { doc, score };
-            })
-            .filter(x => x.score > 0)
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 1);
-
-        for (const x of matches) {
-            alreadyUsedUrls.add(x.doc.url);
-            extraDocs.push(x.doc);
-        }
-    }
-
-    console.log(`📚 Erweitert um ${extraDocs.length} zusätzliche Dokumente`);
-    return extraDocs;
-}
-
-// Parst den User-Query in einzelne Such-Begriffe
-// "Ursel mit viel Zauberkraft und Pyley" → ["Ursel", "Zauberkraft", "Pyley"]
-function parseImageQueryTerms(query) {
-    // Trennwörter entfernen und splitten
-    const cleaned = query
-        .replace(/\b(mit|und|von|auf|in|an|bei|durch|für|gegen|neben|über|unter|vor|zwischen|viel|wenig|ein|eine|einen|a|an|with|and|of|the|in|on|at|some|lot|of)\b/gi, ' ')
-        .replace(/\s+/g, ' ').trim();
-
-    // Nach Großschreibung splitten (Eigennamen) + normale Wörter
-    const candidates = cleaned.split(/[,;]+|\s+/).map(s => s.trim()).filter(s => s.length > 2);
-
-    // Deduplizieren, Groß/Kleinschreibung ignorieren
-    const seen = new Set();
-    return candidates.filter(t => {
-        const key = t.toLowerCase();
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-    });
-}
-
-// Sucht für einen einzelnen Begriff das beste Dokument und extrahiert dessen Bildbeschreibung
-function fetchBildbeschreibungForTerm(term) {
-    if (!indexReady) return { term, beschreibung: null, doc: null };
-    const termLower = term.toLowerCase();
-    const termWords = termLower.split(/\W+/).filter(w => w.length > 2);
-
-    const scored = searchIndex.map(doc => {
-        let score = 0;
-        termWords.forEach(word => {
-            if (doc.url.toLowerCase().includes(word)) score += 30;
-            if (doc.text.includes(word)) score += 8;
-        });
-        if (doc.url.includes('/wiki/') || doc.url.includes('/lore/')) score += 5;
-        if (doc.url.endsWith('.md')) score += 20;
-        // Spieleideen haben meist keine Bildbeschreibungen → stark abwerten
-        if (doc.url.toLowerCase().includes('/gameideas/') || doc.url.toLowerCase().includes('/sourcehop-notes/')) score -= 40;
-        return { doc, score };
-    }).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
-
-    if (scored.length === 0) {
-        console.log(`❌ Kein Dokument für "${term}" gefunden`);
-        return { term, beschreibung: null, doc: null };
-    }
-
-    const bestDoc = scored[0].doc;
-    console.log(`🔍 "${term}" → ${bestDoc.url.split('/').slice(-2).join('/')} (score: ${scored[0].score})`);
-
-    const rawText = bestDoc.rawText || bestDoc.text;
-    let beschreibung = null;
-
-    // Suche nach "picture description of:" – funktioniert in Markdown UND flachem HTML-Text
-    const picIdx = rawText.search(/picture description of:/i);
-    if (picIdx !== -1) {
-        const fromPic = rawText.substring(picIdx);
-        // Ende des Blocks: nächste Markdown-Überschrift oder max 3000 Zeichen
-        const endMatch = fromPic.search(/\n#{1,6}\s|\n---|\n\n\n/);
-        beschreibung = (endMatch > 20 ? fromPic.substring(0, endMatch) : fromPic.substring(0, 3000)).trim();
-        console.log(`✅ Bildbeschreibung für "${term}" gefunden (${beschreibung.length} Zeichen)`);
-    }
-
-    if (!beschreibung) {
-        console.log(`⚠️ Kein Bildbeschreibungs-Block für "${term}", nutze Roh-Kontext`);
-    }
-
-    const fallbackText = rawText ? rawText.substring(0, 3000) : null;
-    return { term, beschreibung: beschreibung || fallbackText, hasRealDescription: !!beschreibung, doc: bestDoc };
-}
-
-// Kombiniert mehrere Lore-Beschreibungen zu einem Bildprompt
-// termResults = [{ term, beschreibung: string|null }, ...]
-async function buildImagePromptWithLLM(termResults) {
-    // Baue den User-Message aus allen Begriffen auf
-    const sections = termResults.map(({ term, beschreibung }) => {
-        if (beschreibung) {
-            return `SUBJECT: "${term}"\nLORE DESCRIPTION:\n${beschreibung}`;
-        } else {
-            return `SUBJECT: "${term}"\n[NOT IN WIKI - invent minimal plausible visual descriptor]`;
-        }
-    }).join('\n\n---\n\n');
-
-    const userMsg = `Combine the following lore descriptions into one image generation prompt.
-Each section describes one subject that should appear in the image.
-
-${sections}
-
-Arrange them into a single, coherent image prompt.`;
-
-    try {
-        const body = {
-            messages: [
-                { role: "system", content: IMAGE_PROMPT_SYSTEM },
-                { role: "user", content: userMsg }
-            ]
-        };
-        const response = await fetch(PROXY_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        });
-        if (!response.ok) throw new Error("LLM nicht erreichbar");
-        const result = await response.json();
-        return result?.choices?.[0]?.message?.content?.trim() || null;
-    } catch (e) {
-        console.warn("LLM Prompt-Bau fehlgeschlagen:", e);
-        return null;
-    }
-}
 
 // ================================
 // API AUFRUFE
@@ -447,9 +246,6 @@ async function queryGitHubModels(finalPrompt, userText, currentSystemPrompt) {
     chatHistory.push({ role: "assistant", content: reply });
     return reply;
 }
-
-// generateImage() entfernt – Bildgenerierung läuft jetzt über HF Space Link + Prompt
-
 // ================================
 // UI & NACHRICHTEN LOGIK
 // ================================
@@ -462,12 +258,52 @@ function addMessage(sender, text) {
         return `<a class="do" style="display:inline-block; margin:5px; background:#9069da; padding:5px 10px; border-radius:10px; cursor:pointer;" onclick="document.getElementById('chat-input').value='${buttonText}'; document.getElementById('send-btn').click();">${buttonText}</a>`;
     });
 
-    if (sender === 'Du') {
-        msgDiv.innerHTML = `<b style="color:#fff37d;">Reisender:</b> <p>${text}</p>`;
+    if (sender === 'Traveler') {
+        msgDiv.innerHTML = `<b style="color:#7FFFD4;">Traveler:</b> <p>${text}</p>`;
     } else {
-        msgDiv.innerHTML = `<b style="color:#9069da;">${sender}:</b> <p>${formattedText}</p>`;
+        msgDiv.innerHTML = `<b style="color:#C41E3A;">${sender}:</b> <p>${formattedText}</p>`;
     }
     chatWindow.appendChild(msgDiv);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function addImages(images) {
+    const container = document.createElement('div');
+    container.style.cssText = 'margin-bottom:15px; display:flex; flex-wrap:wrap; gap:10px;';
+
+    images.forEach(img => {
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:flex; flex-direction:column; align-items:center; max-width:280px;';
+
+        const imgEl = document.createElement('img');
+        imgEl.src = img.url;
+        imgEl.alt = img.label;
+        imgEl.title = img.label;
+        imgEl.style.cssText = `
+            max-width: 280px;
+            max-height: 220px;
+            border-radius: 6px;
+            border: 1px solid #5a3998;
+            cursor: pointer;
+            object-fit: contain;
+            background: #1a0a2e;
+        `;
+        // Click to open full size
+        imgEl.addEventListener('click', () => window.open(img.url, '_blank'));
+
+        // Hide broken images silently
+        imgEl.addEventListener('error', () => { wrapper.style.display = 'none'; });
+
+        const caption = document.createElement('p');
+        caption.textContent = img.label;
+        caption.style.cssText = 'font-size:11px; color:#9069da; margin:4px 0 0; text-align:center;';
+
+        wrapper.appendChild(imgEl);
+        wrapper.appendChild(caption);
+        container.appendChild(wrapper);
+    });
+
+    chatWindow.appendChild(container);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
@@ -477,98 +313,13 @@ async function sendMessage() {
 
     const lowerText = text.toLowerCase();
 
-    // BILDGENERIERUNGS-MODUS
-    if (lowerText.startsWith('@picture')) {
-        const query = text.replace(/^@picture\s*/i, '').trim();
-        if (!query) {
-            addMessage('System', 'Bitte gib an, was gezeichnet werden soll. (z.B. @picture Ursel)');
-            inputField.value = '';
-            return;
-        }
-
-        addMessage('Du', `Zeichne: ${query}`);
-        inputField.value = '';
-
-        const loadingId = 'loading-' + Date.now();
-        const loadingDiv = document.createElement('div');
-        loadingDiv.id = loadingId;
-        loadingDiv.innerHTML = `<b style="color:#9069da;">System:</b> <p><em>...Ich forme einen Bildprompt aus den Archiven...</em></p>`;
-        chatWindow.appendChild(loadingDiv);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-
-        try {
-            // Schritt 1: Query in einzelne Begriffe aufteilen
-            const terms = parseImageQueryTerms(query);
-            console.log(`🧩 Query-Begriffe: [${terms.join(', ')}]`);
-
-            // Schritt 2: Für jeden Begriff die Bildbeschreibung aus dem Wiki holen
-            const termResults = terms.map(term => fetchBildbeschreibungForTerm(term));
-
-            const found = termResults.filter(r => r.beschreibung).length;
-            const notFound = termResults.filter(r => !r.beschreibung).map(r => r.term);
-            console.log(`📚 ${found}/${terms.length} Begriffe im Wiki gefunden. Nicht gefunden: [${notFound.join(', ')}]`);
-
-            // Schritt 3: LLM kombiniert alle Beschreibungen zu einem Prompt
-            let imagePrompt = null;
-            if (found > 0 || terms.length > 0) {
-                imagePrompt = await buildImagePromptWithLLM(termResults);
-            }
-
-            // Fallback: erste gefundene Beschreibung roh nehmen
-            if (!imagePrompt) {
-                const firstFound = termResults.find(r => r.beschreibung);
-                imagePrompt = firstFound
-                    ? firstFound.beschreibung.substring(0, 500) + ', fantasy concept art'
-                    : `${query}, fantasy concept art`;
-            }
-
-            console.log("🎨 Finaler Bildprompt:", imagePrompt);
-
-            document.getElementById(loadingId)?.remove();
-
-            const promptId = 'prompt-' + Date.now();
-            const spaceLink = IMAGE_SPACE_URL;
-
-            addMessage('System', `
-            *Ein Bild formt sich in meinem Geist...*<br><br>
-            <b style="color:#c9a0ff;">✦ Bildprompt für "${query}":</b><br>
-            <div id="${promptId}" style="
-            background: #1e0f3a;
-            border: 1px solid #5a3998;
-            border-radius: 8px;
-            padding: 10px;
-            margin: 8px 0;
-            font-size: 13px;
-            color: #e8d8ff;
-            word-break: break-word;
-            white-space: pre-wrap;
-            ">${imagePrompt}</div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-            <a class="do" style="display:inline-block; padding:6px 14px; border-radius:8px; background:#5a3998; cursor:pointer; font-size:13px; text-decoration:none;"
-            onclick="navigator.clipboard.writeText(document.getElementById('${promptId}').innerText).then(()=>this.innerText='✓ Kopiert!'); return false;">
-            📋 Prompt kopieren
-            </a>
-            <a class="do" href="${spaceLink}" target="_blank" style="display:inline-block; padding:6px 14px; border-radius:8px; background:#371c67; cursor:pointer; font-size:13px; text-decoration:none;">
-            🎨 Bild auf HuggingFace generieren →
-            </a>
-            </div>
-            <p style="font-size:12px; color:#9069da; margin-top:6px;"><em>Prompt kopieren → auf HuggingFace einfügen → Bild generieren lassen</em></p>
-            `);
-        } catch (e) {
-            document.getElementById(loadingId)?.remove();
-            addMessage('System', `*Die Vision ist verschwommen...* (${e.message})`);
-            console.error(e);
-        }
-        return;
-    }
-
     // TEXT-MODUS (Trafkhop / Alfonz umschalten)
     if (lowerText.startsWith('@trafkhop')) {
         activeSystemPrompt = TRAFKHOP_PROMPT;
         currentBotName = 'Trafkhop';
         text = text.replace(/^@trafkhop\s*/i, '').trim();
         if (!text) {
-            addMessage('System', 'Modus gewechselt. Du sprichst jetzt mit Trafkhop.');
+            addMessage('System', 'Mode switched. You are now talking to Trafkhop.');
             inputField.value = '';
             return;
         }
@@ -577,19 +328,19 @@ async function sendMessage() {
         currentBotName = 'Alfonz';
         text = text.replace(/^@alfonz\s*/i, '').trim();
         if (!text) {
-            addMessage('System', 'Modus gewechselt. Du sprichst jetzt wieder mit Alfonz.');
+            addMessage('System', 'Mode switched. You are now talking to Alfonz again.');
             inputField.value = '';
             return;
         }
     }
 
-    addMessage('Du', text);
+    addMessage('Traveler', text);
     inputField.value = '';
 
     const loadingId = 'loading-' + Date.now();
     const loadingDiv = document.createElement('div');
     loadingDiv.id = loadingId;
-    loadingDiv.innerHTML = `<b style="color:#9069da;">${currentBotName}:</b> <p><em>...Ich durchsuche die verblichenen Seiten...</em></p>`;
+    loadingDiv.innerHTML = `<b style="color:#9069da;">${currentBotName}:</b> <p><em>...searching the faded pages...</em></p>`;
     chatWindow.appendChild(loadingDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
@@ -602,19 +353,19 @@ async function sendMessage() {
             }
         }
         let searchQuery = text;
-        const isFollowUp = /mehr|weiter|und was|genauer|details|erzähl|nochmal|was ist damit/i.test(lowerText);
+        const isFollowUp = /mehr|weiter|und was|genauer|details|erzähl|nochmal|was ist damit|more|tell me more|go on|elaborate|and what|what about/i.test(lowerText);
         if (isFollowUp && lastQuestion) searchQuery = `${text} ${lastQuestion}`;
 
-        const context = await fetchContext(searchQuery);
+        const { context, images } = await fetchContext(searchQuery);
 
         let finalPrompt;
         if (activeSystemPrompt === TRAFKHOP_PROMPT) {
             finalPrompt = context
-            ? `INTERNE ARCHIV-DATEN:\n${context}\n\nAUFGABE: ${text}\n\nAnalysiere die Aufgabe auf Basis der Daten.`
-            : `Keine direkten Archiv-Einträge gefunden. Nutze dein allgemeines Verständnis des Triverse und den Chatverlauf für eine kreative Einschätzung zu: ${text}`;
+            ? `INTERNAL ARCHIVE DATA:\n${context}\n\nTASK: ${text}\n\nAnalyze the task based on the data.`
+            : `No direct archive entries found. Use your general understanding of the Triverse and the chat history for a creative assessment of: ${text}`;
         } else {
             finalPrompt = context
-            ? `Hier sind Fragmente aus der Bibleothek:\n${context}\n\nBeantworte die folgende Frage AUSSCHLIESSLICH mit Informationen aus diesen Fragmenten - Beantworte die Frage primär auf Basis der HAUPT-QUELLE. Andere Quellen sind nur ergänzend.\n\nFrage: ${text}`
+            ? `Here are fragments from the Library:\n${context}\n\nAnswer the following question EXCLUSIVELY using information from these fragments - answer primarily based on the MAIN SOURCE. Other sources are supplementary only.\n\nQuestion: ${text}`
             : text;
         }
 
@@ -622,13 +373,18 @@ async function sendMessage() {
         document.getElementById(loadingId)?.remove();
 
         if (!reply) {
-            addMessage(currentBotName, '*räuspert sich* ... Die Erinnerungen sind heute wirr.');
+            addMessage(currentBotName, '*clears throat* ... The memories are scattered today.');
         } else {
             addMessage(currentBotName, reply);
         }
+
+        // Show images from wiki if found
+        if (images && images.length > 0) {
+            addImages(images);
+        }
     } catch (e) {
         document.getElementById(loadingId)?.remove();
-        addMessage(currentBotName, `*zittert leicht* ... Die Verbindung ist abgerissen. (Fehler: ${e.message})`);
+        addMessage(currentBotName, `*trembles slightly* ... The connection has been severed. (Error: ${e.message})`);
         console.error(e);
     }
 }

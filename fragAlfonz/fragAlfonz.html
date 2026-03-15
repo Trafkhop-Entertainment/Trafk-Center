@@ -1,268 +1,51 @@
+<script src="fragAlfonz.js"></script>
+
 <!Doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../standard.css">
+    <link rel="stylesheet" href="fragAlfonz.css">
+    <script src="../volume.js"></script>
+    <meta name="description" content="The Homepage of Trafkhop Entertainment">
+    <title>Traf Center</title>
+  </head>
 
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Frag Alfonz</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<style>
-    * {
-        font-family: 'Noto Sans', sans-serif;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-weight: bold;
-    }
+  <body>
+    <header>
+        <a href="../index.html"><img class="do mainlogo" src="" alt="fragAlfonz"></a>
+        <input type="search" id="search" placeholder="Search">
+        <div class="Account"><img src="Account.png"></div>
+    </header>
 
-    body {
-        background: transparent;
-        height: 100vh;
-        overflow: hidden;
-    }
+    <nav>
+        <div class="nav do"><a id="fragAlfonz" class="do" href="../fragAlfonz/fragAlfonz.html">frag Alfonz</a></div>
+        <div class="nav do"><a id="home" class="do" href="../index.html">Home</a></div>
+        <div class="nav do"><a id="back" class="do" href="javascript:history.back()">Back</a></div>
+        <div class="nav do"><a id="for" class="do" href="javascript:history.forward()">For</a></div>
+    </nav>
 
-    #wrapper {
-        position: fixed;
-        bottom: 75px;
-        right: 15px;
-        width: 320px;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        filter: drop-shadow(0px 0px 10px #311d57);
-    }
 
-    #alfonz-content {
-        display: none;
-        flex-direction: column;
-        background: #6b48ae;
-        border: 5px solid #553393;
-        border-bottom: none;
-        border-radius: 20px 20px 0 0;
-        overflow: hidden;
-    }
-    #alfonz-content.open {
-        display: flex;
-    }
-
-    #chat-header {
-        background: #5a3998;
-        border-bottom: 3px solid #4c2d85;
-        padding: 12px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 14px 14px 0 0;
-    }
-    #chat-header h2 {
-        color: #fdf5ab;
-        font-size: 22px;
-        filter: drop-shadow(0px 0px 4px #fff49e);
-    }
-    #chat-header span {
-        color: #fff6a5;
-        font-size: 11px;
-        opacity: 0.8;
-    }
-
-    #chat-window {
-        overflow-y: auto;
-        padding: 12px;
-        background: #30185e;
-        min-height: 180px;
-        max-height: 300px;
-        scrollbar-width: thin;
-        scrollbar-color: #5a3998 #30185e;
-    }
-    #chat-window p, #chat-window b, #chat-window em {
-        font-size: 14px;
-        color: #fff8bd;
-        line-height: 1.6;
-        margin-bottom: 10px;
-        display: block;
-    }
-    #chat-window b {
-        color: #c9a0ff;
-    }
-
-    #chat-input-row {
-        display: flex;
-        gap: 8px;
-        padding: 10px;
-        background: #6b48ae;
-        border-top: 3px solid #553393;
-    }
-    #chat-input {
-        flex: 1;
-        min-width: 0;
-        padding: 8px 12px;
-        border-radius: 12px;
-        border: 2px solid #4c2d85;
-        background: #5a3998;
-        color: #fff8bd;
-        font-family: 'Noto Sans', sans-serif;
-        font-size: 13px;
-        font-weight: bold;
-        outline: none;
-        transition: border-color .165s ease;
-    }
-    #chat-input:focus {
-        border-color: #fff49e;
-    }
-    #chat-input::placeholder {
-        color: #c9a0ff;
-        font-weight: normal;
-    }
-    #send-btn {
-        padding: 8px 14px;
-        border-radius: 12px;
-        border: 2px solid #4c2d85;
-        background: #5a3998;
-        color: #fdf5ab;
-        font-size: 13px;
-        font-weight: bold;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: filter .165s ease, transform .165s ease;
-        flex-shrink: 0;
-    }
-    #send-btn:hover {
-        filter: drop-shadow(0px 0px 5px #fff49e);
-        transform: scale(1.05);
-    }
-
-    #quick-actions {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        padding: 0 10px 10px 10px;
-        background: #6b48ae;
-    }
-    #quick-actions button {
-        padding: 5px 10px;
-        border-radius: 10px;
-        border: 2px solid #4c2d85;
-        background: #5a3998;
-        color: #fdf5ab;
-        font-size: 12px;
-        cursor: pointer;
-        width: auto;
-        max-width: none;
-        height: auto;
-        max-height: none;
-        margin-bottom: 0;
-        transition: filter .165s ease;
-    }
-    #quick-actions button:hover {
-        filter: drop-shadow(0px 0px 4px #fff49e);
-    }
-
-    #toggle-chatbot {
-        width: 100%;
-        max-width: 100%;
-        padding: 11px 20px;
-        background: #5a3998;
-        border: 5px solid #4c2d85;
-        border-radius: 15px;
-        box-shadow: 0px 0px 12px #311d57;
-        cursor: pointer;
-        color: #fdf5ab;
-        font-size: 17px;
-        font-weight: bold;
-        transition: filter .165s ease, transform .165s ease;
-        height: auto;
-        max-height: none;
-    }
-    #toggle-chatbot p {
-    filter: drop-shadow(0px 0px 5px #fff49e);
-    }
-    #toggle-chatbot:hover {
-        transform: scale(1.02);
-    }
-    #toggle-chatbot:hover p {
-    filter: drop-shadow(0px 0px 7px #fff49e);
-    }
-
-    @media (prefers-color-scheme: light) {
-        #alfonz-content {
-            background: #fffaed;
-            border-color: #f3ecda;
-        }
-        #chat-header {
-            background: #fffad6;
-            border-color: #efe9bd;
-        }
-        #chat-header h2 {
-            color: #a271ff;
-            filter: drop-shadow(0px 0px 4px #5a3998);
-        }
-        #chat-header span { color: #9069da; }
-        #chat-window {
-            background: #f0e8ff;
-            scrollbar-color: #c9a0ff #f0e8ff;
-        }
-        #chat-window p, #chat-window em { color: #784fc6; }
-        #chat-window b { color: #5a3998; }
-        #chat-input-row { background: #fffaed; border-color: #f3ecda; }
-        #chat-input {
-            background: #fffad6;
-            border-color: #efe9bd;
-            color: #5a3998;
-        }
-        #chat-input::placeholder { color: #a271ff; }
-        #chat-input:focus { border-color: #5a3998; }
-        #send-btn {
-            background: #fffad6;
-            border-color: #efe9bd;
-            color: #5a3998;
-        }
-        #send-btn:hover { filter: drop-shadow(0px 0px 5px #5a3998); }
-        #quick-actions { background: #fffaed; }
-        #quick-actions button {
-            background: #fffad6;
-            border-color: #efe9bd;
-            color: #5a3998;
-        }
-        #toggle-chatbot {
-            background: #fffad6;
-            border-color: #ddd69a;
-            color: #5a3998;
-            box-shadow: 0 0 15px #efe8d5;
-        #toggle-chatbot p {
-        filter: drop-shadow(0px 0px 5px #5a3998);
-        }
-        #toggle-chatbot:hover p {
-        filter: drop-shadow(0px 0px 7px #5a3998);
-        }
-    }
-</style>
-</head>
-
-<body>
-<div id="wrapper">
-    <div id="alfonz-content">
-        <div id="chat-header">
-            <h2>Sprich mit Alfonz</h2>
-            <span>Die ewigen Archive</span>
-        </div>
+    <main>
         <div id="chat-window">
-            <p><em>*Ein altes, leises Rauschen erklingt*</em> Ah... ein Reisender. Ich bin Alfonz. Frag mich nach der Welt, und ich werde in meinen verblichenen Erinnerungen suchen...</p>
+            <p><i style="color: #00A86B">The voice of an old man appears:<br><br></i> Ah... a Traveler. I am Alfonz. Ask me anything related to Trafkhop and it's Universe/Stories/Games/News/ETC and i will search for it in the ARCHIVE!</p>
         </div>
         <div id="chat-input-row">
-            <input type="text" id="chat-input" placeholder="Frag mich nach dem Gesetzbuch, den Welten...">
-            <button id="send-btn">Fragen</button>
+            <input type="text" id="chat-input" placeholder="Type your message here...">
+            <button id="send-btn" class="do"><a class="do">ASK!</a></button>
         </div>
-        <div id="quick-actions"></div>
-    </div>
-    <button id="toggle-chatbot"><p>✦ Frag Alfonz</p></button>
-</div>
+    </main>
 
-<script src="fragAlfonz.js"></script>
-<script>
-    document.getElementById('toggle-chatbot').addEventListener('click', () => {
-        document.getElementById('alfonz-content').classList.toggle('open');
-    });
-</script>
-</body>
+
+    <footer>
+        <h4>© 2026 Trafkhop Entertainment™. All rights reserved.</h4>
+        <a class="do" href="mailto:contact.trafkhop@proton.me"><h4>Contact via Email</h4></a>
+        <a class="do" href="../license/LICENSE.html"><h4>License</h4></a>
+        <a class="do" href="../impressum/impressum.html"><h4>Impressum</h4></a>
+        <input class="do" type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+    </footer>
+
+  </body>
+
 </html>

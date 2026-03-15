@@ -111,7 +111,7 @@ header {
     align-items: center;
     justify-content: unset;
     background: var(--otherKraft);
-    filter: drop-shadow(0px 3px 3px var(--otherKraft-dark)) drop-shadow(0px 3px 3px var(--otherKraft-dark));
+    filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--otherKraft-dark));
     z-index: 999;
 }
 header .mainlogo {
@@ -131,7 +131,8 @@ header #search {
     height: 35px;
     width: 165px;
     background: var(--Kraft);
-    filter: drop-shadow(0px 1px 3px var(--Kraft-dark)) drop-shadow(0px 1px 3px var(--Kraft-dark));
+    filter: drop-shadow(0px 3px 5px var(--Kraft-dark)) drop-shadow(0px 3px 5px var(--Kraft-dark));
+    border-radius: 35px;
 }
 header input[type="search"]::placeholder {
     text-align: center;
@@ -148,7 +149,7 @@ footer {
     height: 65px;
     align-items: center;
     background: var(--otherKraft);
-    filter: drop-shadow(0px -3px 3px var(--otherKraft-dark)) drop-shadow(0px -3px 3px var(--otherKraft-dark));
+    filter: drop-shadow(0px -3px 7px var(--otherKraft-dark)) drop-shadow(0px -3px 7px var(--otherKraft-dark));
     gap: 6%;
     flex-shrink: 0;
     z-index: 999;
@@ -159,9 +160,10 @@ section {
     background: var(--otherKraft);
     max-width: 25vw;
     max-height: 35vh;
-    filter: drop-shadow(0px 3px 3px var(--otherKraft-dark)) drop-shadow(0px 3px 3px var(--otherKraft-dark));
+    filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--otherKraft-dark));
     overflow: scroll;
     scroll-behavior: smooth;
+    border-radius: 35px;
 }
 nav {
     padding-top: 10px;
@@ -176,7 +178,7 @@ nav {
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    filter: drop-shadow(0px 3px 3px var(--Kraft-dark)) drop-shadow(0px 3px 3px var(--Kraft-dark));
+    filter: drop-shadow(0px 3px 7px var(--Kraft-dark)) drop-shadow(0px 3px 7px var(--Kraft-dark));
     gap: 2%;
     z-index: 555;
     overflow: scroll;
@@ -184,10 +186,13 @@ nav {
     scrollbar-width: thin;
 }
 .header {
+    margin-left: -15px;
+    margin-right: -15px;
     padding: 10px;
     background: var(--Kraft);
-    filter: drop-shadow(0px 3px 3px var(--Kraft-dark)) drop-shadow(0px 3px 3px var(--Kraft-dark));
+    filter: drop-shadow(0px 3px 7px var(--Kraft-dark)) drop-shadow(0px 3px 7px var(--Kraft-dark));
     margin-bottom: 15px;
+    border-radius: 15px;
 }
 .header .do {
     padding: 0;
