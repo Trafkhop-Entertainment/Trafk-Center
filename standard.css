@@ -92,12 +92,12 @@ body {
 main {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
     flex: 1 0 auto;
     z-index: 11;
-    padding-left: 105px;
+    padding-left: 15px;
     padding-top: 135px;
     padding-bottom: 35px;
 }
@@ -106,27 +106,31 @@ header {
     display: flex;
     position: fixed;
     top: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     height: 85px;
     align-items: center;
-    justify-content: unset;
+    justify-content: center;
+    text-align: center;
     background: var(--otherKraft);
     filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--otherKraft-dark));
     z-index: 999;
+    border-bottom-left-radius: 65px;
+    border-bottom-right-radius: 65px;
 }
 header .mainlogo {
     height: 65px;
     width: auto;
 }
-header .Account {
-    height: 65px;
+header #menu {
+    height: 35px;
     width: auto;
     position: fixed;
-    right: 35px;
+    left: 65px;
 }
 header #search {
     position: fixed;
-    right: 165px;
+    right: 65px;
     border: none;
     height: 35px;
     width: 165px;
@@ -145,7 +149,8 @@ footer {
     padding: 0;
     display: flex;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     height: 65px;
     align-items: center;
     background: var(--otherKraft);
@@ -153,27 +158,29 @@ footer {
     gap: 6%;
     flex-shrink: 0;
     z-index: 999;
+    border-top-left-radius: 65px;
+    border-top-right-radius: 65px;
 }
 section {
     margin: 35px;
     padding: 35px;
     background: var(--otherKraft);
-    max-width: 25vw;
+    max-width: 21vw;
     max-height: 35vh;
-    filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--otherKraft-dark));
+    filter: drop-shadow(0px 3px 3px var(--otherKraft-dark)) drop-shadow(0px 3px 3px var(--otherKraft-dark));
     overflow: scroll;
     scroll-behavior: smooth;
     border-radius: 35px;
 }
 nav {
-    padding-top: 10px;
     top: 105px;
-    bottom: 0;
-    padding-bottom: 75px;
+    bottom: 65px;
+    padding-top: 35px;
+    padding-bottom: 35px;
     display: flex;
     width: 85px;
     position: fixed;
-    left: 0;
+    left: -75px;
     background: var(--Kraft);
     align-items: center;
     justify-content: flex-start;
@@ -184,13 +191,20 @@ nav {
     overflow: scroll;
     scroll-behavior: smooth;
     scrollbar-width: thin;
+    border-top-right-radius: 65px;
+    border-bottom-right-radius: 65px;
+    transition: left 0.085s ease-in-out;
+}
+nav:hover {
+    left: 0;
 }
 .header {
     margin-left: -15px;
     margin-right: -15px;
+    margin-top: -5px;
     padding: 10px;
     background: var(--Kraft);
-    filter: drop-shadow(0px 3px 7px var(--Kraft-dark)) drop-shadow(0px 3px 7px var(--Kraft-dark));
+    filter: drop-shadow(0px 3px 3px var(--Kraft-dark)) drop-shadow(0px 3px 3px var(--Kraft-dark));
     margin-bottom: 15px;
     border-radius: 15px;
 }
@@ -212,12 +226,12 @@ video, iframe, img, audio {
     section {
         margin: 15px;
         padding: 15px;
-        max-width: 33vw;
+        min-width: 80%;
     }
     main {
-        padding-left: 50px;
-        padding-top: 75px;
-        padding-bottom: 35px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     h1, h1 a {
         font-size: 25px;
@@ -251,22 +265,38 @@ video, iframe, img, audio {
         height: 35px;
     }
     nav {
-        width: 50px;
-        top: 65px;
     }
     header {
         height: 45px;
     }
     header .mainlogo {
         height: 35px;
-    }
-    header .Account {
-        height: 35px;
+        padding: 0;
     }
     header #search {
         height: 25px;
         width: 135px;
-        right: 105px;
+        right: 35px;
+    }
+    header input[type="search"]::placeholder {
+    font-size: 8px;
+    }
+    #search {
+        max-width: 35px;
+    }
+    #menu {
+        max-height: 25px;
+        left: 35px;
+    }
+    #volume {
+        max-width: 35px;
+    }
+    footer {
+    height: 65px;
+    gap: 0;
+    }
+    footer h4 {
+        font-size: 6px;
     }
 }
 
