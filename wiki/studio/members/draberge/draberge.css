@@ -11,8 +11,9 @@
 
 header {
     background: var(--orange);
-    filter: drop-shadow(0px 3px 3px var(--orange-dark)) drop-shadow(0px 3px 3px var(--orange-dark));
+    filter: drop-shadow(0px 3px 7px var(--orange-dark)) drop-shadow(0px 3px 7px var(--orange-dark));
     justify-content: normal;
+    padding-left: 35px;
 }
 section {
     background: var(--lightorange);
@@ -30,11 +31,11 @@ header h1:hover {
 }
 nav {
     background: var(--lightorange);
-    filter: drop-shadow(0px 3px 3px var(--lightorange-dark)) drop-shadow(0px 3px 3px var(--lightorange-dark));
+    filter: drop-shadow(3px 0px 7px var(--lightorange-dark)) drop-shadow(3px 0px 7px var(--lightorange-dark));
 }
 footer {
     background: var(--orange);
-    filter: drop-shadow(0px -3px 3px var(--orange-dark)) drop-shadow(0px -3px 3px var(--orange-dark));
+    filter: drop-shadow(0px -3px 7px var(--orange-dark)) drop-shadow(0px -3px 7px var(--orange-dark));
 }
 .acrlogo {
      width: 85px !important;
@@ -55,15 +56,6 @@ footer {
     background: var(--orange);
     filter: drop-shadow(0px 3px 3px var(--orange-dark)) drop-shadow(0px 3px 3px var(--orange-dark));
 }
-#cars img {
-    max-width: 350px;
-}
-#foods img {
-    max-width: 125px;
-}
-#gamesandtoys img {
-    max-width: 200px;
-}
 #OS img {
     max-width: 850px;
 }
@@ -71,11 +63,8 @@ footer {
     max-width: 65%;
     max-height: fit-content;
 }
-#cup img {
-    max-width: 450px;
-}
-#glasses img {
-    max-width: 450px;
+header #menu {
+    left: 75%;
 }
 
 @media (max-width: 1080px) {
@@ -90,40 +79,18 @@ footer {
         width: 135px !important;
         height: 135px !important;
     }
-    #cars img {
-    max-width: 140px;
-    }
-    #foods img {
-    max-width: 180px;
-    }
-    img {
-    max-width: 150px;
-    }
-    #gamesandtoys img {
-        max-width: 140px;
-    }
     #OS img {
     max-width: 400px;
     }
     #OS {
     max-width: 85%;
     }
-    iframe {
-    height: 85%;
-    width: 85%;
-    }
-    #cup img {
-    max-width: 170px;
-    }
-    #glasses img {
-    max-width: 170px;
-    }
 }
 
 @media (prefers-color-scheme: dark) {
     header {
         background: var(--darkorange);
-        filter: drop-shadow(0px 3px 3px var(--darkorange-dark)) drop-shadow(0px 3px 3px var(--darkorange-dark));
+        filter: drop-shadow(0px 3px 7px var(--darkorange-dark)) drop-shadow(0px 3px 7px var(--darkorange-dark));
     }
     header h1, footer {
         color: white !important;
@@ -136,11 +103,11 @@ footer {
 
     nav {
         background: var(--orange);
-        filter: drop-shadow(3px 0px 3px var(--orange-dark)) drop-shadow(3px 0px 3px var(--orange-dark));
+        filter: drop-shadow(3px 0px 7px var(--orange-dark)) drop-shadow(3px 0px 7px var(--orange-dark));
     }
     footer {
         background: var(--darkorange);
-        filter: drop-shadow(0px -3px 3px var(--darkorange-dark)) drop-shadow(0px -3px 3px var(--darkorange-dark));
+        filter: drop-shadow(0px -3px 7px var(--darkorange-dark)) drop-shadow(0px -3px 7px var(--darkorange-dark));
     }
 
     .header {

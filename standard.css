@@ -220,6 +220,8 @@ nav:hover {
 
 video, iframe, img, audio {
     border: none;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 @media (max-width: 1080px) {
@@ -260,12 +262,6 @@ video, iframe, img, audio {
         font-size: 8px;
         font-weight: bold;
     }
-    .nav {
-        width: 35px;
-        height: 35px;
-    }
-    nav {
-    }
     header {
         height: 45px;
     }
@@ -281,6 +277,9 @@ video, iframe, img, audio {
     header input[type="search"]::placeholder {
     font-size: 8px;
     }
+    .header {
+        margin: 5px;
+    }
     #search {
         max-width: 35px;
     }
@@ -289,14 +288,14 @@ video, iframe, img, audio {
         left: 35px;
     }
     #volume {
-        max-width: 35px;
+        max-width: 65px;
     }
     footer {
     height: 65px;
     gap: 0;
     }
     footer h4 {
-        font-size: 6px;
+        font-size: 9px;
     }
 }
 
