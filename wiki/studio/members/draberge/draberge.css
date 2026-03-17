@@ -45,9 +45,14 @@ footer {
 }
 
 #profile-picture img {
-    width: 235px !important;
-     height: 235px !important;
+    max-width: 100%;;
+    max-height: 100%;
 }
+#profile-picture img.acrlogo {
+   min-width: 250px !important;
+   min-height: 250px !important;
+}
+
 .acrlogo:hover {
     rotate: -499680deg !important;
     scale: 1.35 !important;
@@ -64,12 +69,12 @@ footer {
     max-height: fit-content;
 }
 header #menu {
-    left: 75%;
+    left: 65%;
 }
 
 @media (max-width: 1080px) {
     header h1 {
-        font-size: 25px;
+        font-size: 15px;
     }
     header .acrlogo {
         width: 45px !important;
@@ -84,6 +89,9 @@ header #menu {
     }
     #OS {
     max-width: 85%;
+    }
+    #menu {
+    left: 60% !important;
     }
 }
 

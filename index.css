@@ -1,7 +1,3 @@
-.header {
-    text-align: center;
-}
-
 header p {
     font-weight: bold;
     padding-left: 35px;
@@ -20,6 +16,7 @@ header a:has(.mainlogo):hover + p {
 @media (max-width: 1000px) {
     header p {
         padding-left: 5px;
-        font-size: 0.65vw;
+        top: 85px;
+        font-size: 10px;
     }
 }
