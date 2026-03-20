@@ -81,6 +81,12 @@ nav .nodo:hover {
     cursor: pointer;
     scale: 1.065;
 }
+.nav.nodo {
+    border-radius: 0;
+    height: 35px;
+    width: 65px;
+    padding: 5px;
+}
 
 html {
     height: 100%;
@@ -150,19 +156,24 @@ header input[type="search"]::placeholder {
     color: var(--Trafk);
     font-weight: bolder;
 }
-header #chatbot {
+header #chatbot, header #wikih {
     min-width: 35px;
     min-height: 35px;
     max-width: 35px;
+    max-height: 35px;
     position: fixed;
+    padding: 0;
     right: 265px;
     background: var(--Trafk);
     border-radius: 50%;
     align-content: center;
     justify-content: center;
 }
-header #chatbot a {
-    font-size: 10px;
+header #wikih {
+    right: 335px;
+}
+header #chatbot a, header #wikih a {
+    font-size: 12px;
     filter: drop-shadow(0px 0px 3px var(--Kraft)) drop-shadow(0px 0px 7px var(--Kraft));
     color: var(--Kraft);
 }
@@ -324,7 +335,7 @@ video, iframe, img, audio {
     footer h4 {
         font-size: 6px;
     }
-    header #chatbot {
+    header #chatbot, header #wikih {
     min-width: 15px;
     min-height: 15px;
     max-width: 15px;
