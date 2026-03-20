@@ -1,4 +1,4 @@
-#chatbot {
+#chatbott {
     min-width: 100%;
     min-height: 100%;
 }
@@ -70,7 +70,7 @@ p {
     }
 }
 
-@media (prefers-color-scheme: dark) {
+html:has(#darkmode:not(:checked)) {
     #chat-input {
         background: var(--otherTrafk);
         filter: drop-shadow(0px 3px 3px var(--otherTrafk-dark)) drop-shadow(0px 3px 3px var(--otherTrafk-dark));

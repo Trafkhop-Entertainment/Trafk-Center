@@ -124,8 +124,8 @@ header {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: var(--otherKraft);
-    filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--otherKraft-dark));
+    background: var(--Kraft);
+    filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--Kraft-dark));
     z-index: 999;
     border-bottom-left-radius: 65px;
     border-bottom-right-radius: 65px;
@@ -134,11 +134,15 @@ header .mainlogo {
     height: 65px;
     width: auto;
 }
-header #menu {
+header #menuimg {
     height: 35px;
     width: auto;
     position: fixed;
     left: 65px;
+    display: flex;
+    padding: 0;
+    top: 35px;
+    margin: 0;
 }
 header #search {
     position: fixed;
@@ -146,8 +150,8 @@ header #search {
     border: none;
     height: 35px;
     width: 165px;
-    background: var(--Kraft);
-    filter: drop-shadow(0px 3px 5px var(--Kraft-dark)) drop-shadow(0px 3px 5px var(--Kraft-dark));
+    background: var(--otherKraft);
+    filter: drop-shadow(0px 3px 5px var(--otherKraft-dark)) drop-shadow(0px 3px 5px var(--otherKraft-dark));
     border-radius: 35px;
 }
 header input[type="search"]::placeholder {
@@ -156,26 +160,68 @@ header input[type="search"]::placeholder {
     color: var(--Trafk);
     font-weight: bolder;
 }
-header #chatbot, header #wikih {
-    min-width: 35px;
-    min-height: 35px;
-    max-width: 35px;
-    max-height: 35px;
+.menu {
+    width: 35px;
+    height: 35px;
     position: fixed;
     padding: 0;
-    right: 265px;
     background: var(--Trafk);
     border-radius: 50%;
     align-content: center;
     justify-content: center;
 }
-header #wikih {
-    right: 335px;
-}
-header #chatbot a, header #wikih a {
+.menu a.do, .menu a {
     font-size: 12px;
     filter: drop-shadow(0px 0px 3px var(--Kraft)) drop-shadow(0px 0px 7px var(--Kraft));
     color: var(--Kraft);
+}
+#menu {
+    position: fixed;
+    left: 65px;
+    width: 35px;
+    padding: 0;
+    margin: 0;
+}
+#menu:has(input:checked) ~ .menudiv {
+    display: flex;
+}
+.menudiv{
+    display: none;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+
+}
+#Profile {
+    left: 135px;
+}
+#Settings {
+    left: 205px;
+}
+#Services {
+    left: 275px;
+}
+#darkmode-wrapper {
+    left: 345px;
+}
+#darkmode-wrapper label {
+    left: 285px;
+    font-size: 12px;
+    filter: drop-shadow(0px 0px 3px var(--Kraft)) drop-shadow(0px 0px 7px var(--Kraft));
+    color: var(--Kraft);
+    user-select: none;
+}
+.hidden-checkbox {
+    position: fixed;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+#wikih {
+    right: 335px;
+}
+#chatbot {
+    right: 265px;
 }
 footer {
     justify-content: center;
@@ -186,8 +232,8 @@ footer {
     right: 0;
     height: 65px;
     align-items: center;
-    background: var(--otherKraft);
-    filter: drop-shadow(0px -3px 7px var(--otherKraft-dark)) drop-shadow(0px -3px 7px var(--otherKraft-dark));
+    background: var(--Kraft);
+    filter: drop-shadow(0px -3px 7px var(--otherKraft-dark)) drop-shadow(0px -3px 7px var(--Kraft-dark));
     gap: 6%;
     flex-shrink: 0;
     z-index: 999;
@@ -215,11 +261,11 @@ nav {
     width: 85px;
     position: fixed;
     left: -75px;
-    background: var(--Kraft);
+    background: var(--otherKraft);
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    filter: drop-shadow(0px 3px 7px var(--Kraft-dark)) drop-shadow(0px 3px 7px var(--Kraft-dark));
+    filter: drop-shadow(0px 3px 7px var(--otherKraft-dark)) drop-shadow(0px 3px 7px var(--otherKraft-dark));
     gap: 2%;
     z-index: 555;
     overflow: scroll;
@@ -321,9 +367,10 @@ video, iframe, img, audio {
     #search {
         max-width: 35px;
     }
-    #menu {
+    header #menuimg {
         max-height: 25px;
         left: 35px;
+        top: 20px;
     }
     #volume {
         max-width: 35px;
@@ -347,7 +394,7 @@ header #chatbot a {
 }
 }
 
-@media (prefers-color-scheme: dark) {
+html:has(#darkmode:not(:checked)) {
     body {
         background: #1b112e;
     }
