@@ -19,12 +19,9 @@
 [submodule "wiki/assets/Sourcehop-Documents"]
 	path = wiki/assets/Sourcehop-Documents
 	url = git@github.com:Trafkhop-Entertainment/Sourcehop-Documents.git
+[submodule "projects/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive"]
+	path = projects/released/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive
+	url = git@github.com:Trafkhop-Entertainment/Raufbold3bs-Scratch-Archive.git
 [submodule "fragAlfonz/AlfonzProxy"]
 	path = fragAlfonz/AlfonzProxy
 	url = git@hf.co:spaces/Trafkhop/AlfonzProxy
-[submodule "projects/Trafk-OS/Trafk-OS"]
-	path = projects/Trafk-OS/Trafk-OS
-	url = git@github.com:Trafkhop-Entertainment/Trafk-OS.git
-[submodule "projects/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive"]
-	path = projects/Raufbold3bs-Scratch-Archive/Raufbold3bs-Scratch-Archive
-	url = git@github.com:Trafkhop-Entertainment/Raufbold3bs-Scratch-Archive.git
