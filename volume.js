@@ -1,45 +1,34 @@
 (function() {
-    // Holt die gespeicherte Lautstärke oder setzt 0.5 als Standard
-    const getStoredVol = () => localStorage.getItem('site-volume') || "0.5";
+    const getStoredVol = () => parseFloat(localStorage.getItem('site-volume') ?? '0.5');
 
-    const applyStorageVolume = () => {
-        const currentVol = parseFloat(getStoredVol());
+    // Sofort: alle Media-Elemente die schon existieren
+    const applyVolume = (vol) => {
+        document.querySelectorAll('audio, video').forEach(m => m.volume = vol);
+        const slider = document.getElementById('volume');
+        if (slider) slider.value = vol;
+    };
 
-        // FIX: Sucht jetzt nach Audio- UND Video-Elementen
-        document.querySelectorAll('audio, video').forEach(media => {
-            media.volume = currentVol;
+        // Override: fängt jedes neue Media-Element ab, egal wann es abgespielt wird
+        const originalPlay = HTMLMediaElement.prototype.play;
+        HTMLMediaElement.prototype.play = function() {
+            this.volume = getStoredVol();
+            return originalPlay.apply(this, arguments);
+        };
+
+        applyVolume(getStoredVol());
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyVolume(getStoredVol());
+
+            const slider = document.getElementById('volume');
+            if (slider) {
+                slider.addEventListener('input', (e) => {
+                    const vol = parseFloat(e.target.value);
+                    localStorage.setItem('site-volume', vol);
+                    applyVolume(vol);
+                });
+            }
         });
 
-        const slider = document.getElementById('volume');
-        if (slider && slider.value !== currentVol.toString()) {
-            slider.value = currentVol;
-        }
-    };
-
-    // FIX: Überschreibt das generelle MediaElement, um sowohl neue Audio- als auch Video-Aufrufe abzufangen
-    const originalPlay = HTMLMediaElement.prototype.play;
-    HTMLMediaElement.prototype.play = function() {
-        this.volume = parseFloat(getStoredVol());
-        return originalPlay.apply(this, arguments);
-    };
-
-    // Initiale Anwendung (für Elemente, die schon früh geladen sind)
-    applyStorageVolume();
-
-    // Event Listener für den DOMContentLoaded (wenn das HTML fertig geladen ist)
-    document.addEventListener('DOMContentLoaded', () => {
-        applyStorageVolume();
-
-        const slider = document.getElementById('volume');
-        if (slider) {
-            slider.addEventListener('input', (e) => {
-                localStorage.setItem('site-volume', e.target.value);
-                applyStorageVolume();
-            });
-        }
-    });
-
-    // Fallback, wenn alle Ressourcen (wie externe Skripte) geladen wurden
-    window.addEventListener('load', applyStorageVolume);
-
+        window.addEventListener('load', () => applyVolume(getStoredVol()));
 })();

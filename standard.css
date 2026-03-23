@@ -394,7 +394,7 @@ header #chatbot a {
 }
 }
 
-html:has(#darkmode:not(:checked)) {
+html.dark-mode {
     body {
         background: #1b112e;
     }
